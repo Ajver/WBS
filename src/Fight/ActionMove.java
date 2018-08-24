@@ -69,31 +69,44 @@ public class ActionMove extends Action {
 		LinkedList<Point> newPoints;
 		while(points.size() > 0) {
 			newPoints = new LinkedList<Point>();
-			len++;
 			
 			for(Point p : points) {
-				for(int yy=-1; yy<=1; yy++) {
-					for(int xx=-1; xx<=1; xx++) {
-						if(xx != 0 || yy != 0) { 
-							if(p.x+xx > 0 && p.x+xx < w && p.y+yy > 0 && p.y+yy < h) { // Over the map
-								if(!grid[p.x+xx][p.y+yy] && 
-									handler.map.grid[p.x+xx][p.y+yy].mayBePath()) { // May be the path element 
-								
-									if(p.x+xx == finish.x) {
-										if(p.y+yy == finish.y) {								
-											return len;
-										}
-									}else {
-										grid[p.x+xx][p.y+yy] = true;
-										newPoints.add(new Point(p.x+xx, p.y+yy));
-									}
-								}
-							}
-						}
+				if(p.x == finish.x) {
+					if(p.y == finish.y) {
+						return len;
 					}
 				}
+				
+				if(p.y-1 >= 0) {
+					if(!grid[p.x][p.y-1] && 
+						handler.map.grid[p.x][p.y-1].mayBePath()) { 
+						grid[p.x][p.y-1] = true;
+						newPoints.add(new Point(p.x, p.y-1));
+					}
+				}
+				if(p.x+1 < w) {
+					if(!grid[p.x+1][p.y]&& 
+						handler.map.grid[p.x+1][p.y].mayBePath()) { 
+						grid[p.x+1][p.y] = true;
+						newPoints.add(new Point(p.x+1, p.y));
+					}
+				}
+				if(p.y+1 < h) {
+					if(!grid[p.x][p.y+1] && 
+						handler.map.grid[p.x][p.y+1].mayBePath()) { 
+						grid[p.x][p.y+1] = true;
+						newPoints.add(new Point(p.x, p.y+1));
+					}
+				}
+				if(p.x-1 >= 0) {
+					if(!grid[p.x-1][p.y] && 
+						handler.map.grid[p.x-1][p.y].mayBePath()) { 
+						grid[p.x-1][p.y] = true;
+						newPoints.add(new Point(p.x-1, p.y));
+					}
+				}	
 			}
-			
+			len++;
 			points = newPoints;
 		}
 		
@@ -128,15 +141,15 @@ public class ActionMove extends Action {
 																	
 						LinkedList<Point> path = new LinkedList<Point>();
 						
+						path.add(new Point(cx, cy));
+						
 						do {
-							path.add(new Point(cx, cy));
 							int ncx = grid[cx][cy].x;
 							int ncy = grid[cx][cy].y;
 							cx = ncx;
 							cy = ncy;
+							path.add(new Point(cx, cy));
 						}while(cx != x2 || cy != y2);
-						
-						path.add(new Point(grid[cx][cy].x, grid[cx][cy].y));
 						
 						return path;
 					}
@@ -147,6 +160,7 @@ public class ActionMove extends Action {
 						handler.map.grid[p.x][p.y-1].mayBePath()) { 
 						grid[p.x][p.y-1].x = p.x;
 						grid[p.x][p.y-1].y = p.y;
+						newPoints.add(new Point(p.x, p.y-1));
 					}
 				}
 				if(p.x+1 < w) {
@@ -154,6 +168,7 @@ public class ActionMove extends Action {
 						handler.map.grid[p.x+1][p.y].mayBePath()) { 
 						grid[p.x+1][p.y].x = p.x;
 						grid[p.x+1][p.y].y = p.y;
+						newPoints.add(new Point(p.x+1, p.y));
 					}
 				}
 				if(p.y+1 < h) {
@@ -161,6 +176,7 @@ public class ActionMove extends Action {
 						handler.map.grid[p.x][p.y+1].mayBePath()) { 
 						grid[p.x][p.y+1].x = p.x;
 						grid[p.x][p.y+1].y = p.y;
+						newPoints.add(new Point(p.x, p.y+1));
 					}
 				}
 				if(p.x-1 >= 0) {
@@ -168,50 +184,10 @@ public class ActionMove extends Action {
 						handler.map.grid[p.x-1][p.y].mayBePath()) { 
 						grid[p.x-1][p.y].x = p.x;
 						grid[p.x-1][p.y].y = p.y;
+						newPoints.add(new Point(p.x-1, p.y));
 					}
-				}
-				
-				
-				for(int yy=-1; yy<=1; yy++) {
-					for(int xx=-1; xx<=1; xx++) {
-						if(xx != 0 || yy != 0) { 
-							if(p.x+xx > 0 && p.x+xx < w && p.y+yy > 0 && p.y+yy < h) { // Over the map
-								if(grid[p.x+xx][p.y+yy].x == -1 && 
-									handler.map.grid[p.x+xx][p.y+yy].mayBePath()) { 
-									grid[p.x+xx][p.y+yy].x = p.x;
-									grid[p.x+xx][p.y+yy].y = p.y;
-									
-									if(p.x+xx == finish.x) {
-										if(p.y+yy == finish.y) {
-											// End of algorithm
-											// Creating the path
-											int cx = finish.x;
-											int cy = finish.y;
-																						
-											LinkedList<Point> path = new LinkedList<Point>();
-											
-											do {
-												path.add(new Point(cx, cy));
-												int ncx = grid[cx][cy].x;
-												int ncy = grid[cx][cy].y;
-												cx = ncx;
-												cy = ncy;
-											}while(cx != x2 || cy != y2);
-											
-											path.add(new Point(grid[cx][cy].x, grid[cx][cy].y));
-											
-											return path;
-										}
-									}else {
-										newPoints.add(new Point(p.x+xx, p.y+yy));
-									}
-								}
-							}
-						}
-					}
-				}
+				}				
 			}
-			
 			points = newPoints;
 		}
 		
