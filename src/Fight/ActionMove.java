@@ -83,10 +83,9 @@ public class ActionMove extends Action {
 										if(p.y+yy == finish.y) {								
 											return len;
 										}
-									}else {
-										grid[p.x+xx][p.y+yy] = true;
-										newPoints.add(new Point(p.x+xx, p.y+yy));
 									}
+									grid[p.x+xx][p.y+yy] = true;
+									newPoints.add(new Point(p.x+xx, p.y+yy));
 								}
 							}
 						}
@@ -148,9 +147,8 @@ public class ActionMove extends Action {
 											
 											return path;
 										}
-									}else {
-										newPoints.add(new Point(p.x+xx, p.y+yy));
 									}
+									newPoints.add(new Point(p.x+xx, p.y+yy));
 								}
 							}
 						}
