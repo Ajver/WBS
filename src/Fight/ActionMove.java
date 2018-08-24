@@ -113,11 +113,65 @@ public class ActionMove extends Action {
 				grid[xx][yy] = new Point(-1, -1);
 			}
 		}
+		
 		LinkedList<Point> newPoints;
 		while(points.size() > 0) {
 			newPoints = new LinkedList<Point>();
 			
 			for(Point p : points) {
+				if(p.x == finish.x) {
+					if(p.y == finish.y) {
+						// End of algorithm
+						// Creating the path
+						int cx = finish.x;
+						int cy = finish.y;
+																	
+						LinkedList<Point> path = new LinkedList<Point>();
+						
+						do {
+							path.add(new Point(cx, cy));
+							int ncx = grid[cx][cy].x;
+							int ncy = grid[cx][cy].y;
+							cx = ncx;
+							cy = ncy;
+						}while(cx != x2 || cy != y2);
+						
+						path.add(new Point(grid[cx][cy].x, grid[cx][cy].y));
+						
+						return path;
+					}
+				}
+				
+				if(p.y-1 >= 0) {
+					if(grid[p.x][p.y-1].x == -1 && 
+						handler.map.grid[p.x][p.y-1].mayBePath()) { 
+						grid[p.x][p.y-1].x = p.x;
+						grid[p.x][p.y-1].y = p.y;
+					}
+				}
+				if(p.x+1 < w) {
+					if(grid[p.x+1][p.y].x == -1 && 
+						handler.map.grid[p.x+1][p.y].mayBePath()) { 
+						grid[p.x+1][p.y].x = p.x;
+						grid[p.x+1][p.y].y = p.y;
+					}
+				}
+				if(p.y+1 < h) {
+					if(grid[p.x][p.y+1].x == -1 && 
+						handler.map.grid[p.x][p.y+1].mayBePath()) { 
+						grid[p.x][p.y+1].x = p.x;
+						grid[p.x][p.y+1].y = p.y;
+					}
+				}
+				if(p.x-1 >= 0) {
+					if(grid[p.x-1][p.y].x == -1 && 
+						handler.map.grid[p.x-1][p.y].mayBePath()) { 
+						grid[p.x-1][p.y].x = p.x;
+						grid[p.x-1][p.y].y = p.y;
+					}
+				}
+				
+				
 				for(int yy=-1; yy<=1; yy++) {
 					for(int xx=-1; xx<=1; xx++) {
 						if(xx != 0 || yy != 0) { 
