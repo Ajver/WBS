@@ -1,53 +1,40 @@
 package Fight;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
-import Creatures.Player;
+import Creatures.Creature;
+import Creatures.Human;
 import MainFiles.MainClass;
 import Other.Handler;
 
 public class ActionMove extends Action {
-
-	private Handler handler;
 	
-	private float timer = 0.0f, breakTime;
-	private boolean isTimer = false;
-	
-	public ActionMove(float x, float y, Handler handler) {
-		super(x, y);
-		this.handler = handler;
+	public ActionMove(float x, float y, Creature c, Handler handler) {
+		super(x, y, c, handler);
 		
 		this.img = MainClass.tex.bootIcon;
 	}
 
 	public void slUpdate(float et) {
-		if(isTimer) {
-			timer += et;
-			
-			if(timer >= breakTime) {
-				// Next action
-				handler.actionManager.nextAction();
-				
-				// Reset timer
-				isTimer = false;
-				timer = 0.0f;
-			}
-		}
+		
 	}
 	
-	public void use() {
-		int px = handler.player.getMX();
-		int py = handler.player.getMY();
+	public void select() {
+		int cx = c.getMX();
+		int cy = c.getMY();
 	
-		for(int yy=-5; yy<=5; yy++) {
-			for(int xx=-5; xx<=5; xx++) {
+		int maxLen = c.att.current[1][3] * 2;
+		
+		for(int yy=-maxLen; yy<=maxLen; yy++) {
+			for(int xx=-maxLen; xx<=maxLen; xx++) {
 				if(xx != 0 || yy != 0) {
-					if(px+xx >= 0 && px+xx < handler.map.w && py+yy >= 0 && py+yy < handler.map.h) {
-						int len = getPathLength(px, py, px+xx, py+yy);
-						if(len >= 0 && len <= 5) {
-							handler.map.grid[px+xx][py+yy].setClickable(true);
+					if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
+						int len = getPathLength(cx, cy, cx+xx, cy+yy);
+						if(len >= 0 && len <= maxLen) {
+							handler.map.grid[cx+xx][cy+yy].setClickable(new Color(0, 0, 255));
 						}
 					}
 				}
@@ -227,56 +214,69 @@ public class ActionMove extends Action {
 		return null;
 	}
 	
-	public void mouseReleased(MouseEvent e) {
-		int mx = e.getX();
-		int my = e.getY();
+	public void use(int mapX, int mapY) {
+		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
+			int cx = c.getMX();
+			int cy = c.getMY();
+			
+			LinkedList<Point> path = getPath(cx, cy, mapX, mapY);
+			if(path != null) {
+				int maxLen = c.att.current[1][3] * 2;
+				if(path.size() > maxLen+1) {
+					LinkedList<Point> newPath = new LinkedList<Point>();
 
-		int mapX = (int) ((mx + handler.camera.getX()) / Handler.cellW);
-		int mapY = (int) ((my + handler.camera.getY()) / Handler.cellH);
+					for(int i=0; i<maxLen+1; i++) {
+						newPath.add(path.get(i));
+					}
+					
+					path = newPath;
+				}
+				mayBeCaneled = false;
+				c.move(path);
+				breakTime = Human.animationSpeed * (path.size()+1);
+				isTimer = true;
+			}else {
+				System.out.println("No path");
+			}
+		}
+	}
+	
+	public void mouseReleased(MouseEvent e) {
+		int mapX = (int) ((e.getX() + handler.camera.getX()) / Handler.cellW);
+		int mapY = (int) ((e.getY() + handler.camera.getY()) / Handler.cellH);
 		
 		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
-			int px = handler.player.getMX();
-			int py = handler.player.getMY();
+			int cx = c.getMX();
+			int cy = c.getMY();
 			
-			LinkedList<Point> path = getPath(px, py, mapX, mapY);
+			LinkedList<Point> path = getPath(cx, cy, mapX, mapY);
 			if(path != null) {
 				if(handler.map.grid[mapX][mapY].isClickable()) {
 					// Clearing map
 					for(int yy=0; yy<handler.map.h; yy++) {
 						for(int xx=0; xx<handler.map.w; xx++) {
-							handler.map.grid[xx][yy].setClickable(false);
+							handler.map.grid[xx][yy].setClickable(null);
 						}
 					}
 					mayBeCaneled = false;
-					handler.player.move(path);
-					breakTime = Player.animationSpeed * (path.size()+1);
-					isTimer = true;
+					c.move(path);
+					startTimer(Human.animationSpeed * (path.size()+1));
 				}
+			}else {
+				System.out.println("No path");
 			}
 		}
 	}
 	
-	public void mouseMoved(MouseEvent e) {
-		int mx = e.getX();
-		int my = e.getY();
-
-		int mapX = (int) ((mx + handler.camera.getX()) / Handler.cellW);
-		int mapY = (int) ((my + handler.camera.getY()) / Handler.cellH);
-
-		for(int yy=0; yy<handler.map.h; yy++) {
-			for(int xx=0; xx<handler.map.w; xx++) {
-				handler.map.grid[xx][yy].setHover(false);
-			}
-		}
-		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
-			handler.map.grid[mapX][mapY].setHover(true);
-		}
+	public void slMouseMoved(MouseEvent e) {
+		
 	}
+
 
 	public void canel() {
 		for(int yy=0; yy<handler.map.h; yy++) {
 			for(int xx=0; xx<handler.map.w; xx++) {
-				handler.map.grid[xx][yy].setClickable(false);
+				handler.map.grid[xx][yy].setClickable(null);
 			}
 		}
 	}

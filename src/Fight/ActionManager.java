@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.util.LinkedList;
 
 import MainFiles.MainClass;
 import Other.Button;
@@ -16,10 +15,7 @@ public class ActionManager {
 	public static float buttonW = 64;
 	
 	private Handler handler;
-	
-	private LinkedList<Action> actions = new LinkedList<Action>();
-	private Action[] selected = { null, null };
-	private int currentAction = 0;
+	private ActionList al;
 	
 	private Button canelBtn;
 	
@@ -30,30 +26,28 @@ public class ActionManager {
 	
 	public ActionManager(Handler handler) {
 		this.handler = handler;	
-		
-		actions.add(new ActionAttack(x, y, handler));
-		actions.add(new ActionMove(x, y, handler));
+		this.al = handler.creatures.get(0).al;
 		
 		setButtonsPosition();
 	}
 	
 	public void update(float et) {
-		for(Action a : actions) {
+		for(Action a : al.actions) {
 			a.update(et);
 		}
 	}
 	
 	public void render(Graphics g) {
 		g.setColor(new Color(204, 189, 83));
-		g.fillOval((int)(selX + buttonW*currentAction - 16), (int)y-16, (int)buttonW + 32, (int)buttonW + 32);
+		g.fillOval((int)(selX + buttonW*al.currentAction - 16), (int)y-16, (int)buttonW + 32, (int)buttonW + 32);
 		
 		g.setColor(new Color(112, 89, 51));
 		g.fillRect((int)selX, (int)y, (int)buttonW*2, (int)buttonW);
 		
-		if(selected[0] != null) {
-			g.drawImage(selected[0].img, (int)selX, (int)y, null);
-			if(selected[1] != null) {
-				g.drawImage(selected[1].img, (int)(selX+buttonW), (int)y, null);
+		if(al.selected[0] != null) {
+			g.drawImage(al.selected[0].img, (int)selX, (int)y, null);
+			if(al.selected[1] != null) {
+				g.drawImage(al.selected[1].img, (int)(selX+buttonW), (int)y, null);
 			}
 		}
 		
@@ -65,18 +59,18 @@ public class ActionManager {
 		
 		FontMetrics f = g.getFontMetrics();
 		int sx = (int)((MainClass.WW - f.stringWidth("Twoja runda")) / 2.0f);
-		int sy = (int)(actions.get(0).getY() - buttonW * 0.5f);
+		int sy = (int)(al.actions.get(0).getY() - buttonW * 0.5f);
 		g.drawString("Twoja runda", sx, sy);
 		
 		sx = (int)(selX + buttonW - f.stringWidth("Wybrane akcje") / 2.0f);
 		g.drawString("Wybrane akcje", sx, (int)(y - buttonW * 0.5f));
 		
-		for(Action a : actions) {
+		for(Action a : al.actions) {
 			a.render(g);
 		}
 		
-		if(selected[currentAction] != null) {
-			if(selected[currentAction].mayBeCaneled()) {
+		if(al.selected[al.currentAction] != null) {
+			if(al.selected[al.currentAction].mayBeCaneled()) {
 				canelBtn.render(g);
 			}
 		}
@@ -84,40 +78,36 @@ public class ActionManager {
 	
 	private void setButtonsPosition() {
 		float margin = 16;
-		float allButtonsW = actions.size() * buttonW + (actions.size()-1) * margin;
+		float allButtonsW = al.actions.size() * buttonW + (al.actions.size()-1) * margin;
 		x = (MainClass.WW - allButtonsW) / 2.0f;
 		
-		for(int i=0; i<actions.size(); i++) {
-			actions.get(i).setX(x + (buttonW+16)*i);
+		for(int i=0; i<al.actions.size(); i++) {
+			al.actions.get(i).setX(x + (buttonW+16)*i);
+			al.actions.get(i).setY(y);
 		}
 		
 		canelBtn = new Button(buttonW-16, y+buttonW+20, buttonW*2.0f+32, 32, "Anuluj akcjê");
 	}
 	
 	public void nextAction() {
-		currentAction++;
-		
 		showActions();
 		
-		if(currentAction > 1) { // End of player tour
-			selected[0] = selected[1] = null;
-			currentAction = 0;
-		}
+		al.nextAction();
 	}
 	
 	public void mouseReleased(MouseEvent e) {
-		if(selected[currentAction] == null) {
-			for(Action a : actions) {
+		if(al.selected[al.currentAction] == null) {
+			for(Action a : al.actions) {
 				if(a.mouseOver(e.getX(), e.getY())) {
 					hideActions();
 					
 					// Selecting
-					a.use();
-					selected[currentAction] = a;
+					a.select();
+					al.selected[al.currentAction] = a;
 				}
 			}		
 		}else {
-			for(Action a : actions) {
+			for(Action a : al.actions) {
 				if(a.mouseOver(e.getX(), e.getY())) {
 					return;
 				}
@@ -126,27 +116,27 @@ public class ActionManager {
 				}	
 			}
 			
-			if(selected[currentAction].mayBeCaneled()) {
+			if(al.selected[al.currentAction].mayBeCaneled()) {
 				if(canelBtn.mouseOver(e.getX(), e.getY())) {
-					selected[currentAction].canel();
-					selected[currentAction] = null;
+					al.selected[al.currentAction].canel();
+					al.selected[al.currentAction] = null;
 					showActions();
 					return;
 				}
 			}
 			
-			selected[currentAction].mouseReleased(e);
+			al.selected[al.currentAction].mouseReleased(e);
 		}
 	}
 	
 	public void mouseMoved(MouseEvent e) {
-		for(Action a : actions) {
+		for(Action a : al.actions) {
 			a.hover(e.getX(), e.getY());
 		}
 		
-		if(selected[currentAction] != null) {
+		if(al.selected[al.currentAction] != null) {
 			boolean good = true;
-			for(Action a : actions) {
+			for(Action a : al.actions) {
 				if(a.mouseOver(e.getX(), e.getY())) {
 					good = false;
 				}
@@ -155,24 +145,28 @@ public class ActionManager {
 				}
 			}
 			if(good) {
-				selected[currentAction].mouseMoved(e);
+				al.selected[al.currentAction].mouseMoved(e);
 			}
 		}
 		
-		canelBtn.hover(e.getX(), e.getY());
+		if(al.selected[al.currentAction] != null) {
+			if(al.selected[al.currentAction].mayBeCaneled()) {
+				canelBtn.hover(e.getX(), e.getY());
+			}
+		}
 	}
 	
 	private void showActions() {
-		for(Action aa : actions) {
-			aa.setNextX(aa.x);
-			aa.setNextY(y);
+		for(Action a : al.actions) {
+			a.setNextX(a.x);
+			a.setNextY(y);
 		}
 	}
 	
 	private void hideActions() {
-		for(Action aa : actions) {
-			aa.setNextX(aa.x);
-			aa.setNextY(MainClass.WH);
+		for(Action a : al.actions) {
+			a.setNextX(a.x);
+			a.setNextY(MainClass.WH);
 		}
 	}
 	

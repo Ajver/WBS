@@ -14,8 +14,10 @@ public class Button {
 
 	private float x, y, w, h;
 	private String caption = "";
-	private boolean hover = false;
+	
 	private BufferedImage img = null;
+	private boolean hover = false;
+	private boolean soundPlayed = false;
 	
 	public Button(float x, float y, float w, float h, String caption) {
 		this.x = x;
@@ -55,7 +57,17 @@ public class Button {
 		}
 	}
 	
-	public void hover(int mx, int my) { this.hover = mouseOver(mx, my); }
+	public void hover(int mx, int my) { 
+		this.hover = mouseOver(mx, my);
+		
+		if(this.hover) {
+			if(!soundPlayed) {
+				soundPlayed = (new SoundPlayer()).playSound("res/Sounds/click.wav");
+			}				
+		}else {
+			soundPlayed = false;
+		}
+	}
 	
 	public boolean mouseOver(int mx, int my) {
 		return mx >= x && mx <= x+w && my >= y && my <= y+h;

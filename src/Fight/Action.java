@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import Creatures.Creature;
+import Other.Handler;
 import Other.SoundPlayer;
 
 public abstract class Action {
@@ -23,17 +25,24 @@ public abstract class Action {
 	
 	public BufferedImage img;
 	protected boolean hover = false;
+	private boolean soundPlayed = false;
 	
 	protected boolean mayBeCaneled = true;
 	
 	// How long is this Action (no animation of this)
 	protected int duration = 1; 
 	
-	private boolean soundPlayed = false;
+	protected Creature c;
+	protected Handler handler;
 	
-	public Action(float x, float y) {
+	protected float timer = 0.0f, breakTime;
+	protected boolean isTimer = false;
+	
+	public Action(float x, float y, Creature c, Handler handler) {
 		this.x = x;
 		this.y = y;
+		this.c = c;
+		this.handler = handler;
 	}
 	
 	public void update(float et) {
@@ -42,6 +51,19 @@ public abstract class Action {
 		
 		slUpdate(et);
 		updateAnimation(et);
+		
+		if(isTimer) {
+			timer += et;
+			
+			if(timer >= breakTime) {
+				// Next action
+				handler.nextAction();
+				
+				// Reset timer
+				isTimer = false;
+				timer = 0.0f;
+			}
+		}
 	}
 	
 	public void render(Graphics g) {
@@ -73,8 +95,15 @@ public abstract class Action {
 	}
 	
 	public abstract void slUpdate(float et);
-	public abstract void use();
+	public abstract void select();
 	public abstract void canel();
+	
+	public void use() { // To override 
+		System.out.println("Error: No args 'mapX', 'mapY'");
+	}
+	public void use(int mapx, int mapY) { // To override 
+		System.out.println("Error: use(mapX, mapY) is not overrided");
+	}
 	
 	public void updateAnimation(float et) {
 		if(!isAnimated) return;
@@ -118,6 +147,11 @@ public abstract class Action {
 		
 	}
 	
+	protected void startTimer(float bt) {
+		this.breakTime = bt;
+		this.isTimer = true;
+	}
+	
 	public int getDuration() { return duration; }
 	public float getX() { return x + (nextX - x)*progress; }
 	public float getY() { return y + (nextY - y)*progress; }
@@ -144,5 +178,24 @@ public abstract class Action {
 	public boolean mayBeCaneled() { return this.mayBeCaneled; }
 	
 	public abstract void mouseReleased(MouseEvent e);
-	public abstract void mouseMoved(MouseEvent e);
+	public abstract void slMouseMoved(MouseEvent e);
+	
+	public void mouseMoved(MouseEvent e) {
+		int mx = e.getX();
+		int my = e.getY();
+
+		int mapX = (int) ((mx + handler.camera.getX()) / Handler.cellW);
+		int mapY = (int) ((my + handler.camera.getY()) / Handler.cellH);
+
+		for(int yy=0; yy<handler.map.h; yy++) {
+			for(int xx=0; xx<handler.map.w; xx++) {
+				handler.map.grid[xx][yy].setHover(false);
+			}
+		}
+		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
+			handler.map.grid[mapX][mapY].setHover(true);
+		}
+		
+		slMouseMoved(e);
+	}
 }

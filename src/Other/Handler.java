@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 import Creatures.Creature;
-import Creatures.Player;
+import Creatures.Human;
 import Fight.ActionManager;
 import MainFiles.MainClass;
 import Map.Map;
@@ -18,7 +18,7 @@ public class Handler extends MouseAdapter {
 	public static float cellW = 32, cellH = 32;
 	
 	public LinkedList<Creature> creatures = new LinkedList<Creature>();
-	public Player player;
+	private int currentCreature = 1;
 	
 	public Map map;
 	
@@ -28,22 +28,32 @@ public class Handler extends MouseAdapter {
 	public Handler(MainClass m) {
 		this.m = m;
 		
-		player = new Player(0, 10, this);
+		// Player 
+		creatures.add(new Human(0, 10, this));
+		creatures.get(0).setHasAI(false);
+		
+		// Other creatures
+		creatures.add(new Human(10, 10, this));
 		
 		map = new Map(50, 30);
 		actionManager = new ActionManager(this);
 		
 		camera = new Camera(this);
+		camera.focus(creatures.get(currentCreature));
 	}
 	
 	public void update(float et) {
-		for(Creature c:creatures) {
+		if(currentCreature == 0) {
+			actionManager.update(et);
+		}else {
+			creatures.get(currentCreature).round();
+		}
+		
+		for(Creature c : creatures) {
 			c.update(et);
 		}
-		player.update(et);
 		
 		map.update(et);
-		actionManager.update(et);
 		camera.update(et);
 	}
 	
@@ -56,12 +66,13 @@ public class Handler extends MouseAdapter {
 			for(Creature c:creatures) {
 				c.render(g);
 			}
-			player.render(g);
 			
 		////////////////////////////////////////////////////////////
 		g.translate((int)camera.getX(), (int)camera.getY());
 			
-		actionManager.render(g);
+		if(currentCreature == 0) {
+			actionManager.render(g);
+		}
 	}	
 	
 	public Creature getFromMap(int x, int y) {
@@ -74,6 +85,24 @@ public class Handler extends MouseAdapter {
 		}
 		
 		return null;
+	}
+	
+	public void nextRound() {
+		currentCreature++;
+		
+		if(currentCreature >= creatures.size()) {
+			currentCreature = 0;
+		}
+		
+		camera.focus(creatures.get(currentCreature));
+	}
+	
+	public void nextAction() {
+		if(currentCreature == 0) {
+			actionManager.nextAction();
+		}else {
+			creatures.get(currentCreature).al.nextAction();
+		}
 	}
 	
 	public void addCreature(Creature c) {
@@ -89,10 +118,14 @@ public class Handler extends MouseAdapter {
 	}
 	
 	public void removeCreature(int i) {
-		if(i >= 0) {
+		if(i >= 0 && i < creatures.size()) {
 			creatures.remove(i);
 		}
 	}
+	
+	public void removeAllCreatures() {
+		creatures.clear();
+	}	
 	
 	////////////////////////////////////////////////////////////////////////////////
 	
@@ -105,11 +138,15 @@ public class Handler extends MouseAdapter {
 		int mx = e.getX();
 		int my = e.getY();
 		
-		actionManager.mouseReleased(e);
+		if(currentCreature == 0) {
+			actionManager.mouseReleased(e);
+		}
 	}
 	
 	public void mouseMoved(MouseEvent e) {
-		actionManager.mouseMoved(e);
+		if(currentCreature == 0) {
+			actionManager.mouseMoved(e);
+		}
 	}
 
 }

@@ -20,7 +20,7 @@ public class EmptyPlace extends MapObject {
 
 	public void render(Graphics g) {
 		if(isClickable && hover) {
-			g.setColor(new Color(20, 200, 70));
+			g.setColor(col);
 		}else {
 			g.setColor(new Color(10, 150, 50));
 		}
@@ -30,7 +30,7 @@ public class EmptyPlace extends MapObject {
 		g.drawRect((int)(x), (int)(y), (int)Handler.cellW, (int)Handler.cellH);
 		
 		if(isClickable) {
-			g.setColor(new Color(106, 212, 242));
+			g.setColor(col);
 			g.fillOval((int)x, (int)y, (int)Handler.cellW, (int)Handler.cellH);
 		}
 	}

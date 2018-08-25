@@ -70,6 +70,10 @@ public class SoundPlayer {
 		}
 	}
 	
+	public void loop() {
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
+	}
+	
 	public void reload() {
 		load(path);
 	}
