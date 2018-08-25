@@ -22,7 +22,7 @@ public class Camera {
 	
 	public void update(float et) {
 		if(player != null) {
-			float speed = 0.3f;
+			float speed = 0.4f;
 			this.velX = ((player.getX() - MainClass.WW / 2.0f + Handler.cellW / 2.0f) - this.x) / speed;
 			this.velY = ((player.getY() - MainClass.WH / 2.0f + Handler.cellH / 2.0f) - this.y) / speed;
 			

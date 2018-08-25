@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 import Creatures.Player;
+import MainFiles.MainClass;
 import Other.Handler;
 
 public class ActionMove extends Action {
@@ -16,8 +17,9 @@ public class ActionMove extends Action {
 	
 	public ActionMove(float x, float y, Handler handler) {
 		super(x, y);
-		
 		this.handler = handler;
+		
+		this.img = MainClass.tex.bootIcon;
 	}
 
 	public void slUpdate(float et) {
@@ -245,6 +247,7 @@ public class ActionMove extends Action {
 							handler.map.grid[xx][yy].setClickable(false);
 						}
 					}
+					mayBeCaneled = false;
 					handler.player.move(path);
 					breakTime = Player.animationSpeed * (path.size()+1);
 					isTimer = true;
@@ -269,5 +272,12 @@ public class ActionMove extends Action {
 			handler.map.grid[mapX][mapY].setHover(true);
 		}
 	}
-	
+
+	public void canel() {
+		for(int yy=0; yy<handler.map.h; yy++) {
+			for(int xx=0; xx<handler.map.w; xx++) {
+				handler.map.grid[xx][yy].setClickable(false);
+			}
+		}
+	}
 }

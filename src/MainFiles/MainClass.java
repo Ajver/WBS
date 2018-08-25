@@ -19,7 +19,7 @@ public class MainClass extends Canvas implements Runnable {
 
 	private Handler handler;
 	private KeyInput keyInput;
-	private Textures tex;
+	public static Textures tex;
 	
 	private int fps = 0;
 	

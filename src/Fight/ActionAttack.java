@@ -2,6 +2,7 @@ package Fight;
 
 import java.awt.event.MouseEvent;
 
+import MainFiles.MainClass;
 import Other.Handler;
 
 public class ActionAttack extends Action {
@@ -12,7 +13,7 @@ public class ActionAttack extends Action {
 		super(x, y);
 		
 		this.handler = handler;
-		duration = 1;
+		this.img = MainClass.tex.swordIcon;
 	}
 
 	public void slUpdate(float et) {
@@ -46,6 +47,10 @@ public class ActionAttack extends Action {
 	}
 
 	public void mouseMoved(MouseEvent e) {
+		
+	}
+
+	public void canel() {
 		
 	}
 }

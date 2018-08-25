@@ -19,9 +19,10 @@ public abstract class Action {
 	protected float speed = 4.0f; // Speed of animation progressing
 	protected boolean isAnimated = false;
 	
-	protected BufferedImage img;
+	public BufferedImage img;
 	protected boolean hover = false;
 	
+	protected boolean mayBeCaneled = true;
 	
 	// How long is this Action (no animation of this)
 	protected int duration = 1; 
@@ -47,14 +48,23 @@ public abstract class Action {
 		}
 		
 		if(isAnimated) {
-			g.fillRect((int)(x + (nextX - x)*progress), (int)(y + (nextY - y)*progress), (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
+			if(img == null) {
+				g.fillRect((int)getX(), (int)getY(), (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
+			}else {
+				g.drawImage(img, (int)getX(), (int)getY(), null);
+			}
 		}else {
-			g.fillRect((int)x, (int)y, (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
+			if(img == null) {
+				g.fillRect((int)x, (int)y, (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
+			}else {
+				g.drawImage(img, (int)x, (int)y, null);
+			}
 		}
 	}
 	
 	public abstract void slUpdate(float et);
 	public abstract void use();
+	public abstract void canel();
 	
 	public void updateAnimation(float et) {
 		if(!isAnimated) return;
@@ -99,6 +109,8 @@ public abstract class Action {
 	}
 	
 	public int getDuration() { return duration; }
+	public float getX() { return x + (nextX - x)*progress; }
+	public float getY() { return y + (nextY - y)*progress; }
 	
 	public boolean mouseOver(int mx, int my) {
 		return mx >= x + (nextX - x)*progress && 
@@ -108,6 +120,8 @@ public abstract class Action {
 	}
 	
 	public void hover(int mx, int my) { this.hover = mouseOver(mx, my); }
+	
+	public boolean mayBeCaneled() { return this.mayBeCaneled; }
 	
 	public abstract void mouseReleased(MouseEvent e);
 	public abstract void mouseMoved(MouseEvent e);
