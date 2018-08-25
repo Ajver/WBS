@@ -34,8 +34,7 @@ public class ActionAttack extends Action {
 		}
 		
 		if(!isInRange) {
-			// Message
-			System.out.println("No enemys in Range");
+			handler.msg.set("No enemys in Range");
 		}
 	}
 	
@@ -49,16 +48,14 @@ public class ActionAttack extends Action {
 		if(enemy != null) {
 			if(c.att.WW(0)) {
 				int dmg = Dice.roll1d10();
-				System.out.println("Damage: " + dmg);
+				handler.msg.set("Damage: " + dmg);
 				enemy.hit(dmg);
 			}else {
-				// Message
-				System.out.println("Miss");
+				handler.msg.set("Miss");
 			}
 			startTimer(0.1f);
 		}else {
-			// Message
-			System.out.println("No enemy on xy: " + mapX + " | " + mapY);
+			handler.msg.set("No enemy on xy: " + mapX + " | " + mapY);
 		}
 	}
 	
@@ -69,7 +66,7 @@ public class ActionAttack extends Action {
 		if(mapX >= c.getMX()-1 && mapX <= c.getMX()+1 && mapY >= c.getMY()-1 && mapY <= c.getMY()+1) {
 			use(mapX, mapY);
 		}else {
-			System.out.println("out of range!");
+			handler.msg.set("out of range!");
 		}
 	}
 	

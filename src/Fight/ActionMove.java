@@ -235,7 +235,7 @@ public class ActionMove extends Action {
 				c.move(path);
 				startTimer(Human.animationSpeed * (path.size()+1));
 			}else {
-				System.out.println("No path");
+				handler.msg.set("No path");
 			}
 		}
 	}
@@ -262,7 +262,7 @@ public class ActionMove extends Action {
 					startTimer(Human.animationSpeed * (path.size()+1));
 				}
 			}else {
-				System.out.println("No path");
+				handler.msg.set("No path");
 			}
 		}
 	}

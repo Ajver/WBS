@@ -47,7 +47,7 @@ public abstract class Creature extends GameObject {
 	
 	public void hit(int dmg) {
 		this.hp -= dmg;
-		System.out.println("HP left: " + this.hp);
+		handler.msg.add("HP left: " + this.hp);
 		
 		if(hp < 0) {
 			handler.removeCreature(this);

@@ -55,8 +55,6 @@ public class ActionManager {
 		g.drawRect((int)selX, (int)y, (int)buttonW, (int)buttonW);
 		g.drawRect((int)(selX + buttonW), (int)y, (int)buttonW, (int)buttonW);
 		
-		g.setFont(new Font("arial", 0, 35));
-		
 		FontMetrics f = g.getFontMetrics();
 		int sx = (int)((MainClass.WW - f.stringWidth("Twoja runda")) / 2.0f);
 		int sy = (int)(al.actions.get(0).getY() - buttonW * 0.5f);

@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import Creatures.Creature;
 import Creatures.Human;
 import Fight.ActionManager;
+import Fight.FightMessage;
 import MainFiles.MainClass;
 import Map.Map;
 
@@ -24,9 +25,14 @@ public class Handler extends MouseAdapter {
 	
 	public ActionManager actionManager;
 	public Camera camera;
+	public FightMessage msg;
 	
 	public Handler(MainClass m) {
 		this.m = m;
+		
+		this.msg = new FightMessage(MainClass.WW - 512 - ActionManager.buttonW, 
+				MainClass.WH - 256 - ActionManager.buttonW, 
+				512, 256);
 		
 		// Player 
 		creatures.add(new Human(0, 10, this));
@@ -73,6 +79,8 @@ public class Handler extends MouseAdapter {
 		if(currentCreature == 0) {
 			actionManager.render(g);
 		}
+		
+		msg.render(g);
 	}	
 	
 	public Creature getFromMap(int x, int y) {

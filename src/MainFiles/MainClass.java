@@ -2,6 +2,7 @@ package MainFiles;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
@@ -60,6 +61,7 @@ public class MainClass extends Canvas implements Runnable {
 		g.setColor(new Color(94, 93, 89));
 		g.fillRect(0, 0, WW, WH);
 		
+		g.setFont(new Font("arial", 0, 35));
 		handler.render(g);
 		
 		g.setColor(new Color(255, 255, 255));
