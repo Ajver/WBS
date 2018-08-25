@@ -69,44 +69,30 @@ public class ActionMove extends Action {
 		LinkedList<Point> newPoints;
 		while(points.size() > 0) {
 			newPoints = new LinkedList<Point>();
+			len++;
 			
 			for(Point p : points) {
-				if(p.x == finish.x) {
-					if(p.y == finish.y) {
-						return len;
+				for(int yy=-1; yy<=1; yy++) {
+					for(int xx=-1; xx<=1; xx++) {
+						if(xx != 0 || yy != 0) { 
+							if(p.x+xx > 0 && p.x+xx < w && p.y+yy > 0 && p.y+yy < h) { // Over the map
+								if(!grid[p.x+xx][p.y+yy] && 
+									handler.map.grid[p.x+xx][p.y+yy].mayBePath()) { // May be the path element 
+								
+									if(p.x+xx == finish.x) {
+										if(p.y+yy == finish.y) {								
+											return len;
+										}
+									}
+									grid[p.x+xx][p.y+yy] = true;
+									newPoints.add(new Point(p.x+xx, p.y+yy));
+								}
+							}
+						}
 					}
 				}
-				
-				if(p.y-1 >= 0) {
-					if(!grid[p.x][p.y-1] && 
-						handler.map.grid[p.x][p.y-1].mayBePath()) { 
-						grid[p.x][p.y-1] = true;
-						newPoints.add(new Point(p.x, p.y-1));
-					}
-				}
-				if(p.x+1 < w) {
-					if(!grid[p.x+1][p.y]&& 
-						handler.map.grid[p.x+1][p.y].mayBePath()) { 
-						grid[p.x+1][p.y] = true;
-						newPoints.add(new Point(p.x+1, p.y));
-					}
-				}
-				if(p.y+1 < h) {
-					if(!grid[p.x][p.y+1] && 
-						handler.map.grid[p.x][p.y+1].mayBePath()) { 
-						grid[p.x][p.y+1] = true;
-						newPoints.add(new Point(p.x, p.y+1));
-					}
-				}
-				if(p.x-1 >= 0) {
-					if(!grid[p.x-1][p.y] && 
-						handler.map.grid[p.x-1][p.y].mayBePath()) { 
-						grid[p.x-1][p.y] = true;
-						newPoints.add(new Point(p.x-1, p.y));
-					}
-				}	
 			}
-			len++;
+			
 			points = newPoints;
 		}
 		
@@ -188,6 +174,42 @@ public class ActionMove extends Action {
 					}
 				}				
 			}
+			
+			for(Point p : points) {
+				if(p.y-1 >= 0 && p.x-1 >= 0) {
+					if(grid[p.x-1][p.y-1].x == -1 && 
+						handler.map.grid[p.x-1][p.y-1].mayBePath()) { 
+						grid[p.x-1][p.y-1].x = p.x;
+						grid[p.x-1][p.y-1].y = p.y;
+						newPoints.add(new Point(p.x-1, p.y-1));
+					}
+				}
+				if(p.x+1 < w && p.y-1 >= 0) {
+					if(grid[p.x+1][p.y-1].x == -1 && 
+						handler.map.grid[p.x+1][p.y-1].mayBePath()) { 
+						grid[p.x+1][p.y-1].x = p.x;
+						grid[p.x+1][p.y-1].y = p.y;
+						newPoints.add(new Point(p.x+1, p.y-1));
+					}
+				}
+				if(p.y+1 < h && p.x+1 < h) {
+					if(grid[p.x+1][p.y+1].x == -1 && 
+						handler.map.grid[p.x+1][p.y+1].mayBePath()) { 
+						grid[p.x+1][p.y+1].x = p.x;
+						grid[p.x+1][p.y+1].y = p.y;
+						newPoints.add(new Point(p.x+1, p.y+1));
+					}
+				}
+				if(p.x-1 >= 0 && p.y+1 < h) {
+					if(grid[p.x-1][p.y+1].x == -1 && 
+						handler.map.grid[p.x-1][p.y+1].mayBePath()) { 
+						grid[p.x-1][p.y+1].x = p.x;
+						grid[p.x-1][p.y+1].y = p.y;
+						newPoints.add(new Point(p.x-1, p.y+1));
+					}
+				}
+			}
+			
 			points = newPoints;
 		}
 		
@@ -207,6 +229,12 @@ public class ActionMove extends Action {
 		LinkedList<Point> path = getPath(px, py, mapX, mapY);
 		if(path != null) {
 			if(handler.map.grid[mapX][mapY].isClickable()) {
+				// Clearing map
+				for(int yy=0; yy<handler.map.h; yy++) {
+					for(int xx=0; xx<handler.map.w; xx++) {
+						handler.map.grid[xx][yy].setClickable(false);
+					}
+				}
 				handler.player.move(path);
 			}
 		}
