@@ -28,7 +28,7 @@ public class Handler extends MouseAdapter {
 	public Handler(MainClass m) {
 		this.m = m;
 		
-		player = new Player(10, 10, this);
+		player = new Player(0, 10, this);
 		
 		map = new Map(50, 30);
 		actionManager = new ActionManager(this);

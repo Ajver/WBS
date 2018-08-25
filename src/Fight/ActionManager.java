@@ -76,10 +76,32 @@ public class ActionManager {
 		}
 	}
 	
+	public void nextAction() {
+		currentAction++;
+		
+		// Showing actions
+		for(Action a : actions) {
+			a.setNextX(a.x);
+			a.setNextY(y);
+		}
+		
+		if(currentAction > 1) { // End of player tour
+			selected[0] = selected[1] = null;
+			currentAction = 0;
+		}
+	}
+	
 	public void mouseReleased(MouseEvent e) {
 		if(selected[currentAction] == null) {
 			for(Action a : actions) {
 				if(a.mouseOver(e.getX(), e.getY())) {
+					// Hiding actions
+					for(Action aa : actions) {
+						aa.setNextX(aa.x);
+						aa.setNextY(MainClass.WH);
+					}
+					
+					// Selecting
 					a.use();
 					selected[currentAction] = a;
 				}
@@ -101,6 +123,10 @@ public class ActionManager {
 	}
 	
 	public void mouseMoved(MouseEvent e) {
+		for(Action a : actions) {
+			a.hover(e.getX(), e.getY());
+		}
+		
 		if(selected[currentAction] != null) {
 			boolean good = true;
 			for(Action a : actions) {

@@ -12,9 +12,17 @@ public class Player extends Creature {
 	}
 
 	public void update(float et) {
-		if(isMoving) {
-			move(et);
+		if(isMoving) { 
+			move(et); 
+			x += velX * et;
+			y += velY * et;
+			
+			mx = (int)((x + Handler.cellW/2.0f) / Handler.cellW);
+			my = (int)((y + Handler.cellH/2.0f) / Handler.cellH);
+		}else {
+			setMXY(mx, my);
 		}
+		
 	}
 
 	public void render(Graphics g) {

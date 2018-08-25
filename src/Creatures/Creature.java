@@ -16,7 +16,9 @@ public abstract class Creature extends GameObject {
 	protected boolean isMoving = false;
 	private LinkedList<Point> path;
 	private int currentPoint = 0;
-	private float timer = 0;
+	private float timer = animationSpeed;
+	
+	public static float animationSpeed = 0.4f;
 	
 	public Creature(int mx, int my, Handler handler) {
 		super(mx, my);
@@ -26,15 +28,19 @@ public abstract class Creature extends GameObject {
 	
 	protected void move(float et) {
 		timer += et;
-		if(timer >= 0.4f) {
-			timer = 0;
+		if(timer >= animationSpeed) {
 			if(currentPoint < path.size()) {
-				setMXY(path.get(currentPoint).x, path.get(currentPoint).y);
+				velX = (path.get(currentPoint).x - mx) * (Handler.cellW / animationSpeed);
+				velY = (path.get(currentPoint).y - my) * (Handler.cellH / animationSpeed);
 				currentPoint++;
+				timer = 0.0f;
 			}else {
+				timer = animationSpeed;
+				velX = velY = 0;
 				currentPoint = 0;
 				isMoving = false;
 			}
+			setMXY(mx, my);
 		}
 	}
 	

@@ -1,17 +1,18 @@
 package Fight;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
-import Map.Map.ID;
+import Creatures.Player;
 import Other.Handler;
 
 public class ActionMove extends Action {
 
 	private Handler handler;
+	
+	private float timer = 0.0f, breakTime;
+	private boolean isTimer = false;
 	
 	public ActionMove(float x, float y, Handler handler) {
 		super(x, y);
@@ -19,17 +20,18 @@ public class ActionMove extends Action {
 		this.handler = handler;
 	}
 
-	public void update(float et) {
-		
-	}
-
-	public void render(Graphics g) {
-		g.setColor(new Color(132, 103, 54));
-		
-		if(isAnimated) {
-			g.fillRect((int)(x + (nextX - x)*progress), (int)(y + (nextY - y)*progress), (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
-		}else {
-			g.fillRect((int)x, (int)y, (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
+	public void slUpdate(float et) {
+		if(isTimer) {
+			timer += et;
+			
+			if(timer >= breakTime) {
+				// Next action
+				handler.actionManager.nextAction();
+				
+				// Reset timer
+				isTimer = false;
+				timer = 0.0f;
+			}
 		}
 	}
 	
@@ -40,13 +42,15 @@ public class ActionMove extends Action {
 		for(int yy=-5; yy<=5; yy++) {
 			for(int xx=-5; xx<=5; xx++) {
 				if(xx != 0 || yy != 0) {
-					int len = getPathLength(px, py, px+xx, py+yy);
-					if(len >= 0 && len <= 5) {
-						handler.map.grid[px+xx][py+yy].setClickable(true);
+					if(px+xx >= 0 && px+xx < handler.map.w && py+yy >= 0 && py+yy < handler.map.h) {
+						int len = getPathLength(px, py, px+xx, py+yy);
+						if(len >= 0 && len <= 5) {
+							handler.map.grid[px+xx][py+yy].setClickable(true);
+						}
 					}
 				}
 			}
-		}
+		}		
 	}
 	
 	private int getPathLength(int x1, int y1, int x2, int y2) {
@@ -75,7 +79,7 @@ public class ActionMove extends Action {
 				for(int yy=-1; yy<=1; yy++) {
 					for(int xx=-1; xx<=1; xx++) {
 						if(xx != 0 || yy != 0) { 
-							if(p.x+xx > 0 && p.x+xx < w && p.y+yy > 0 && p.y+yy < h) { // Over the map
+							if(p.x+xx >= 0 && p.x+xx < w && p.y+yy >= 0 && p.y+yy < h) { // Over the map
 								if(!grid[p.x+xx][p.y+yy] && 
 									handler.map.grid[p.x+xx][p.y+yy].mayBePath()) { // May be the path element 
 								
@@ -100,6 +104,11 @@ public class ActionMove extends Action {
 	}
 	
 	private LinkedList<Point> getPath(int x1, int y1, int x2, int y2) {
+		if(x1 == x2) {
+			if(y1 == y2) {
+				return null;
+			}
+		}
 		Point finish = new Point(x1, y1);
 		LinkedList<Point> points = new LinkedList<Point>();
 		points.add(new Point(x2, y2));
@@ -223,19 +232,23 @@ public class ActionMove extends Action {
 		int mapX = (int) ((mx + handler.camera.getX()) / Handler.cellW);
 		int mapY = (int) ((my + handler.camera.getY()) / Handler.cellH);
 		
-		int px = handler.player.getMX();
-		int py = handler.player.getMY();
-		
-		LinkedList<Point> path = getPath(px, py, mapX, mapY);
-		if(path != null) {
-			if(handler.map.grid[mapX][mapY].isClickable()) {
-				// Clearing map
-				for(int yy=0; yy<handler.map.h; yy++) {
-					for(int xx=0; xx<handler.map.w; xx++) {
-						handler.map.grid[xx][yy].setClickable(false);
+		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
+			int px = handler.player.getMX();
+			int py = handler.player.getMY();
+			
+			LinkedList<Point> path = getPath(px, py, mapX, mapY);
+			if(path != null) {
+				if(handler.map.grid[mapX][mapY].isClickable()) {
+					// Clearing map
+					for(int yy=0; yy<handler.map.h; yy++) {
+						for(int xx=0; xx<handler.map.w; xx++) {
+							handler.map.grid[xx][yy].setClickable(false);
+						}
 					}
+					handler.player.move(path);
+					breakTime = Player.animationSpeed * (path.size()+1);
+					isTimer = true;
 				}
-				handler.player.move(path);
 			}
 		}
 	}
@@ -252,7 +265,9 @@ public class ActionMove extends Action {
 				handler.map.grid[xx][yy].setHover(false);
 			}
 		}
-		handler.map.grid[mapX][mapY].setHover(true);
+		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
+			handler.map.grid[mapX][mapY].setHover(true);
+		}
 	}
 	
 }

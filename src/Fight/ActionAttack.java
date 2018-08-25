@@ -1,7 +1,5 @@
 package Fight;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 import Other.Handler;
@@ -17,18 +15,8 @@ public class ActionAttack extends Action {
 		duration = 1;
 	}
 
-	public void update(float et) {
-		updateAnimation(et);
-	}
+	public void slUpdate(float et) {
 
-	public void render(Graphics g) {
-		g.setColor(new Color(132, 103, 54));
-		
-		if(isAnimated) {
-			g.fillRect((int)(x + (nextX - x)*progress), (int)(y + (nextY - y)*progress), (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
-		}else {
-			g.fillRect((int)x, (int)y, (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
-		}
 	}
 
 	public void use() {
