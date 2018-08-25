@@ -55,7 +55,7 @@ public class ActionAttack extends Action {
 				// Message
 				System.out.println("Miss");
 			}
-			handler.nextAction();
+			startTimer(0.1f);
 		}else {
 			// Message
 			System.out.println("No enemy on xy: " + mapX + " | " + mapY);

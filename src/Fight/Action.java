@@ -62,6 +62,9 @@ public abstract class Action {
 				// Reset timer
 				isTimer = false;
 				timer = 0.0f;
+				
+				// Reset 
+				mayBeCaneled = true;
 			}
 		}
 	}

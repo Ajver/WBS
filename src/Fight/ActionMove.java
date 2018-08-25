@@ -233,8 +233,7 @@ public class ActionMove extends Action {
 				}
 				mayBeCaneled = false;
 				c.move(path);
-				breakTime = Human.animationSpeed * (path.size()+1);
-				isTimer = true;
+				startTimer(Human.animationSpeed * (path.size()+1));
 			}else {
 				System.out.println("No path");
 			}

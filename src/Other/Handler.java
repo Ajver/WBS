@@ -112,14 +112,24 @@ public class Handler extends MouseAdapter {
 	}
 	
 	public void removeCreature(Creature c) {
-		if(c != null) {
-			creatures.remove(c);
+		for(int i=0; i<creatures.size(); i++) {
+			if(c == creatures.get(i)) {
+				removeCreature(i);
+			}
 		}
 	}
 	
 	public void removeCreature(int i) {
 		if(i >= 0 && i < creatures.size()) {
 			creatures.remove(i);
+			
+			if(i < currentCreature) {
+				currentCreature--;
+				
+				if(currentCreature < 0) {
+					currentCreature = 0;
+				}
+			}
 		}
 	}
 	

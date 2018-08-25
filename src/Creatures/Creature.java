@@ -36,8 +36,9 @@ public abstract class Creature extends GameObject {
 	public Creature(int mx, int my, Handler handler) {
 		super(mx, my);
 		this.handler = handler;	
+		
 		this.att = new Attributes();
-		this.hp = this.att.current[1][0];
+		
 		this.al = new ActionList(handler, this);
 		this.AI = new ArtificialIntelligence(this, handler);
 		

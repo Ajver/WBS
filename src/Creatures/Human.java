@@ -27,6 +27,8 @@ public class Human extends Creature {
 		att.current[1][2] = (int)(att.current[0][2] / 10);
 		att.current[1][3] = (int)(att.current[0][3] / 10);
 		att.current[1][4] = (int)(att.current[0][4] / 10);
+		
+		this.hp = att.current[1][0];
 	}
 
 	public void render(Graphics g) {
