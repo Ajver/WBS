@@ -22,7 +22,6 @@ public class Player extends Creature {
 		}else {
 			setMXY(mx, my);
 		}
-		
 	}
 
 	public void render(Graphics g) {

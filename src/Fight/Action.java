@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import Other.SoundPlayer;
+
 public abstract class Action {
 	
 	// Position on Screen
@@ -27,6 +29,8 @@ public abstract class Action {
 	// How long is this Action (no animation of this)
 	protected int duration = 1; 
 	
+	private boolean soundPlayed = false;
+	
 	public Action(float x, float y) {
 		this.x = x;
 		this.y = y;
@@ -41,10 +45,12 @@ public abstract class Action {
 	}
 	
 	public void render(Graphics g) {
-		if(hover) {
-			g.setColor(new Color(162, 143, 64));
-		}else {
-			g.setColor(new Color(132, 103, 54));
+		if(img == null) {
+			if(hover) {
+				g.setColor(new Color(162, 143, 64));
+			}else {
+				g.setColor(new Color(132, 103, 54));
+			}
 		}
 		
 		if(isAnimated) {
@@ -57,6 +63,10 @@ public abstract class Action {
 			if(img == null) {
 				g.fillRect((int)x, (int)y, (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
 			}else {
+				if(hover) {
+					g.setColor(new Color(162, 143, 64));
+					g.fillRect((int)x-4, (int)y-4, (int)(ActionManager.buttonW * duration + 8), (int)(ActionManager.buttonW + 8));
+				}
 				g.drawImage(img, (int)x, (int)y, null);
 			}
 		}
@@ -119,7 +129,17 @@ public abstract class Action {
 				my <= y + (nextY - y)*progress + ActionManager.buttonW;
 	}
 	
-	public void hover(int mx, int my) { this.hover = mouseOver(mx, my); }
+	public void hover(int mx, int my) { 
+		this.hover = mouseOver(mx, my);
+		
+		if(this.hover) {
+			if(!soundPlayed) {
+				soundPlayed = (new SoundPlayer()).playSound("res/Sounds/click.wav");
+			}				
+		}else {
+			soundPlayed = false;
+		}
+	}
 	
 	public boolean mayBeCaneled() { return this.mayBeCaneled; }
 	
