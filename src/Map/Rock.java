@@ -19,7 +19,12 @@ public class Rock extends MapObject {
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.gray);
+		if(isClickable) {
+			g.setColor(Color.blue);
+		}else {
+			g.setColor(Color.gray);
+		}
+		
 		g.fillOval((int)x, (int)y, (int)Handler.cellW, (int)Handler.cellH);
 	}
 

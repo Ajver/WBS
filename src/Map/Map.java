@@ -54,21 +54,31 @@ public class Map {
 	}
 	
 	public int getPathLength(int x1, int y1, int x2, int y2) {
+		if(x1 == x2) {
+			if(y1 == y2) {
+				return 0;
+			}
+		}
+		
 		int len = 0;
 		
-		Point finish = new Point(x1, y1);
 		LinkedList<Point> points = new LinkedList<Point>();
-		points.add(new Point(x2, y2));
+		points.add(new Point(x1, y1));
+		Point finish = new Point(x2, y2);
 		
 		// false - empty, true - visited
-		boolean[][] bGrid = new boolean[w][h];
+		boolean[][] visited = new boolean[w][h];
 		
 		for(int yy=0; yy<h; yy++) {
 			for(int xx=0; xx<w; xx++) {
-				bGrid[xx][yy] = false;
+				visited[xx][yy] = false;
 			}
 		}
+		
+		visited[x1][y1] = true;
+		
 		LinkedList<Point> newPoints;
+		
 		while(points.size() > 0) {
 			newPoints = new LinkedList<Point>();
 			len++;
@@ -76,19 +86,18 @@ public class Map {
 			for(Point p : points) {
 				for(int yy=-1; yy<=1; yy++) {
 					for(int xx=-1; xx<=1; xx++) {
-						if(xx != 0 || yy != 0) { 
-							if(p.x+xx >= 0 && p.x+xx < w && p.y+yy >= 0 && p.y+yy < h) { // Over the map
-								if(!bGrid[p.x+xx][p.y+yy] && (handler.getFromMap(p.x+xx, p.y+yy) == null || p.x+xx == finish.x && p.y+yy == finish.y) &&
-									grid[p.x+xx][p.y+yy].mayBePath()) { // May be the path element 
-								
-									if(p.x+xx == finish.x) {
-										if(p.y+yy == finish.y) {								
-											return len;
-										}
+						if(p.x+xx >= 0 && p.x+xx < w && p.y+yy >= 0 && p.y+yy < h) { // Over the map
+							if(!visited[p.x+xx][p.y+yy] && 
+									handler.getFromMap(p.x+xx, p.y+yy) == null &&
+									grid[p.x+xx][p.y+yy].mayBePath()) { // (Is'n a rock, or something...)
+							
+								if(p.x+xx == finish.x) {
+									if(p.y+yy == finish.y) {								
+										return len;
 									}
-									bGrid[p.x+xx][p.y+yy] = true;
-									newPoints.add(new Point(p.x+xx, p.y+yy));
 								}
+								visited[p.x+xx][p.y+yy] = true;
+								newPoints.add(new Point(p.x+xx, p.y+yy));
 							}
 						}
 					}
@@ -107,9 +116,11 @@ public class Map {
 				return null;
 			}
 		}
-		Point finish = new Point(x1, y1);
+		
 		LinkedList<Point> points = new LinkedList<Point>();
-		points.add(new Point(x2, y2));
+		points.add(new Point(x1, y1));
+		Point finish = new Point(x2, y2);
+		
 		Point[][] pGrid = new Point[w][h];
 		
 		for(int yy=0; yy<h; yy++) {
@@ -119,6 +130,7 @@ public class Map {
 		}
 		
 		LinkedList<Point> newPoints;
+		
 		while(points.size() > 0) {
 			newPoints = new LinkedList<Point>();
 			
@@ -130,17 +142,22 @@ public class Map {
 						int cx = finish.x;
 						int cy = finish.y;
 																	
-						LinkedList<Point> path = new LinkedList<Point>();
+						LinkedList<Point> tempPath = new LinkedList<Point>();
 						
-						path.add(new Point(cx, cy));
+						tempPath.add(new Point(cx, cy));
 						
 						do {
-							int ncx = pGrid[cx][cy].x;
-							int ncy = pGrid[cx][cy].y;
-							cx = ncx;
-							cy = ncy;
-							path.add(new Point(cx, cy));
-						}while(cx != x2 || cy != y2);
+							Point np = pGrid[cx][cy];
+							cx = np.x;
+							cy = np.y;
+							tempPath.add(new Point(cx, cy));
+						}while(cx != x1 || cy != y1);
+						
+						LinkedList<Point> path = new LinkedList<Point>();
+						
+						for(int i=tempPath.size()-1; i>=0; i--) {
+							path.add(tempPath.get(i));
+						}
 						
 						return path;
 					}
@@ -165,8 +182,9 @@ public class Map {
 	
 	private void pathElement(Point p, int xx, int yy, Point finish, Point[][] pGrid, LinkedList<Point> newPoints) {
 		if(xx >= 0 && xx < w && yy >= 0 && yy < h) {
-			if(pGrid[xx][yy].x == -1 && (handler.getFromMap(xx, yy) == null || (xx == finish.x && yy == finish.y)) &&
-				grid[xx][yy].mayBePath()) { 
+			if(pGrid[xx][yy].x == -1 &&
+					handler.getFromMap(xx, yy) == null &&
+					grid[xx][yy].mayBePath()) { 
 				pGrid[xx][yy].x = p.x;
 				pGrid[xx][yy].y = p.y;
 				newPoints.add(new Point(xx, yy));

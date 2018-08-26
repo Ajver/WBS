@@ -35,7 +35,7 @@ public class Handler extends MouseAdapter {
 				512, 256);
 		
 		// Player 
-		creatures.add(new Human(0, 10, this));
+		creatures.add(new Human(20, 10, this));
 		creatures.get(0).setHasAI(false);
 		
 		// Other creatures
