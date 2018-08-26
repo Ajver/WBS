@@ -50,4 +50,6 @@ public class Attributes {
 	public boolean Int(int mod) { return r.nextInt(100) < current[0][5] + mod; }
 	public boolean SW(int mod) { return r.nextInt(100) < current[0][6] + mod; }
 	public boolean Ogl(int mod) { return r.nextInt(100) < current[0][7] + mod; }
+	
+	public int getSz() { return current[1][2]; }
 }

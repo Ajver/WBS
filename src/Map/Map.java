@@ -1,6 +1,8 @@
 package Map;
 
 import java.awt.Graphics;
+import java.awt.Point;
+import java.util.LinkedList;
 
 public class Map {
 
@@ -45,5 +47,173 @@ public class Map {
 				grid[xx][yy].render(g);
 			}
 		}
+	}
+	
+	public int getPathLength(int x1, int y1, int x2, int y2) {
+		int len = 0;
+		
+		Point finish = new Point(x1, y1);
+		LinkedList<Point> points = new LinkedList<Point>();
+		points.add(new Point(x2, y2));
+		
+		// false - empty, true - visited
+		boolean[][] bGrid = new boolean[w][h];
+		
+		for(int yy=0; yy<h; yy++) {
+			for(int xx=0; xx<w; xx++) {
+				bGrid[xx][yy] = false;
+			}
+		}
+		LinkedList<Point> newPoints;
+		while(points.size() > 0) {
+			newPoints = new LinkedList<Point>();
+			len++;
+			
+			for(Point p : points) {
+				for(int yy=-1; yy<=1; yy++) {
+					for(int xx=-1; xx<=1; xx++) {
+						if(xx != 0 || yy != 0) { 
+							if(p.x+xx >= 0 && p.x+xx < w && p.y+yy >= 0 && p.y+yy < h) { // Over the map
+								if(!bGrid[p.x+xx][p.y+yy] && 
+									grid[p.x+xx][p.y+yy].mayBePath()) { // May be the path element 
+								
+									if(p.x+xx == finish.x) {
+										if(p.y+yy == finish.y) {								
+											return len;
+										}
+									}
+									bGrid[p.x+xx][p.y+yy] = true;
+									newPoints.add(new Point(p.x+xx, p.y+yy));
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			points = newPoints;
+		}
+		
+		return -1;
+	}
+	
+	public LinkedList<Point> getPath(int x1, int y1, int x2, int y2) {
+		if(x1 == x2) {
+			if(y1 == y2) {
+				return null;
+			}
+		}
+		Point finish = new Point(x1, y1);
+		LinkedList<Point> points = new LinkedList<Point>();
+		points.add(new Point(x2, y2));
+		Point[][] pGrid = new Point[w][h];
+		
+		for(int yy=0; yy<h; yy++) {
+			for(int xx=0; xx<w; xx++) {
+				pGrid[xx][yy] = new Point(-1, -1);
+			}
+		}
+		
+		LinkedList<Point> newPoints;
+		while(points.size() > 0) {
+			newPoints = new LinkedList<Point>();
+			
+			for(Point p : points) {
+				if(p.x == finish.x) {
+					if(p.y == finish.y) {
+						// End of algorithm
+						// Creating the path
+						int cx = finish.x;
+						int cy = finish.y;
+																	
+						LinkedList<Point> path = new LinkedList<Point>();
+						
+						path.add(new Point(cx, cy));
+						
+						do {
+							int ncx = pGrid[cx][cy].x;
+							int ncy = pGrid[cx][cy].y;
+							cx = ncx;
+							cy = ncy;
+							path.add(new Point(cx, cy));
+						}while(cx != x2 || cy != y2);
+						
+						return path;
+					}
+				}
+				
+				if(p.y-1 >= 0) {
+					if(pGrid[p.x][p.y-1].x == -1 && 
+						grid[p.x][p.y-1].mayBePath()) { 
+						pGrid[p.x][p.y-1].x = p.x;
+						pGrid[p.x][p.y-1].y = p.y;
+						newPoints.add(new Point(p.x, p.y-1));
+					}
+				}
+				if(p.x+1 < w) {
+					if(pGrid[p.x+1][p.y].x == -1 && 
+						grid[p.x+1][p.y].mayBePath()) { 
+						pGrid[p.x+1][p.y].x = p.x;
+						pGrid[p.x+1][p.y].y = p.y;
+						newPoints.add(new Point(p.x+1, p.y));
+					}
+				}
+				if(p.y+1 < h) {
+					if(pGrid[p.x][p.y+1].x == -1 && 
+						grid[p.x][p.y+1].mayBePath()) { 
+						pGrid[p.x][p.y+1].x = p.x;
+						pGrid[p.x][p.y+1].y = p.y;
+						newPoints.add(new Point(p.x, p.y+1));
+					}
+				}
+				if(p.x-1 >= 0) {
+					if(pGrid[p.x-1][p.y].x == -1 && 
+						grid[p.x-1][p.y].mayBePath()) { 
+						pGrid[p.x-1][p.y].x = p.x;
+						pGrid[p.x-1][p.y].y = p.y;
+						newPoints.add(new Point(p.x-1, p.y));
+					}
+				}				
+			}
+			
+			for(Point p : points) {
+				if(p.y-1 >= 0 && p.x-1 >= 0) {
+					if(pGrid[p.x-1][p.y-1].x == -1 && 
+						grid[p.x-1][p.y-1].mayBePath()) { 
+						pGrid[p.x-1][p.y-1].x = p.x;
+						pGrid[p.x-1][p.y-1].y = p.y;
+						newPoints.add(new Point(p.x-1, p.y-1));
+					}
+				}
+				if(p.x+1 < w && p.y-1 >= 0) {
+					if(pGrid[p.x+1][p.y-1].x == -1 && 
+						grid[p.x+1][p.y-1].mayBePath()) { 
+						pGrid[p.x+1][p.y-1].x = p.x;
+						pGrid[p.x+1][p.y-1].y = p.y;
+						newPoints.add(new Point(p.x+1, p.y-1));
+					}
+				}
+				if(p.y+1 < h && p.x+1 < h) {
+					if(pGrid[p.x+1][p.y+1].x == -1 && 
+						grid[p.x+1][p.y+1].mayBePath()) { 
+						pGrid[p.x+1][p.y+1].x = p.x;
+						pGrid[p.x+1][p.y+1].y = p.y;
+						newPoints.add(new Point(p.x+1, p.y+1));
+					}
+				}
+				if(p.x-1 >= 0 && p.y+1 < h) {
+					if(pGrid[p.x-1][p.y+1].x == -1 && 
+						grid[p.x-1][p.y+1].mayBePath()) { 
+						pGrid[p.x-1][p.y+1].x = p.x;
+						pGrid[p.x-1][p.y+1].y = p.y;
+						newPoints.add(new Point(p.x-1, p.y+1));
+					}
+				}
+			}
+			
+			points = newPoints;
+		}
+		
+		return null;
 	}
 }

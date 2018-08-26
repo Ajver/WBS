@@ -10,12 +10,16 @@ import Creatures.Human;
 import MainFiles.MainClass;
 import Other.Handler;
 
-public class ActionMove extends Action {
+public class ActionRun extends Action {
 	
-	public ActionMove(float x, float y, Creature c, Handler handler) {
+	public ActionRun(float x, float y, Creature c, Handler handler) {
 		super(x, y, c, handler);
 		
-		this.img = MainClass.tex.bootIcon;
+		this.img = MainClass.tex.bigBootIcon;
+		if(img == null) {
+			System.out.println("?");
+		}
+		this.duration = 2;
 	}
 
 	public void slUpdate(float et) {
@@ -26,14 +30,15 @@ public class ActionMove extends Action {
 		int cx = c.getMX();
 		int cy = c.getMY();
 	
-		int maxLen = c.att.current[1][3] * 2;
+		int minLen = c.att.current[1][3] * 2 + 1;
+		int maxLen = c.att.current[1][3] * 4;
 		
 		for(int yy=-maxLen; yy<=maxLen; yy++) {
 			for(int xx=-maxLen; xx<=maxLen; xx++) {
 				if(xx != 0 || yy != 0) {
 					if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
 						int len = handler.map.getPathLength(cx, cy, cx+xx, cy+yy);
-						if(len >= 0 && len <= maxLen) {
+						if(len >= minLen && len <= maxLen) {
 							handler.map.grid[cx+xx][cy+yy].setClickable(new Color(0, 0, 255));
 						}
 					}
@@ -41,7 +46,7 @@ public class ActionMove extends Action {
 			}
 		}		
 	}
-	
+		
 	public void use(int mapX, int mapY) {
 		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
 			int cx = c.getMX();
@@ -49,8 +54,12 @@ public class ActionMove extends Action {
 			
 			LinkedList<Point> path = handler.map.getPath(cx, cy, mapX, mapY);
 			if(path != null) {
-				int maxLen = c.att.current[1][3] * 2;
-				if(path.size() > maxLen+1) {
+				int minLen = c.att.current[1][3] * 2 + 1;
+				int maxLen = c.att.current[1][3] * 4;
+				
+				if(path.size() < minLen) {
+					handler.msg.set("Too short path to run");
+				}else if(path.size() > maxLen+1) {
 					LinkedList<Point> newPath = new LinkedList<Point>();
 
 					for(int i=0; i<maxLen+1; i++) {
@@ -63,7 +72,7 @@ public class ActionMove extends Action {
 				c.move(path);
 				startTimer(Human.animationSpeed * (path.size()+1));
 			}else {
-				handler.msg.set("No path");
+				handler.msg.set("No path to run");
 			}
 		}
 	}

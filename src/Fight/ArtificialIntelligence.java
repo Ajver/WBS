@@ -46,7 +46,12 @@ public class ArtificialIntelligence {
 				al.current().use(px, py);
 			}else {
 				if(px != c.getMX() || py != c.getMY()) {
-					al.select(new ActionMove(0, 0, c, handler));
+					if(handler.map.getPathLength(c.getMX(), c.getMY(), px, py) <= c.att.getSz() * 2) {
+						al.select(new ActionMove(0, 0, c, handler));
+					}else {
+						al.select(new ActionRun(0, 0, c, handler));
+					}
+					
 					al.current().use(px, py);
 				}
 			}

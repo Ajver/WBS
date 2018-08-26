@@ -19,7 +19,7 @@ public class Handler extends MouseAdapter {
 	public static float cellW = 32, cellH = 32;
 	
 	public LinkedList<Creature> creatures = new LinkedList<Creature>();
-	private int currentCreature = 1;
+	private int currentCreature = 0;
 	
 	public Map map;
 	

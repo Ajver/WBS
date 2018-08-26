@@ -18,6 +18,7 @@ public class ActionList {
 		
 		actions.add(new ActionAttack(0, 0, c, handler));
 		actions.add(new ActionMove(0, 0, c, handler));
+		actions.add(new ActionRun(0, 0, c, handler));
 	}
 	
 	public void reset() {

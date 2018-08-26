@@ -1,6 +1,7 @@
 package Fight;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.LinkedList;
@@ -22,6 +23,7 @@ public class FightMessage {
 		g.setColor(new Color(255, 255, 255));
 		g.drawRect((int)x, (int)y, (int)w, (int)h);
 		
+		g.setFont(new Font("arial", 0, 35));
 		FontMetrics f = g.getFontMetrics();
 		
 		if(f.stringWidth(msg) > w) {

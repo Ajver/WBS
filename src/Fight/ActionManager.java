@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import MainFiles.MainClass;
 import Other.Button;
@@ -19,6 +20,8 @@ public class ActionManager {
 	
 	private Button canelBtn;
 	
+	private BufferedImage actionBg; 
+	
 	float x = (MainClass.WW / 2.0f) - (buttonW / 2.0f);
 	float y = MainClass.WH - buttonW*2.0f;
 	
@@ -27,7 +30,7 @@ public class ActionManager {
 	public ActionManager(Handler handler) {
 		this.handler = handler;	
 		this.al = handler.creatures.get(0).al;
-		
+		this.actionBg = MainClass.tex.actionBg;
 		setButtonsPosition();
 	}
 	
@@ -40,20 +43,18 @@ public class ActionManager {
 	public void render(Graphics g) {
 		g.setColor(new Color(204, 189, 83));
 		g.fillOval((int)(selX + buttonW*al.currentAction - 16), (int)y-16, (int)buttonW + 32, (int)buttonW + 32);
-		
-		g.setColor(new Color(112, 89, 51));
-		g.fillRect((int)selX, (int)y, (int)buttonW*2, (int)buttonW);
+	
+		g.setColor(new Color(0,0,0));
+		g.drawImage(actionBg, (int)selX, (int)y, null);
+		g.drawImage(actionBg, (int)(selX + buttonW), (int)y, null);
 		
 		if(al.selected[0] != null) {
 			g.drawImage(al.selected[0].img, (int)selX, (int)y, null);
+			
 			if(al.selected[1] != null) {
 				g.drawImage(al.selected[1].img, (int)(selX+buttonW), (int)y, null);
 			}
 		}
-		
-		g.setColor(new Color(0,0,0));
-		g.drawRect((int)selX, (int)y, (int)buttonW, (int)buttonW);
-		g.drawRect((int)(selX + buttonW), (int)y, (int)buttonW, (int)buttonW);
 		
 		FontMetrics f = g.getFontMetrics();
 		int sx = (int)((MainClass.WW - f.stringWidth("Twoja runda")) / 2.0f);
