@@ -30,7 +30,7 @@ public class ActionList {
 	public void nextAction() {
 		currentAction++;
 		
-		if(currentAction > 1) { // End of round
+		if(currentAction > 1 || selected[0].getDuration() == 2) { // End of round
 			reset();
 			handler.nextRound();
 		}

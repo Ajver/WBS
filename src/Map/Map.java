@@ -4,20 +4,25 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
 
+import Other.Handler;
+
 public class Map {
 
 	// Map size
 	public int w, h;
 	public MapObject[][] grid;
 	
+	private Handler handler;
+	
 	public enum ID {
 		n, 			// Nothing
 		rock;		
 	}
 	
-	public Map(int w, int h) {
+	public Map(int w, int h, Handler handler) {
 		this.w = w;
 		this.h = h;
+		this.handler = handler;
 		
 		grid = new MapObject[w][h];
 		
@@ -40,8 +45,7 @@ public class Map {
 		}
 	}
 	
-	public void render(Graphics g) {	
-		
+	public void render(Graphics g) {
 		for(int yy=0; yy<h; yy++) {
 			for(int xx=0; xx<w; xx++) {
 				grid[xx][yy].render(g);
@@ -74,7 +78,7 @@ public class Map {
 					for(int xx=-1; xx<=1; xx++) {
 						if(xx != 0 || yy != 0) { 
 							if(p.x+xx >= 0 && p.x+xx < w && p.y+yy >= 0 && p.y+yy < h) { // Over the map
-								if(!bGrid[p.x+xx][p.y+yy] && 
+								if(!bGrid[p.x+xx][p.y+yy] && (handler.getFromMap(p.x+xx, p.y+yy) == null || p.x+xx == finish.x && p.y+yy == finish.y) &&
 									grid[p.x+xx][p.y+yy].mayBePath()) { // May be the path element 
 								
 									if(p.x+xx == finish.x) {
@@ -143,7 +147,7 @@ public class Map {
 				}
 				
 				if(p.y-1 >= 0) {
-					if(pGrid[p.x][p.y-1].x == -1 && 
+					if(pGrid[p.x][p.y-1].x == -1 && (handler.getFromMap(p.x, p.y-1) == null || (p.x == finish.x && p.y-1 == finish.y)) &&
 						grid[p.x][p.y-1].mayBePath()) { 
 						pGrid[p.x][p.y-1].x = p.x;
 						pGrid[p.x][p.y-1].y = p.y;
@@ -151,7 +155,7 @@ public class Map {
 					}
 				}
 				if(p.x+1 < w) {
-					if(pGrid[p.x+1][p.y].x == -1 && 
+					if(pGrid[p.x+1][p.y].x == -1 && (handler.getFromMap(p.x+1, p.y) == null || (p.x+1 == finish.x && p.y == finish.y)) &&
 						grid[p.x+1][p.y].mayBePath()) { 
 						pGrid[p.x+1][p.y].x = p.x;
 						pGrid[p.x+1][p.y].y = p.y;
@@ -159,7 +163,7 @@ public class Map {
 					}
 				}
 				if(p.y+1 < h) {
-					if(pGrid[p.x][p.y+1].x == -1 && 
+					if(pGrid[p.x][p.y+1].x == -1 && (handler.getFromMap(p.x, p.y+1) == null || (p.x == finish.x && p.y+1 == finish.y)) &&
 						grid[p.x][p.y+1].mayBePath()) { 
 						pGrid[p.x][p.y+1].x = p.x;
 						pGrid[p.x][p.y+1].y = p.y;
@@ -167,7 +171,7 @@ public class Map {
 					}
 				}
 				if(p.x-1 >= 0) {
-					if(pGrid[p.x-1][p.y].x == -1 && 
+					if(pGrid[p.x-1][p.y].x == -1 &&  (handler.getFromMap(p.x-1, p.y) == null || (p.x-1 == finish.x && p.y == finish.y)) &&
 						grid[p.x-1][p.y].mayBePath()) { 
 						pGrid[p.x-1][p.y].x = p.x;
 						pGrid[p.x-1][p.y].y = p.y;
@@ -178,7 +182,7 @@ public class Map {
 			
 			for(Point p : points) {
 				if(p.y-1 >= 0 && p.x-1 >= 0) {
-					if(pGrid[p.x-1][p.y-1].x == -1 && 
+					if(pGrid[p.x-1][p.y-1].x == -1 && (handler.getFromMap(p.x-1, p.y-1) == null || (p.x-1 == finish.x && p.y-1 == finish.y)) &&
 						grid[p.x-1][p.y-1].mayBePath()) { 
 						pGrid[p.x-1][p.y-1].x = p.x;
 						pGrid[p.x-1][p.y-1].y = p.y;
@@ -186,7 +190,7 @@ public class Map {
 					}
 				}
 				if(p.x+1 < w && p.y-1 >= 0) {
-					if(pGrid[p.x+1][p.y-1].x == -1 && 
+					if(pGrid[p.x+1][p.y-1].x == -1 && (handler.getFromMap(p.x+1, p.y-1) == null || (p.x+1 == finish.x && p.y-1 == finish.y)) &&
 						grid[p.x+1][p.y-1].mayBePath()) { 
 						pGrid[p.x+1][p.y-1].x = p.x;
 						pGrid[p.x+1][p.y-1].y = p.y;
@@ -194,7 +198,7 @@ public class Map {
 					}
 				}
 				if(p.y+1 < h && p.x+1 < h) {
-					if(pGrid[p.x+1][p.y+1].x == -1 && 
+					if(pGrid[p.x+1][p.y+1].x == -1 && (handler.getFromMap(p.x+1, p.y+1) == null || (p.x+1 == finish.x && p.y+1 == finish.y)) &&
 						grid[p.x+1][p.y+1].mayBePath()) { 
 						pGrid[p.x+1][p.y+1].x = p.x;
 						pGrid[p.x+1][p.y+1].y = p.y;
@@ -202,7 +206,7 @@ public class Map {
 					}
 				}
 				if(p.x-1 >= 0 && p.y+1 < h) {
-					if(pGrid[p.x-1][p.y+1].x == -1 && 
+					if(pGrid[p.x-1][p.y+1].x == -1 && (handler.getFromMap(p.x-1, p.y+1) == null || (p.x-1 == finish.x && p.y+1 == finish.y)) &&
 						grid[p.x-1][p.y+1].mayBePath()) { 
 						pGrid[p.x-1][p.y+1].x = p.x;
 						pGrid[p.x-1][p.y+1].y = p.y;

@@ -1,9 +1,9 @@
 package Creatures;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import Character.Dice;
+import MainFiles.MainClass;
 import Other.Handler;
 
 public class Human extends Creature {
@@ -29,10 +29,11 @@ public class Human extends Creature {
 		att.current[1][4] = (int)(att.current[0][4] / 10);
 		
 		this.hp = att.current[1][0];
+		
+		this.img = MainClass.tex.swordman;
 	}
 
 	public void render(Graphics g) {
-		g.setColor(new Color(0, 0, 255));
-		g.fillOval((int)(x + Handler.cellW * 0.1f), (int)(y + Handler.cellH * 0.1f), (int)(Handler.cellW * 0.8f), (int)(Handler.cellH * 0.8f));
+		g.drawImage(img, (int)(x), (int)(y), null);
 	}
 }

@@ -1,6 +1,7 @@
 package Creatures;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 import Character.Attributes;
@@ -23,6 +24,8 @@ public abstract class Creature extends GameObject {
 	private float timer = animationSpeed;
 	
 	public static float animationSpeed = 0.4f;
+	
+	protected BufferedImage img;
 	
 	public ActionList al;
 	private ArtificialIntelligence AI;

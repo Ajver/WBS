@@ -1,6 +1,5 @@
 package Fight;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import Character.Dice;
@@ -27,7 +26,7 @@ public class ActionAttack extends Action {
 				if(xx != 0 || yy != 0) {
 					if(handler.getFromMap(c.getMX()+xx, c.getMY()+yy) != null) {
 						isInRange = true;
-						handler.map.grid[c.getMX()+xx][c.getMY()+yy].setClickable(new Color(255, 0, 0));
+						handler.map.grid[c.getMX()+xx][c.getMY()+yy].setClickable(1);
 					}
 				}
 			}

@@ -1,6 +1,5 @@
 package Fight;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
@@ -34,7 +33,7 @@ public class ActionMove extends Action {
 					if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
 						int len = handler.map.getPathLength(cx, cy, cx+xx, cy+yy);
 						if(len >= 0 && len <= maxLen) {
-							handler.map.grid[cx+xx][cy+yy].setClickable(new Color(0, 0, 255));
+							handler.map.grid[cx+xx][cy+yy].setClickable(0);
 						}
 					}
 				}
@@ -80,11 +79,8 @@ public class ActionMove extends Action {
 			if(path != null) {
 				if(handler.map.grid[mapX][mapY].isClickable()) {
 					// Clearing map
-					for(int yy=0; yy<handler.map.h; yy++) {
-						for(int xx=0; xx<handler.map.w; xx++) {
-							handler.map.grid[xx][yy].setClickable(null);
-						}
-					}
+					canel();
+					
 					mayBeCaneled = false;
 					c.move(path);
 					startTimer(Human.animationSpeed * (path.size()+1));
@@ -99,11 +95,10 @@ public class ActionMove extends Action {
 		
 	}
 
-
 	public void canel() {
 		for(int yy=0; yy<handler.map.h; yy++) {
 			for(int xx=0; xx<handler.map.w; xx++) {
-				handler.map.grid[xx][yy].setClickable(null);
+				handler.map.grid[xx][yy].setClickable(false);
 			}
 		}
 	}

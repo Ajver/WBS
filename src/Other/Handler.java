@@ -41,7 +41,7 @@ public class Handler extends MouseAdapter {
 		// Other creatures
 		creatures.add(new Human(10, 10, this));
 		
-		map = new Map(50, 30);
+		map = new Map(50, 30, this);
 		actionManager = new ActionManager(this);
 		
 		camera = new Camera(this);

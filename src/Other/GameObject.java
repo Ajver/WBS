@@ -2,7 +2,6 @@ package Other;
 
 import java.awt.Graphics;
 
-import Map.Map;
 import Map.Map.ID;
 
 public abstract class GameObject {

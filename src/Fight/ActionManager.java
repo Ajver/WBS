@@ -1,7 +1,6 @@
 package Fight;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -15,7 +14,6 @@ public class ActionManager {
 
 	public static float buttonW = 64;
 	
-	private Handler handler;
 	private ActionList al;
 	
 	private Button canelBtn;
@@ -28,7 +26,6 @@ public class ActionManager {
 	float selX = buttonW;
 	
 	public ActionManager(Handler handler) {
-		this.handler = handler;	
 		this.al = handler.creatures.get(0).al;
 		this.actionBg = MainClass.tex.actionBg;
 		setButtonsPosition();
@@ -89,9 +86,8 @@ public class ActionManager {
 	}
 	
 	public void nextAction() {
-		showActions();
-		
 		al.nextAction();
+		showActions();
 	}
 	
 	public void mouseReleased(MouseEvent e) {

@@ -3,6 +3,7 @@ package Map;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import MainFiles.MainClass;
 import Map.Map.ID;
 import Other.Handler;
 
@@ -19,19 +20,18 @@ public class EmptyPlace extends MapObject {
 	}
 
 	public void render(Graphics g) {
-		if(isClickable && hover) {
-			g.setColor(col);
-		}else {
-			g.setColor(new Color(10, 150, 50));
-		}
+		g.setColor(new Color(20, 150, 50));
 		g.fillRect((int)(x), (int)(y), (int)Handler.cellW, (int)Handler.cellH);
 		
 		g.setColor(new Color(10, 135, 45));
 		g.drawRect((int)(x), (int)(y), (int)Handler.cellW, (int)Handler.cellH);
 		
 		if(isClickable) {
-			g.setColor(col);
-			g.fillOval((int)x, (int)y, (int)Handler.cellW, (int)Handler.cellH);
+			if(hover) {
+				g.drawImage(MainClass.tex.mapTile[imgNr][1], (int)x, (int)y, null);
+			}else {
+				g.drawImage(MainClass.tex.mapTile[imgNr][0], (int)x, (int)y, null);
+			}
 		}
 	}
 

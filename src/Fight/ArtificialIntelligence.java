@@ -45,15 +45,26 @@ public class ArtificialIntelligence {
 				al.select(new ActionAttack(0, 0, c, handler));
 				al.current().use(px, py);
 			}else {
-				if(px != c.getMX() || py != c.getMY()) {
-					if(handler.map.getPathLength(c.getMX(), c.getMY(), px, py) <= c.att.getSz() * 2) {
-						al.select(new ActionMove(0, 0, c, handler));
-					}else {
-						al.select(new ActionRun(0, 0, c, handler));
+				int npx = px, npy = py;
+				int len = -1;
+				for(int yy=-1; yy<=1; yy++) {
+					for(int xx=-1; xx<=1; xx++) {
+						int newLen = handler.map.getPathLength(c.getMX(), c.getMY(), px+xx, py+yy);
+						if(len == -1 || newLen < len) {
+							len = newLen;
+							npx = px+xx;
+							npy = py+yy;
+						}
 					}
-					
-					al.current().use(px, py);
 				}
+				
+				if(handler.map.getPathLength(c.getMX(), c.getMY(), npx, npy) <= c.att.getSz() * 2) {
+					al.select(new ActionMove(0, 0, c, handler));
+				}else {
+					al.select(new ActionRun(0, 0, c, handler));
+				}
+				
+				al.current().use(npx, npy);
 			}
 			
 			
