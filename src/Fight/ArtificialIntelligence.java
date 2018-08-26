@@ -51,9 +51,11 @@ public class ArtificialIntelligence {
 					for(int xx=-1; xx<=1; xx++) {
 						int newLen = handler.map.getPathLength(c.getMX(), c.getMY(), px+xx, py+yy);
 						if(len == -1 || newLen < len) {
-							len = newLen;
-							npx = px+xx;
-							npy = py+yy;
+							if(newLen > 0) {
+								len = newLen;
+								npx = px+xx;
+								npy = py+yy;
+							}
 						}
 					}
 				}

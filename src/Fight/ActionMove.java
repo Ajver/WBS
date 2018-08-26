@@ -29,12 +29,10 @@ public class ActionMove extends Action {
 		
 		for(int yy=-maxLen; yy<=maxLen; yy++) {
 			for(int xx=-maxLen; xx<=maxLen; xx++) {
-				if(xx != 0 || yy != 0) {
-					if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
-						int len = handler.map.getPathLength(cx, cy, cx+xx, cy+yy);
-						if(len >= 0 && len <= maxLen) {
-							handler.map.grid[cx+xx][cy+yy].setClickable(0);
-						}
+				if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
+					int len = handler.map.getPathLength(cx, cy, cx+xx, cy+yy);
+					if(len >= 0 && len <= maxLen) {
+						handler.map.grid[cx+xx][cy+yy].setClickable(0);
 					}
 				}
 			}
