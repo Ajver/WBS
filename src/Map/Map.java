@@ -146,78 +146,31 @@ public class Map {
 					}
 				}
 				
-				if(p.y-1 >= 0) {
-					if(pGrid[p.x][p.y-1].x == -1 && (handler.getFromMap(p.x, p.y-1) == null || (p.x == finish.x && p.y-1 == finish.y)) &&
-						grid[p.x][p.y-1].mayBePath()) { 
-						pGrid[p.x][p.y-1].x = p.x;
-						pGrid[p.x][p.y-1].y = p.y;
-						newPoints.add(new Point(p.x, p.y-1));
-					}
-				}
-				if(p.x+1 < w) {
-					if(pGrid[p.x+1][p.y].x == -1 && (handler.getFromMap(p.x+1, p.y) == null || (p.x+1 == finish.x && p.y == finish.y)) &&
-						grid[p.x+1][p.y].mayBePath()) { 
-						pGrid[p.x+1][p.y].x = p.x;
-						pGrid[p.x+1][p.y].y = p.y;
-						newPoints.add(new Point(p.x+1, p.y));
-					}
-				}
-				if(p.y+1 < h) {
-					if(pGrid[p.x][p.y+1].x == -1 && (handler.getFromMap(p.x, p.y+1) == null || (p.x == finish.x && p.y+1 == finish.y)) &&
-						grid[p.x][p.y+1].mayBePath()) { 
-						pGrid[p.x][p.y+1].x = p.x;
-						pGrid[p.x][p.y+1].y = p.y;
-						newPoints.add(new Point(p.x, p.y+1));
-					}
-				}
-				if(p.x-1 >= 0) {
-					if(pGrid[p.x-1][p.y].x == -1 &&  (handler.getFromMap(p.x-1, p.y) == null || (p.x-1 == finish.x && p.y == finish.y)) &&
-						grid[p.x-1][p.y].mayBePath()) { 
-						pGrid[p.x-1][p.y].x = p.x;
-						pGrid[p.x-1][p.y].y = p.y;
-						newPoints.add(new Point(p.x-1, p.y));
-					}
-				}				
-			}
-			
-			for(Point p : points) {
-				if(p.y-1 >= 0 && p.x-1 >= 0) {
-					if(pGrid[p.x-1][p.y-1].x == -1 && (handler.getFromMap(p.x-1, p.y-1) == null || (p.x-1 == finish.x && p.y-1 == finish.y)) &&
-						grid[p.x-1][p.y-1].mayBePath()) { 
-						pGrid[p.x-1][p.y-1].x = p.x;
-						pGrid[p.x-1][p.y-1].y = p.y;
-						newPoints.add(new Point(p.x-1, p.y-1));
-					}
-				}
-				if(p.x+1 < w && p.y-1 >= 0) {
-					if(pGrid[p.x+1][p.y-1].x == -1 && (handler.getFromMap(p.x+1, p.y-1) == null || (p.x+1 == finish.x && p.y-1 == finish.y)) &&
-						grid[p.x+1][p.y-1].mayBePath()) { 
-						pGrid[p.x+1][p.y-1].x = p.x;
-						pGrid[p.x+1][p.y-1].y = p.y;
-						newPoints.add(new Point(p.x+1, p.y-1));
-					}
-				}
-				if(p.y+1 < h && p.x+1 < h) {
-					if(pGrid[p.x+1][p.y+1].x == -1 && (handler.getFromMap(p.x+1, p.y+1) == null || (p.x+1 == finish.x && p.y+1 == finish.y)) &&
-						grid[p.x+1][p.y+1].mayBePath()) { 
-						pGrid[p.x+1][p.y+1].x = p.x;
-						pGrid[p.x+1][p.y+1].y = p.y;
-						newPoints.add(new Point(p.x+1, p.y+1));
-					}
-				}
-				if(p.x-1 >= 0 && p.y+1 < h) {
-					if(pGrid[p.x-1][p.y+1].x == -1 && (handler.getFromMap(p.x-1, p.y+1) == null || (p.x-1 == finish.x && p.y+1 == finish.y)) &&
-						grid[p.x-1][p.y+1].mayBePath()) { 
-						pGrid[p.x-1][p.y+1].x = p.x;
-						pGrid[p.x-1][p.y+1].y = p.y;
-						newPoints.add(new Point(p.x-1, p.y+1));
-					}
-				}
+				pathElement(p, p.x, p.y-1, finish, pGrid, newPoints);
+				pathElement(p, p.x+1, p.y, finish, pGrid, newPoints);
+				pathElement(p, p.x, p.y+1, finish, pGrid, newPoints);
+				pathElement(p, p.x-1, p.y, finish, pGrid, newPoints);
+				
+				pathElement(p, p.x-1, p.y-1, finish, pGrid, newPoints);
+				pathElement(p, p.x+1, p.y-1, finish, pGrid, newPoints);
+				pathElement(p, p.x+1, p.y+1, finish, pGrid, newPoints);
+				pathElement(p, p.x-1, p.y+1, finish, pGrid, newPoints);
 			}
 			
 			points = newPoints;
 		}
 		
 		return null;
+	}
+	
+	private void pathElement(Point p, int xx, int yy, Point finish, Point[][] pGrid, LinkedList<Point> newPoints) {
+		if(xx >= 0 && xx < w && yy >= 0 && yy < h) {
+			if(pGrid[xx][yy].x == -1 && (handler.getFromMap(xx, yy) == null || (xx == finish.x && yy == finish.y)) &&
+				grid[xx][yy].mayBePath()) { 
+				pGrid[xx][yy].x = p.x;
+				pGrid[xx][yy].y = p.y;
+				newPoints.add(new Point(xx, yy));
+			}
+		}
 	}
 }

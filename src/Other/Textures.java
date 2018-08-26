@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 public class Textures {
 
-	public BufferedImage swordman = null;
+	public BufferedImage[] swordman = new BufferedImage[6];
 	
 	public BufferedImage swordIcon = null;
 	public BufferedImage bootIcon = null;
@@ -24,7 +24,9 @@ public class Textures {
 	
 	public Textures() {
 		try {
-			swordman = ImageIO.read(new File("res/Graphics/Icons/Swordman.png"));
+			BufferedImage swordmanSS = ImageIO.read(new File("res/Graphics/Icons/SS/Swordman.png"));
+			for(int i=0; i<6; i++) { swordman[i] = getFromSS(swordmanSS, i, 0, 32, 32); }
+			
 			
 			swordIcon = ImageIO.read(new File("res/Graphics/Icons/SwordIcon.png"));
 			bootIcon = ImageIO.read(new File("res/Graphics/Icons/BootIcon.png"));
@@ -39,5 +41,9 @@ public class Textures {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+		
+	private BufferedImage getFromSS(BufferedImage ss, int x, int y, int w, int h) {
+		return ss.getSubimage(x*w, y*h, w, h);
 	}
 }

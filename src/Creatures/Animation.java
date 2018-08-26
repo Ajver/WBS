@@ -1,7 +1,10 @@
 package Creatures;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
+import Other.Handler;
 
 public class Animation {
 
@@ -29,8 +32,18 @@ public class Animation {
 		}
 	}
 	
-	public void render(Graphics g, float x, float y) {
+	public void render(Graphics g, float x, float y) {		
 		int currentFrame = (int)((progress * frames) / duration);
 		g.drawImage(imgs[currentFrame], (int)x, (int)y, null);
+	}	
+	
+	public void render(Graphics g, float x, float y, float theta) {
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.rotate(theta, x+Handler.cellW/2.0f, y+Handler.cellH/2.0f);
+		
+		int currentFrame = (int)((progress * frames) / duration);
+		g.drawImage(imgs[currentFrame], (int)x, (int)y, null);
+		
+		g2d.rotate(-theta, x+Handler.cellW/2.0f, y+Handler.cellH/2.0f);
 	}	
 }

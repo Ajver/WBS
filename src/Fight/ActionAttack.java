@@ -43,6 +43,7 @@ public class ActionAttack extends Action {
 
 	public void use(int mapX, int mapY) {
 		Creature enemy = handler.getFromMap(mapX, mapY);
+		c.setFocus(mapX, mapY);
 		
 		if(enemy != null) {
 			if(c.att.WW(0)) {

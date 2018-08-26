@@ -30,10 +30,9 @@ public class Human extends Creature {
 		
 		this.hp = att.current[1][0];
 		
-		this.img = MainClass.tex.swordman;
+		this.moveAnimation = new Animation(0.4f, MainClass.tex.swordman);
+				
 	}
 
-	public void render(Graphics g) {
-		g.drawImage(img, (int)(x), (int)(y), null);
-	}
+	
 }

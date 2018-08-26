@@ -1,7 +1,7 @@
 package Creatures;
 
+import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 import Character.Attributes;
@@ -25,7 +25,8 @@ public abstract class Creature extends GameObject {
 	
 	public static float animationSpeed = 0.4f;
 	
-	protected BufferedImage img;
+	protected Animation moveAnimation;
+	private int direction = 0;
 	
 	public ActionList al;
 	private ArtificialIntelligence AI;
@@ -66,6 +67,18 @@ public abstract class Creature extends GameObject {
 			
 			mx = (int)((x + Handler.cellW/2.0f) / Handler.cellW);
 			my = (int)((y + Handler.cellH/2.0f) / Handler.cellH);
+			
+			if(velX == 0 && velY < 0) direction = 0;
+			else if(velX > 0 && velY < 0) direction = 1;
+			else if(velX > 0 && velY == 0) direction = 2;
+			else if(velX > 0 && velY > 0) direction = 3;
+			
+			else if(velX == 0 && velY > 0) direction = 4;
+			else if(velX < 0 && velY > 0) direction = 5;
+			else if(velX < 0 && velY == 0) direction = 6;
+			else if(velX < 0 && velY < 0) direction = 7;
+			
+			moveAnimation.update(et);
 		}else {
 			setMXY(mx, my);
 		}
@@ -73,6 +86,10 @@ public abstract class Creature extends GameObject {
 		if(hasAI) {
 			AI.update(et);
 		}
+	}
+	
+	public void render(Graphics g) {
+		moveAnimation.render(g, x, y, direction*0.7853125f);
 	}
 	
 	protected void move(float et) {
@@ -106,6 +123,19 @@ public abstract class Creature extends GameObject {
 		if(hasAI) {
 			AI.round();
 		}
+	}
+	
+	public void setDirection(int direction) { this.direction = direction % 8; }
+	public void setFocus(int fmx, int fmy) { // Where Should look
+		if(mx == fmx && my < fmy) direction = 0;
+		else if(fmx > mx && fmy < my) direction = 1;
+		else if(fmx > mx && fmy == my) direction = 2;
+		else if(fmx > mx && fmy > my) direction = 3;
+		
+		else if(fmx == mx && fmy > my) direction = 4;
+		else if(fmx < mx && fmy > my) direction = 5;
+		else if(fmx < mx && fmy == my) direction = 6;
+		else if(fmx < mx && fmy < my) direction = 7;		
 	}
 	
 	public void setHasAI(boolean flag) { this.hasAI = flag; }
