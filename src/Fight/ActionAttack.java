@@ -9,8 +9,8 @@ import Other.Handler;
 
 public class ActionAttack extends Action {
 	
-	public ActionAttack(float x, float y, Creature c, Handler handler) {
-		super(x, y, c, handler);
+	public ActionAttack(Creature c, Handler handler) {
+		super(c, handler);
 		this.img = MainClass.tex.swordIcon;
 	}
 

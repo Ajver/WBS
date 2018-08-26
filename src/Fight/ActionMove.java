@@ -11,8 +11,8 @@ import Other.Handler;
 
 public class ActionMove extends Action {
 	
-	public ActionMove(float x, float y, Creature c, Handler handler) {
-		super(x, y, c, handler);
+	public ActionMove(Creature c, Handler handler) {
+		super(c, handler);
 		
 		this.img = MainClass.tex.bootIcon;
 	}

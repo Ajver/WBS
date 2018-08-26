@@ -16,9 +16,9 @@ public class ActionList {
 	public ActionList(Handler handler, Creature c) {
 		this.handler = handler;
 		
-		actions.add(new ActionAttack(0, 0, c, handler));
-		actions.add(new ActionMove(0, 0, c, handler));
-		actions.add(new ActionRun(0, 0, c, handler));
+		actions.add(new ActionAttack(c, handler));
+		actions.add(new ActionMove(c, handler));
+		actions.add(new ActionRun(c, handler));
 	}
 	
 	public void reset() {

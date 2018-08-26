@@ -54,7 +54,7 @@ public abstract class Creature extends GameObject {
 		handler.msg.add("HP left: " + this.hp);
 		
 		if(hp < 0) {
-			handler.removeCreature(this);
+			//handler.removeCreature(this);
 		}
 	}
 	

@@ -38,9 +38,7 @@ public abstract class Action {
 	protected float timer = 0.0f, breakTime;
 	protected boolean isTimer = false;
 	
-	public Action(float x, float y, Creature c, Handler handler) {
-		this.x = x;
-		this.y = y;
+	public Action(Creature c, Handler handler) {
 		this.c = c;
 		this.handler = handler;
 	}

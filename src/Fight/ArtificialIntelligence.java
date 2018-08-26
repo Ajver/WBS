@@ -42,7 +42,7 @@ public class ArtificialIntelligence {
 			}
 			if(isPlayer) {
 				// Attack
-				al.select(new ActionAttack(0, 0, c, handler));
+				al.select(new ActionAttack(c, handler));
 				al.current().use(px, py);
 			}else {
 				int npx = px, npy = py;
@@ -61,9 +61,9 @@ public class ArtificialIntelligence {
 				}
 				
 				if(handler.map.getPathLength(c.getMX(), c.getMY(), npx, npy) <= c.att.getSz() * 2) {
-					al.select(new ActionMove(0, 0, c, handler));
+					al.select(new ActionMove(c, handler));
 				}else {
-					al.select(new ActionRun(0, 0, c, handler));
+					al.select(new ActionRun(c, handler));
 				}
 				
 				al.current().use(npx, npy);

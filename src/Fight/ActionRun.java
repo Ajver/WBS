@@ -11,8 +11,8 @@ import Other.Handler;
 
 public class ActionRun extends Action {
 	
-	public ActionRun(float x, float y, Creature c, Handler handler) {
-		super(x, y, c, handler);
+	public ActionRun(Creature c, Handler handler) {
+		super(c, handler);
 		
 		this.img = MainClass.tex.bigBootIcon;
 		
