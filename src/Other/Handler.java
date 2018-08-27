@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import Creatures.Creature;
 import Creatures.Human;
 import Fight.ActionManager;
+import Fight.ActionManagerGUI;
 import Fight.FightMessage;
 import MainFiles.MainClass;
 import Map.Map;
@@ -23,15 +24,15 @@ public class Handler extends MouseAdapter {
 	
 	public Map map;
 	
-	public ActionManager actionManager;
+	public ActionManagerGUI actionManager;
 	public Camera camera;
 	public FightMessage msg;
 	
 	public Handler(MainClass m) {
 		this.m = m;
 		
-		this.msg = new FightMessage(MainClass.WW - 512 - ActionManager.buttonW, 
-				MainClass.WH - 256 - ActionManager.buttonW, 
+		this.msg = new FightMessage(MainClass.WW - 512 - ActionManagerGUI.buttonW,
+				MainClass.WH - 256 - ActionManagerGUI.buttonW,
 				512, 256);
 		
 		// Player 
@@ -42,7 +43,7 @@ public class Handler extends MouseAdapter {
 		creatures.add(new Human(10, 10, this));
 		
 		map = new Map(50, 30, this);
-		actionManager = new ActionManager(this);
+		actionManager = new ActionManagerGUI(this, creatures.get(0));
 		
 		camera = new Camera(this);
 		camera.focus(creatures.get(currentCreature));
@@ -109,7 +110,7 @@ public class Handler extends MouseAdapter {
 		if(currentCreature == 0) {
 			actionManager.nextAction();
 		}else {
-			creatures.get(currentCreature).al.nextAction();
+			creatures.get(currentCreature).AI.nextAction();
 		}
 	}
 	
@@ -150,6 +151,14 @@ public class Handler extends MouseAdapter {
 	public void mousePressed(MouseEvent e) {
 		int mx = e.getX();
 		int my = e.getY();
+
+		camera.mousePressed(e);
+
+		if(e.getButton() == 2) {
+            int mapX = (int) ((e.getX() + camera.getX()) / Handler.cellW);
+            int mapY = (int) ((e.getY() + camera.getY()) / Handler.cellH);
+		    creatures.get(0).setFocus(mapX, mapY);
+        }
 	}
 	
 	public void mouseReleased(MouseEvent e) {
@@ -159,12 +168,18 @@ public class Handler extends MouseAdapter {
 		if(currentCreature == 0) {
 			actionManager.mouseReleased(e);
 		}
+
+        camera.mouseReleased(e);
 	}
 	
 	public void mouseMoved(MouseEvent e) {
 		if(currentCreature == 0) {
 			actionManager.mouseMoved(e);
 		}
+	}
+
+	public void mouseDragged(MouseEvent e) {
+		camera.mouseDragged(e);
 	}
 
 }

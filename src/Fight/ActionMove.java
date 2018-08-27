@@ -43,7 +43,9 @@ public class ActionMove extends Action {
 		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
 			int cx = c.getMX();
 			int cy = c.getMY();
-			
+
+			c.setFocus(mapX, mapY);
+
 			LinkedList<Point> path = handler.map.getPath(cx, cy, mapX, mapY);
 			if(path != null) {
 				int maxLen = c.att.current[1][3] * 2;
@@ -58,7 +60,7 @@ public class ActionMove extends Action {
 				}
 				mayBeCaneled = false;
 				c.move(path);
-				startTimer(Human.animationSpeed * (path.size()+1));
+				startTimer((int)(Human.animationSpeed * (path.size()+1) * 1000.0f));
 			}else {
 				handler.msg.set("No path");
 			}
@@ -69,24 +71,26 @@ public class ActionMove extends Action {
 		int mapX = (int) ((e.getX() + handler.camera.getX()) / Handler.cellW);
 		int mapY = (int) ((e.getY() + handler.camera.getY()) / Handler.cellH);
 		
-		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
-			int cx = c.getMX();
-			int cy = c.getMY();
-			
-			LinkedList<Point> path = handler.map.getPath(cx, cy, mapX, mapY);
-			if(path != null) {
-				if(handler.map.grid[mapX][mapY].isClickable()) {
-					// Clearing map
-					canel();
-					
-					mayBeCaneled = false;
-					c.move(path);
-					startTimer(Human.animationSpeed * (path.size()+1));
-				}
-			}else {
-				handler.msg.set("No path");
-			}
-		}
+//		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
+//			int cx = c.getMX();
+//			int cy = c.getMY();
+//
+//			LinkedList<Point> path = handler.map.getPath(cx, cy, mapX, mapY);
+//			if(path != null) {
+//				if(handler.map.grid[mapX][mapY].isClickable()) {
+//					// Clearing map
+//					canel();
+//
+//					mayBeCaneled = false;
+//					c.move(path);
+//					startTimer(Human.animationSpeed * (path.size()+1));
+//				}
+//			}else {
+//				handler.msg.set("No path");
+//			}
+//		}
+        canel();
+        use(mapX, mapY);
 	}
 	
 	public void slMouseMoved(MouseEvent e) {

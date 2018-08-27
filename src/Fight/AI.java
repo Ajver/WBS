@@ -3,26 +3,26 @@ package Fight;
 import Creatures.Creature;
 import Other.Handler;
 
-public class ArtificialIntelligence {
+public class AI {
 	
 	private Creature c;
 	private Handler handler;
-	private ActionList al;
+	private ActionManager am;
 	
-	public ArtificialIntelligence(Creature c, Handler handler) {
+	public AI(Creature c, Handler handler) {
 		this.c = c;
 		this.handler = handler;
-		al = c.al;
+		this.am = new ActionManager(handler, c);
 	}
 	
 	public void update(float et) {
-		if(al.current() != null) {
-			al.current().update(et);
+		if(am.current() != null) {
+			am.current().update(et);
 		}
 	}
 
 	public void round() {
-		if(al.current() == null) { // Selecting action
+		if(am.current() == null) { // Selecting action
 			// Finding player
 			int px = handler.creatures.get(0).getMX();
 			int py = handler.creatures.get(0).getMY();
@@ -42,14 +42,16 @@ public class ArtificialIntelligence {
 			}
 			if(isPlayer) {
 				// Attack
-				al.select(new ActionAttack(c, handler));
-				al.current().use(px, py);
+				am.select(new ActionAttack(c, handler));
+				am.current().use(px, py);
 			}else {
 				int npx = px, npy = py;
-				int len = -1;
+				float len = -1;
 				for(int yy=-1; yy<=1; yy++) {
 					for(int xx=-1; xx<=1; xx++) {
-						int newLen = handler.map.getPathLength(c.getMX(), c.getMY(), px+xx, py+yy);
+						int diffX = px+xx - c.getMX();
+						int diffY = py+yy - c.getMY();
+						float newLen = (float)(Math.sqrt(diffX*diffX + diffY*diffY));
 						if(len == -1 || newLen < len) {
 							if(newLen > 0) {
 								len = newLen;
@@ -61,15 +63,17 @@ public class ArtificialIntelligence {
 				}
 				
 				if(handler.map.getPathLength(c.getMX(), c.getMY(), npx, npy) <= c.att.getSz() * 2) {
-					al.select(new ActionMove(c, handler));
+					am.select(new ActionMove(c, handler));
 				}else {
-					al.select(new ActionRun(c, handler));
+					am.select(new ActionRun(c, handler));
 				}
-				
-				al.current().use(npx, npy);
+
+				am.current().use(npx, npy);
 			}
-			
-			
 		}
+	}
+
+	public void nextAction() {
+		am.nextAction();
 	}
 }

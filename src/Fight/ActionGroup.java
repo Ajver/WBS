@@ -9,9 +9,15 @@ public class ActionGroup {
 	
 	// Position of left-bottom corner 
 	private float x, y;
+
+	// Translate y (while is hided)
+    private float ty = ActionManagerGUI.buttonW*2, velY = 0;
+	private float movingProgress = 0.0f, movingSpeed = 3.0f;
+
 	public LinkedList<Action> actions = new LinkedList<Action>();
 	
 	private boolean isOpen = false;
+	private boolean isVisible = true;
 	
 	// Animation (opening, closing)
 	private float animationSpeed = 6.0f;
@@ -43,22 +49,40 @@ public class ActionGroup {
 		if(vel > 0) {
 			if(progress >= 1.0f) {
 				progress = 1.0f;
-				vel = 0;
+				vel = 0.0f;
 			}
 		}else if(vel < 0) {
 			if(progress <= 0.0f) {
 				progress = 0.0f;
-				vel = 0;
+				vel = 0.0f;
 				isOpen = false;
 			}
 		}
+
+		if(velY != 0) {
+            movingProgress += velY * et;
+
+            if (velY > 0) {
+                if(movingProgress >= 1.0f) {
+                    movingProgress = 1.0f;
+                    velY = 0.0f;
+                }
+            } else if (velY < 0) {
+                if(movingProgress <= 0.0f) {
+                    movingProgress = 0.0f;
+                    velY = 0.0f;
+                }
+            }
+        }
 	}
 	
 	public void render(Graphics g) {
+	    g.translate(0, (int)(ty*movingProgress));
+
 		if(isOpen) {
 			float h = 80 + progress * (actions.size()-1) * 80;
 			g.setColor(new Color(200, 200, 200));
-			g.fillRect((int)x-16, (int)(y-h), 160, (int)h+16);
+			g.fillRect((int)(x-16+((1-progress)*64)), (int)(y-h), (int)(160-((1-progress)*128)), (int)h+16);
 			
 			for(int i=0; i<actions.size(); i++) {
 				g.translate(0, (int)((1.0f-progress)*80*i)); 
@@ -68,6 +92,8 @@ public class ActionGroup {
 		}else {
 			actions.get(0).render(g);
 		}
+
+        g.translate(0, (int)-(ty*movingProgress));
 	}
 	
 	public void mouseMoved(MouseEvent e) { 		
@@ -85,6 +111,8 @@ public class ActionGroup {
 	}
 	
 	private boolean mouseOver(int mx, int my) {
+	    if(!isVisible) return false;
+
 		float h;
 		
 		if(isOpen) {
@@ -106,16 +134,19 @@ public class ActionGroup {
 	private void close() {
 		if(!isOpen) return;
 		
-		vel = -animationSpeed*2.0f;
+		vel = -animationSpeed;
 	}
 	
 	public void hide() {
-		
+	    close();
+        isVisible = false;
+		velY = movingSpeed;
 	}
 	
 	public void show() {
-		
+        isVisible = true;
+        velY = -movingSpeed;
 	}
 	
-	public boolean isOpen() { return this.isOpen; }
+	public boolean isOpen() { return this.isOpen && this.isVisible; }
 }	

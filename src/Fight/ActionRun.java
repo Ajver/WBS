@@ -26,8 +26,7 @@ public class ActionRun extends Action {
 	public void select() {
 		int cx = c.getMX();
 		int cy = c.getMY();
-	
-		int minLen = c.att.current[1][3] * 2 + 1;
+
 		int maxLen = c.att.current[1][3] * 4;
 		
 		for(int yy=-maxLen; yy<=maxLen; yy++) {
@@ -35,7 +34,7 @@ public class ActionRun extends Action {
 				if(xx != 0 || yy != 0) {
 					if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
 						int len = handler.map.getPathLength(cx, cy, cx+xx, cy+yy);
-						if(len >= minLen && len <= maxLen) {
+						if(len > 0 && len <= maxLen) {
 							handler.map.grid[cx+xx][cy+yy].setClickable(0);
 						}
 					}
@@ -48,15 +47,14 @@ public class ActionRun extends Action {
 		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
 			int cx = c.getMX();
 			int cy = c.getMY();
-			
+
+			c.setFocus(mapX, mapY);
+
 			LinkedList<Point> path = handler.map.getPath(cx, cy, mapX, mapY);
 			if(path != null) {
-				int minLen = c.att.current[1][3] * 2 + 1;
 				int maxLen = c.att.current[1][3] * 4;
 				
-				if(path.size() < minLen) {
-					handler.msg.set("Too short path to run");
-				}else if(path.size() > maxLen+1) {
+				if(path.size() > maxLen+1) {
 					LinkedList<Point> newPath = new LinkedList<Point>();
 
 					for(int i=0; i<maxLen+1; i++) {
@@ -66,8 +64,9 @@ public class ActionRun extends Action {
 					path = newPath;
 				}
 				mayBeCaneled = false;
+
 				c.move(path);
-				startTimer(Human.animationSpeed * (path.size()+1));
+				startTimer((int)(Human.animationSpeed * (path.size()+1) * 1000.0f));
 			}else {
 				handler.msg.set("No path to run");
 			}
@@ -77,29 +76,13 @@ public class ActionRun extends Action {
 	public void mouseReleased(MouseEvent e) {
 		int mapX = (int) ((e.getX() + handler.camera.getX()) / Handler.cellW);
 		int mapY = (int) ((e.getY() + handler.camera.getY()) / Handler.cellH);
-		
-		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
-			int cx = c.getMX();
-			int cy = c.getMY();
-			
-			LinkedList<Point> path = handler.map.getPath(cx, cy, mapX, mapY);
-			if(path != null) {
-				if(handler.map.grid[mapX][mapY].isClickable()) {
-					// Clearing map
-					canel();
-					
-					mayBeCaneled = false;
-					c.move(path);
-					startTimer(Human.animationSpeed * (path.size()+1));
-				}
-			}else {
-				handler.msg.set("No path");
-			}
-		}
+
+        canel();
+        use(mapX, mapY);
 	}
-	
+
 	public void slMouseMoved(MouseEvent e) {
-		
+
 	}
 
 	public void canel() {

@@ -13,16 +13,7 @@ public abstract class Action {
 	
 	// Position on Screen
 	protected float x, y;
-	
-	// Position to animation
-	protected float nextX, nextY;
-	protected float velX, velY;
-	
-	// Animation progress
-	protected float progress = 0; // <0; 1>, where 0 - begin, 1 - end of animation
-	protected float speed = 4.0f; // Speed of animation progressing
-	protected boolean isAnimated = false;
-	
+
 	public BufferedImage img;
 	protected boolean hover = false;
 	private boolean soundPlayed = false;
@@ -35,7 +26,7 @@ public abstract class Action {
 	protected Creature c;
 	protected Handler handler;
 	
-	protected float timer = 0.0f, breakTime;
+	protected long breakTime;
 	protected boolean isTimer = false;
 	
 	public Action(Creature c, Handler handler) {
@@ -44,22 +35,16 @@ public abstract class Action {
 	}
 	
 	public void update(float et) {
-		x += velX * et;
-		y += velY * et;
-		
 		slUpdate(et);
-		updateAnimation(et);
-		
+
 		if(isTimer) {
-			timer += et;
 			
-			if(timer >= breakTime) {
+			if(System.currentTimeMillis() >= breakTime) {
 				// Next action
 				handler.nextAction();
 				
 				// Reset timer
 				isTimer = false;
-				timer = 0.0f;
 				
 				// Reset 
 				mayBeCaneled = true;
@@ -75,24 +60,22 @@ public abstract class Action {
 				g.setColor(new Color(132, 103, 54));
 			}
 		}
-		
-		if(isAnimated) {
+
 			if(img == null) {
-				g.fillRect((int)getX(), (int)getY(), (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
+				g.fillRect((int)getX(), (int)getY(), (int)(ActionManagerGUI.buttonW * duration), (int)(ActionManagerGUI.buttonW));
 			}else {
 				g.drawImage(img, (int)getX(), (int)getY(), null);
 			}
-		}else {
 			if(img == null) {
-				g.fillRect((int)x, (int)y, (int)(ActionManager.buttonW * duration), (int)(ActionManager.buttonW));
+				g.fillRect((int)x, (int)y, (int)(ActionManagerGUI.buttonW * duration), (int)(ActionManagerGUI.buttonW));
 			}else {
 				if(hover) {
 					g.setColor(new Color(162, 143, 64));
-					g.fillRect((int)x-4, (int)y-4, (int)(ActionManager.buttonW * duration + 8), (int)(ActionManager.buttonW + 8));
+					g.fillRect((int)x-4, (int)y-4, (int)(ActionManagerGUI.buttonW * duration + 8), (int)(ActionManagerGUI.buttonW + 8));
 				}
 				g.drawImage(img, (int)x, (int)y, null);
 			}
-		}
+
 	}
 	
 	public abstract void slUpdate(float et);
@@ -105,63 +88,24 @@ public abstract class Action {
 	public void use(int mapx, int mapY) { // To override 
 		System.out.println("Error: use(mapX, mapY) is not overrided");
 	}
-	
-	public void updateAnimation(float et) {
-		if(!isAnimated) return;
-		
-		progress += speed * et;
-		
-		if(progress >= 1) {
-			isAnimated = false;
-			x = nextX;
-			y = nextY;
-		}
-	}
-	
-	protected void startAnimation() {
-		isAnimated = true;
-		progress = 0.0f;
-	}
 
 	public void setX(float x) { this.x = x; }
 	public void setY(float y) { this.y = y; }
-	public void setNextX(float nextX) {
-		this.nextX = nextX;
-		startAnimation();
-	}
-	public void setNextY(float nextY) {
-		this.nextY = nextY;
-		startAnimation();
-	}
-	public void setNextXY(float nextX, float nextY) {
-		this.nextX = nextX;
-		this.nextY = nextY;
-		startAnimation();
-	}	
-	public void setSpeed(float speed) { this.speed = speed; }
 	
-	public void setDuration(int d) { this.duration = d; }
-
-	public void move(int nx, int ny) {
-		this.nextX = nx;
-		this.nextY = ny;
-		
-	}
-	
-	protected void startTimer(float bt) {
-		this.breakTime = bt;
+	protected void startTimer(int bt) {
+		this.breakTime = System.currentTimeMillis() + bt;
 		this.isTimer = true;
 	}
 	
 	public int getDuration() { return duration; }
-	public float getX() { return x + (nextX - x)*progress; }
-	public float getY() { return y + (nextY - y)*progress; }
+	public float getX() { return x; }
+	public float getY() { return y; }
 	
 	public boolean mouseOver(int mx, int my) {
-		return mx >= x + (nextX - x)*progress && 
-				mx <= x + (nextX - x)*progress + (ActionManager.buttonW*duration) && 
-				my >= y + (nextY - y)*progress && 
-				my <= y + (nextY - y)*progress + ActionManager.buttonW;
+		return mx >= x &&
+				mx <= x + (ActionManagerGUI.buttonW*duration) &&
+				my >= y &&
+				my <= y + ActionManagerGUI.buttonW;
 	}
 	
 	public void hover(int mx, int my) { 

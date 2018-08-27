@@ -33,12 +33,12 @@ public class ActionAttack extends Action {
 		}
 		
 		if(!isInRange) {
-			handler.msg.set("No enemys in Range");
+			handler.msg.set("No enemies in Range");
 		}
 	}
 	
 	public boolean mouseOver(int mx, int my) {
-		return mx >= x && mx <= x+ActionManager.buttonW * duration && my >= y && my <= y+ActionManager.buttonW;
+		return mx >= x && mx <= x+ActionManagerGUI.buttonW * duration && my >= y && my <= y+ActionManagerGUI.buttonW;
 	}
 
 	public void use(int mapX, int mapY) {
@@ -53,7 +53,8 @@ public class ActionAttack extends Action {
 			}else {
 				handler.msg.set("Miss");
 			}
-			startTimer(0.1f);
+			startTimer(1000);
+			c.attack();
 		}else {
 			handler.msg.set("No enemy on xy: " + mapX + " | " + mapY);
 		}

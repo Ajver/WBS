@@ -1,13 +1,11 @@
 package Creatures;
 
-import java.awt.Graphics;
-
 import Character.Dice;
 import MainFiles.MainClass;
 import Other.Handler;
 
 public class Human extends Creature {
-	
+
 	public Human(int mx, int my, Handler handler) {
 		super(mx, my, handler);
 				
@@ -31,7 +29,7 @@ public class Human extends Creature {
 		this.hp = att.current[1][0];
 		
 		this.moveAnimation = new Animation(0.4f, MainClass.tex.swordman);
-				
+		this.attackAnimation = new Animation(0.6f, MainClass.tex.attack);
 	}
 
 	

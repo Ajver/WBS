@@ -9,8 +9,10 @@ import javax.imageio.ImageIO;
 public class Textures {
 
 	public BufferedImage[] swordman = new BufferedImage[6];
-	
+	public BufferedImage[] attack = new BufferedImage[10];
+
 	public BufferedImage swordIcon = null;
+	public BufferedImage runattackIcon = null;
 	public BufferedImage bootIcon = null;
 	public BufferedImage bigBootIcon = null;
 	public BufferedImage actionBg = null;
@@ -24,11 +26,14 @@ public class Textures {
 	
 	public Textures() {
 		try {
-			BufferedImage swordmanSS = ImageIO.read(new File("res/Graphics/Icons/SS/Swordman.png"));
+			BufferedImage swordmanSS = ImageIO.read(new File("res/Graphics/SS/Swordman.png"));
 			for(int i=0; i<6; i++) { swordman[i] = getFromSS(swordmanSS, i, 0, 32, 32); }
-			
+
+            BufferedImage attackSS = ImageIO.read(new File("res/Graphics/SS/Attack.png"));
+            for(int i=0; i<10; i++) { attack[i] = getFromSS(attackSS, i, 0, 32, 48); }
 			
 			swordIcon = ImageIO.read(new File("res/Graphics/Icons/SwordIcon.png"));
+            runattackIcon = ImageIO.read(new File("res/Graphics/Icons/RunattackIcon.png"));
 			bootIcon = ImageIO.read(new File("res/Graphics/Icons/BootIcon.png"));
 			bigBootIcon = ImageIO.read(new File("res/Graphics/Icons/BigBootIcon.png"));
 			actionBg = ImageIO.read(new File("res/Graphics/Icons/ActionBg.png"));

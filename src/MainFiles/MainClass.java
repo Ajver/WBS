@@ -24,7 +24,7 @@ public class MainClass extends Canvas implements Runnable {
 	
 	private int fps = 0;
 	
-	public static STATE state = STATE.menu;
+	public static STATE state = STATE.game;
 	public enum STATE {
 		game(),
 		menu();

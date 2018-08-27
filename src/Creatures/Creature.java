@@ -5,8 +5,8 @@ import java.awt.Point;
 import java.util.LinkedList;
 
 import Character.Attributes;
-import Fight.ActionList;
-import Fight.ArtificialIntelligence;
+import Fight.ActionManager;
+import Fight.AI;
 import Other.GameObject;
 import Other.Handler;
 import Other.SoundPlayer;
@@ -26,10 +26,12 @@ public abstract class Creature extends GameObject {
 	public static float animationSpeed = 0.4f;
 	
 	protected Animation moveAnimation;
+	protected Animation attackAnimation;
 	private int direction = 0;
-	
-	public ActionList al;
-	private ArtificialIntelligence AI;
+
+	private boolean isAttacking = false;
+
+	public AI AI;
 	private boolean hasAI = true;
 	
 	private SoundPlayer soundPlayer;
@@ -42,9 +44,8 @@ public abstract class Creature extends GameObject {
 		this.handler = handler;	
 		
 		this.att = new Attributes();
-		
-		this.al = new ActionList(handler, this);
-		this.AI = new ArtificialIntelligence(this, handler);
+
+		this.AI = new AI(this, handler);
 		
 		soundPlayer = new SoundPlayer("res/sounds/step_on_dirt.wav");
 	}
@@ -80,7 +81,11 @@ public abstract class Creature extends GameObject {
 			
 			moveAnimation.update(et);
 		}else {
-			setMXY(mx, my);
+			if(isAttacking) {
+			    if(!attackAnimation.update(et)) {
+			        isAttacking = false;
+                }
+            }
 		}
 		
 		if(hasAI) {
@@ -89,7 +94,11 @@ public abstract class Creature extends GameObject {
 	}
 	
 	public void render(Graphics g) {
-		moveAnimation.render(g, x, y, direction*0.7853125f);
+        if(isAttacking) {
+            attackAnimation.render(g, x, y-16, direction * 0.7853125f, x+Handler.cellW/2.0f, y+Handler.cellH/2.0f);
+        }else {
+            moveAnimation.render(g, x, y, direction * 0.7853125f);
+        }
 	}
 	
 	protected void move(float et) {
@@ -124,10 +133,9 @@ public abstract class Creature extends GameObject {
 			AI.round();
 		}
 	}
-	
-	public void setDirection(int direction) { this.direction = direction % 8; }
+
 	public void setFocus(int fmx, int fmy) { // Where Should look
-		if(mx == fmx && my < fmy) direction = 0;
+		if(mx == fmx && fmy < my) direction = 0;
 		else if(fmx > mx && fmy < my) direction = 1;
 		else if(fmx > mx && fmy == my) direction = 2;
 		else if(fmx > mx && fmy > my) direction = 3;
@@ -135,8 +143,13 @@ public abstract class Creature extends GameObject {
 		else if(fmx == mx && fmy > my) direction = 4;
 		else if(fmx < mx && fmy > my) direction = 5;
 		else if(fmx < mx && fmy == my) direction = 6;
-		else if(fmx < mx && fmy < my) direction = 7;		
+		else if(fmx < mx && fmy < my) direction = 7;
 	}
-	
+
+	public void attack() {
+	    this.isAttacking = true;
+
+    }
+
 	public void setHasAI(boolean flag) { this.hasAI = flag; }
 }

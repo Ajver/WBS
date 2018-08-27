@@ -24,26 +24,33 @@ public class Animation {
 		}
 	}
 	
-	public void update(float et) {
+	public boolean update(float et) {
 		progress += et;
 		
 		if(progress >= duration) { // End of animation
 			progress = 0.0f;
+			return false;
 		}
+
+		return true;
 	}
 	
 	public void render(Graphics g, float x, float y) {		
 		int currentFrame = (int)((progress * frames) / duration);
 		g.drawImage(imgs[currentFrame], (int)x, (int)y, null);
-	}	
-	
-	public void render(Graphics g, float x, float y, float theta) {
+	}
+
+	public void render(Graphics g, float x, float y, float theta, float rx, float ry) {
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.rotate(theta, x+Handler.cellW/2.0f, y+Handler.cellH/2.0f);
-		
+		g2d.rotate(theta, rx, ry);
+
 		int currentFrame = (int)((progress * frames) / duration);
 		g.drawImage(imgs[currentFrame], (int)x, (int)y, null);
-		
-		g2d.rotate(-theta, x+Handler.cellW/2.0f, y+Handler.cellH/2.0f);
+
+		g2d.rotate(-theta, rx, ry);
+	}
+
+	public void render(Graphics g, float x, float y, float theta) {
+		render(g, x, y, theta, x+Handler.cellW/2.0f, y+Handler.cellH/2.0f);
 	}	
 }
