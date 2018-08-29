@@ -86,24 +86,27 @@ public class ActionManagerGUI extends ActionManager {
         }
 
         if(selected[currentAction] != null) {
-            if(selected[currentAction].mayBeCaneled()) {
+            if(!selected[currentAction].used()) {
                 canelBtn.render(g);
             }
         }
     }
 
     public void mouseReleased(MouseEvent e) {
-        if(selected[currentAction] == null) {
-            for(ActionGroup ag : ag) {
-                for(Action a : ag.actions) {
-                    if(a.mouseOver(e.getX(), e.getY())) {
-                        if(a.getDuration() == 1 || (a.getDuration() == 2 && currentAction == 0)) {
-                            hideActions();
+        int mapX = (int) ((e.getX() + handler.camera.getX()) / Handler.cellW);
+        int mapY = (int) ((e.getY() + handler.camera.getY()) / Handler.cellH);
 
-                            // Selecting
-                            a.select();
-                            selected[currentAction] = a;
-                        }
+        if(e.getButton() == 2) {
+            System.out.println(handler.map.getPathLength(c.getMX(), c.getMY(), mapX, mapY));
+        }
+
+        if(current() == null) {
+            for(ActionGroup ag : ag) {
+                Action a = ag.mouseReleased(e);
+
+                if(a != null) {
+                    if (a.getDuration() == 1 || (a.getDuration() == 2 && currentAction == 0)) {
+                        select(a);
                     }
                 }
             }
@@ -120,7 +123,7 @@ public class ActionManagerGUI extends ActionManager {
                 return;
             }
 
-            if(selected[currentAction].mayBeCaneled()) {
+            if(!selected[currentAction].used()) {
                 if(canelBtn.mouseOver(e.getX(), e.getY())) {
                     selected[currentAction].canel();
                     selected[currentAction] = null;
@@ -129,7 +132,9 @@ public class ActionManagerGUI extends ActionManager {
                 }
             }
 
-            selected[currentAction].mouseReleased(e);
+            if(!current().used()) {
+                current().mouseReleased(e);
+            }
         }
     }
 
@@ -149,13 +154,13 @@ public class ActionManagerGUI extends ActionManager {
             }
         }
 
-        if(selected[currentAction] != null) {
+        if(current() != null) {
             boolean good = true;
 
             if(good) {
-                selected[currentAction].mouseMoved(e);
+                current().mouseMoved(e);
             }
-            if(selected[currentAction].mayBeCaneled()) {
+            if(!current().used()) {
                 canelBtn.hover(e.getX(), e.getY());
             }
         }

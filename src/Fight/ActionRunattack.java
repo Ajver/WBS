@@ -4,7 +4,6 @@ import Creatures.Creature;
 import Creatures.Human;
 import MainFiles.MainClass;
 import Other.Handler;
-import Character.Dice;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -36,7 +35,10 @@ public class ActionRunattack extends Action {
         int cx = c.getMX();
         int cy = c.getMY();
 
-        int maxLen = c.att.current[1][3] * 4 + 1;
+        int minLen = c.att.getSz() * 2;
+        int maxLen = c.att.getSz() * 4 + 1;
+
+        slMouseLeved();
 
         boolean isInRange = false;
 
@@ -44,16 +46,10 @@ public class ActionRunattack extends Action {
             for(int xx=-maxLen; xx<=maxLen; xx++) {
                 if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
                     int len = handler.map.getPathLength(cx, cy, cx+xx, cy+yy);
-                    if(len > 0 && len <= maxLen) {
-                        for(int nyy=-1; nyy<=1; nyy++) {
-                            for(int nxx=-1; nxx<=1; nxx++) {
-                                if(xx+nxx != 0 || yy+nyy != 0) {
-                                    if (handler.getFromMap(cx + xx + nxx, cy + yy + nyy) != null) {
-                                        handler.map.grid[cx + xx + nxx][cy + yy + nyy].setClickable(1);
-                                        isInRange = true;
-                                    }
-                                }
-                            }
+                    if (len >= minLen && len <= maxLen) {
+                        if (handler.getFromMap(cx + xx, cy + yy) != null) {
+                            handler.map.setClickable(cx+xx, cy+yy, 1);
+                            isInRange = true;
                         }
                     }
                 }
@@ -61,27 +57,13 @@ public class ActionRunattack extends Action {
         }
 
         if(!isInRange) {
-            handler.msg.set("No enemies in Range");
+            handler.msg.set("Nie ma do kogo zaszar¿owaæ");
         }
     }
 
     private void attack() {
-        Creature enemy = handler.getFromMap(mapX, mapY);
-        c.setFocus(mapX, mapY);
-
-        if(enemy != null) {
-            if(c.att.WW(0)) {
-                int dmg = Dice.roll1d10();
-                handler.msg.set("Damage: " + dmg);
-                enemy.hit(dmg);
-            }else {
-                handler.msg.set("Miss");
-            }
-            c.attack();
-            startTimer(1000);
-        }else {
-            handler.msg.set("No enemy on xy: " + mapX + " | " + mapY);
-        }
+        new ActionAttack(c, handler).use(mapX, mapY);
+        startTimer((long)(c.attackDuration*1000.0f));
     }
 
     public void use(int mapX, int mapY) {
@@ -112,42 +94,23 @@ public class ActionRunattack extends Action {
             }
 
             LinkedList<Point> path = handler.map.getPath(cx, cy, npx, npy);
-            if(path != null) {
-                int maxLen = c.att.current[1][3] * 4 + 1;
 
-                if(path.size() > maxLen+1) {
-                    LinkedList<Point> newPath = new LinkedList<Point>();
+            used = true;
 
-                    for(int i=0; i<maxLen+1; i++) {
-                        newPath.add(path.get(i));
-                    }
-
-                    path = newPath;
-                }
-
-
-
-                mayBeCaneled = false;
-
-                c.move(path);
-                startLocalTimer((int)(Human.animationSpeed * (path.size()+1) * 1000.0f));
-            }else {
-                handler.msg.set("No path to runattack");
-            }
+            c.move(path);
+            startLocalTimer((int)(c.moveDuration * (path.size()) * 1000.0f));
         }
     }
 
     private void startLocalTimer(int bt) {
         this.localBreakTime = System.currentTimeMillis() + bt;
         this.isLocalTimer = true;
-        System.out.println("Current time: " + System.currentTimeMillis());
-        System.out.println("Local timer:  " + localBreakTime);
     }
 
     public void canel() {
         for(int yy=0; yy<handler.map.h; yy++) {
             for(int xx=0; xx<handler.map.w; xx++) {
-                handler.map.grid[xx][yy].setClickable(false);
+                handler.map.setClickable(xx, yy, false);
             }
         }
     }
@@ -156,11 +119,34 @@ public class ActionRunattack extends Action {
         int mapX = (int) ((e.getX() + handler.camera.getX()) / Handler.cellW);
         int mapY = (int) ((e.getY() + handler.camera.getY()) / Handler.cellH);
 
-        canel();
-        use(mapX, mapY);
+        if(handler.map.isClickable(mapX, mapY)) {
+            if(handler.getFromMap(mapX, mapY) != null) {
+                canel();
+                use(mapX, mapY);
+            }
+        }
     }
 
-    public void slMouseMoved(MouseEvent e) {
+    public void slMouseEntered() {
+        int cx = c.getMX();
+        int cy = c.getMY();
 
+        int minLen = c.att.getSz() * 2;
+        int maxLen = c.att.getSz() * 4 + 1;
+
+        for(int yy=-maxLen; yy<=maxLen; yy++) {
+            for(int xx=-maxLen; xx<=maxLen; xx++) {
+                if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
+                    int len = handler.map.getPathLength(cx, cy, cx+xx, cy+yy);
+                    if (len >= minLen && len <= maxLen) {
+                        handler.map.grid[cx + xx][cy + yy].setColor(new Color(255, 0, 50, 110));
+                    }
+                }
+            }
+        }
+    }
+
+    public void slMouseLeved() {
+        handler.map.clearColors();
     }
 }

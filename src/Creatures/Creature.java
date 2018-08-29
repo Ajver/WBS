@@ -3,6 +3,7 @@ package Creatures;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
+import java.util.Random;
 
 import Character.Attributes;
 import Fight.ActionManager;
@@ -21,10 +22,11 @@ public abstract class Creature extends GameObject {
 	protected boolean isMoving = false;
 	private LinkedList<Point> path;
 	private int currentPoint = 0;
-	private float timer = animationSpeed;
+	private long timer;
 	
-	public static float animationSpeed = 0.4f;
-	
+	public static float moveDuration = 0.3f;
+	public static float attackDuration = 0.6f;
+
 	protected Animation moveAnimation;
 	protected Animation attackAnimation;
 	private int direction = 0;
@@ -33,9 +35,11 @@ public abstract class Creature extends GameObject {
 
 	public AI AI;
 	private boolean hasAI = true;
-	
-	private SoundPlayer soundPlayer;
-	
+
+	private long stepTimer;
+	private String[] stepsPath = { "step_0.wav", "step_1.wav", "step_2.wav" };
+	private Random r = new Random();
+
 	public Attributes att;
 	public int hp;
 	
@@ -46,8 +50,6 @@ public abstract class Creature extends GameObject {
 		this.att = new Attributes();
 
 		this.AI = new AI(this, handler);
-		
-		soundPlayer = new SoundPlayer("res/sounds/step_on_dirt.wav");
 	}
 	
 	public void hit(int dmg) {
@@ -60,9 +62,8 @@ public abstract class Creature extends GameObject {
 	}
 	
 	public void update(float et) {
-		if(isMoving) { 
-			move(et); 
-			
+		if(isMoving) {
+			move(et);
 			x += velX * et;
 			y += velY * et;
 			
@@ -102,30 +103,32 @@ public abstract class Creature extends GameObject {
 	}
 	
 	protected void move(float et) {
-		timer += et;
-		if(timer >= animationSpeed) {
+		if(System.currentTimeMillis() >= stepTimer) {
+			stepTimer += (long)(moveDuration*500.0f + (r.nextFloat()-0.5f)*20.0f);
+			SoundPlayer.playNextSound("res/Sounds/" + stepsPath[r.nextInt(3)]);
+		}
+
+		if(System.currentTimeMillis() >= timer) {
+			timer = System.currentTimeMillis() + (long)(moveDuration*1000.0f);
+
 			if(currentPoint < path.size()) {
-				soundPlayer.start();
-				soundPlayer.loop();
-				velX = (path.get(currentPoint).x - mx) * (Handler.cellW / animationSpeed);
-				velY = (path.get(currentPoint).y - my) * (Handler.cellH / animationSpeed);
+				velX = (path.get(currentPoint).x - mx) * (Handler.cellW / moveDuration);
+				velY = (path.get(currentPoint).y - my) * (Handler.cellH / moveDuration);
 				currentPoint++;
-				timer = 0.0f;
 			}else {
-				soundPlayer.stop();
-				soundPlayer.reload();
-				timer = animationSpeed;
 				velX = velY = 0;
 				currentPoint = 0;
 				isMoving = false;
+				setMXY(mx, my);
 			}
-			setMXY(mx, my);
 		}
 	}
 	
 	public void move(LinkedList<Point> path) {
 		isMoving = true;
 		this.path = path;
+		stepTimer = System.currentTimeMillis() + (long)(moveDuration * 500.0f);
+		timer = 0;
 	}
 	
 	public void round() {
@@ -148,7 +151,7 @@ public abstract class Creature extends GameObject {
 
 	public void attack() {
 	    this.isAttacking = true;
-
+		SoundPlayer.playNextSound("res/Sounds/sword_" + r.nextInt(2) + ".wav");
     }
 
 	public void setHasAI(boolean flag) { this.hasAI = flag; }

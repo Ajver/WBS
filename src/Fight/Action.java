@@ -16,9 +16,9 @@ public abstract class Action {
 
 	public BufferedImage img;
 	protected boolean hover = false;
+	protected boolean wasHover = false;
 	private boolean soundPlayed = false;
-	
-	protected boolean mayBeCaneled = true;
+	private boolean isVisible = true;
 	
 	// How long is this Action (no animation of this)
 	protected int duration = 1; 
@@ -28,6 +28,7 @@ public abstract class Action {
 	
 	protected long breakTime;
 	protected boolean isTimer = false;
+	protected boolean used = false;
 	
 	public Action(Creature c, Handler handler) {
 		this.c = c;
@@ -38,16 +39,13 @@ public abstract class Action {
 		slUpdate(et);
 
 		if(isTimer) {
-			
 			if(System.currentTimeMillis() >= breakTime) {
 				// Next action
 				handler.nextAction();
-				
-				// Reset timer
+
+				// Reset
 				isTimer = false;
-				
-				// Reset 
-				mayBeCaneled = true;
+				used = false;
 			}
 		}
 	}
@@ -83,16 +81,16 @@ public abstract class Action {
 	public abstract void canel();
 	
 	public void use() { // To override 
-		System.out.println("Error: No args 'mapX', 'mapY'");
+		System.out.println("Error: No set use() function!");
 	}
 	public void use(int mapx, int mapY) { // To override 
-		System.out.println("Error: use(mapX, mapY) is not overrided");
+		System.out.println("Error: No overrided use(mapX, mapY) function!");
 	}
 
 	public void setX(float x) { this.x = x; }
 	public void setY(float y) { this.y = y; }
 	
-	protected void startTimer(int bt) {
+	protected void startTimer(long bt) {
 		this.breakTime = System.currentTimeMillis() + bt;
 		this.isTimer = true;
 	}
@@ -108,23 +106,29 @@ public abstract class Action {
 				my <= y + ActionManagerGUI.buttonW;
 	}
 	
-	public void hover(int mx, int my) { 
-		this.hover = mouseOver(mx, my);
+	private void hover(MouseEvent e) {
+		this.hover = mouseOver(e.getX(), e.getY());
 		
 		if(this.hover) {
 			if(!soundPlayed) {
+				wasHover = true;
+				slMouseEntered();
 				soundPlayed = (new SoundPlayer()).playSound("res/Sounds/click.wav");
 			}				
-		}else {
+		}else if(wasHover) {
+			wasHover = false;
+			slMouseLeved();
 			soundPlayed = false;
 		}
 	}
 	
-	public boolean mayBeCaneled() { return this.mayBeCaneled; }
+	public boolean used() { return this.used; }
 	
-	public abstract void mouseReleased(MouseEvent e);
-	public abstract void slMouseMoved(MouseEvent e);
-	
+	public void mouseReleased(MouseEvent e) {}
+	public void slMouseMoved(MouseEvent e) {}
+	public void slMouseEntered() {}
+	public void slMouseLeved() {}
+
 	public void mouseMoved(MouseEvent e) {
 		int mx = e.getX();
 		int my = e.getY();
@@ -140,7 +144,17 @@ public abstract class Action {
 		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
 			handler.map.grid[mapX][mapY].setHover(true);
 		}
-		
+
+		if(isVisible) {
+			hover(e);
+		}
+
 		slMouseMoved(e);
 	}
+
+	private void mouseEntered(MouseEvent e) {
+		slMouseMoved(e);
+	}
+
+	public void setVisible(boolean flag) { this.isVisible = flag; }
 }

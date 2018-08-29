@@ -95,17 +95,31 @@ public class ActionGroup {
 
         g.translate(0, (int)-(ty*movingProgress));
 	}
-	
-	public void mouseMoved(MouseEvent e) { 		
-		if(mouseOver(e.getX(), e.getY())) {
-			open();
-		}else {
-			close();
+
+	public Action mouseReleased(MouseEvent e) {
+		if(isOpen && isVisible) {
+			for (Action a : actions) {
+				if (a.mouseOver(e.getX(), e.getY())) {
+					// Selecting
+					a.select();
+					return a;
+				}
+			}
 		}
-		if(isOpen()) {
-			for(Action a : actions) {
-				a.hover(e.getX(), e.getY());
-				a.mouseMoved(e);
+		return null;
+	}
+	
+	public void mouseMoved(MouseEvent e) {
+		if(isVisible) {
+			if(mouseOver(e.getX(), e.getY())) {
+				open();
+			}else {
+				close();
+			}
+			if(isOpen) {
+				for (Action a : actions) {
+					a.mouseMoved(e);
+				}
 			}
 		}
 	}
@@ -139,12 +153,18 @@ public class ActionGroup {
 	
 	public void hide() {
 	    close();
+	    for (Action a : actions) {
+	    	a.setVisible(false);
+	    }
         isVisible = false;
 		velY = movingSpeed;
 	}
 	
 	public void show() {
         isVisible = true;
+		for (Action a : actions) {
+			a.setVisible(true);
+		}
         velY = -movingSpeed;
 	}
 	

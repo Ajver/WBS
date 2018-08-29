@@ -25,7 +25,12 @@ public class EmptyPlace extends MapObject {
 		
 		g.setColor(new Color(10, 135, 45));
 		g.drawRect((int)(x), (int)(y), (int)Handler.cellW, (int)Handler.cellH);
-		
+
+		if(col != null) {
+			g.setColor(col);
+			g.fillRect((int)(x), (int)(y), (int)Handler.cellW, (int)Handler.cellH);
+		}
+
 		if(isClickable) {
 			if(hover) {
 				g.drawImage(MainClass.tex.mapTile[imgNr][1], (int)x, (int)y, null);

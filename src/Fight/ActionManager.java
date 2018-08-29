@@ -1,14 +1,6 @@
 package Fight;
 
-import java.awt.Color;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-
 import Creatures.Creature;
-import MainFiles.MainClass;
-import Other.Button;
 import Other.Handler;
 
 public class ActionManager {

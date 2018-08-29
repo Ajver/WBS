@@ -87,17 +87,28 @@ public class Map {
 				for(int yy=-1; yy<=1; yy++) {
 					for(int xx=-1; xx<=1; xx++) {
 						if(p.x+xx >= 0 && p.x+xx < w && p.y+yy >= 0 && p.y+yy < h) { // Over the map
-							if(!visited[p.x+xx][p.y+yy] && 
-									handler.getFromMap(p.x+xx, p.y+yy) == null &&
-									grid[p.x+xx][p.y+yy].mayBePath()) { // (Is'n a rock, or something...)
-							
-								if(p.x+xx == finish.x) {
-									if(p.y+yy == finish.y) {								
-										return len;
+							if (!visited[p.x + xx][p.y + yy]) {
+								if (grid[p.x + xx][p.y + yy].mayBePath()) {
+									if (p.x + xx == finish.x && p.y + yy == finish.y) { // (Is'n a rock, or something...)
+
+										if (p.x + xx == finish.x) {
+											if (p.y + yy == finish.y) {
+												return len;
+											}
+										}
+										visited[p.x + xx][p.y + yy] = true;
+										newPoints.add(new Point(p.x + xx, p.y + yy));
+									} else if (handler.getFromMap(p.x + xx, p.y + yy) == null) { // (Is'n a rock, or something...)
+
+										if (p.x + xx == finish.x) {
+											if (p.y + yy == finish.y) {
+												return len;
+											}
+										}
+										visited[p.x + xx][p.y + yy] = true;
+										newPoints.add(new Point(p.x + xx, p.y + yy));
 									}
 								}
-								visited[p.x+xx][p.y+yy] = true;
-								newPoints.add(new Point(p.x+xx, p.y+yy));
 							}
 						}
 					}
@@ -155,7 +166,7 @@ public class Map {
 						
 						LinkedList<Point> path = new LinkedList<Point>();
 						
-						for(int i=tempPath.size()-1; i>=0; i--) {
+						for(int i=tempPath.size()-2; i>=0; i--) {
 							path.add(tempPath.get(i));
 						}
 						
@@ -179,7 +190,35 @@ public class Map {
 		
 		return null;
 	}
-	
+
+	public void clearColors() {
+		for(int yy=0; yy<h; yy++) {
+			for(int xx=0; xx<w; xx++) {
+				grid[xx][yy].setColor(null);
+			}
+		}
+	}
+
+	public boolean isClickable(int mapX, int mapY) {
+		if(mapX >= 0 && mapX < w && mapY >= 0 && mapY < h) {
+			return grid[mapX][mapY].isClickable();
+		}
+
+		return false;
+	}
+
+	public void setClickable(int mapX, int mapY, boolean flag) {
+		if(mapX >= 0 && mapX < w && mapY >= 0 && mapY < h) {
+			grid[mapX][mapY].setClickable(flag);
+		}
+	}
+
+	public void setClickable(int mapX, int mapY, int nr) {
+		if(mapX >= 0 && mapX < w && mapY >= 0 && mapY < h) {
+			grid[mapX][mapY].setClickable(nr);
+		}
+	}
+
 	private void pathElement(Point p, int xx, int yy, Point finish, Point[][] pGrid, LinkedList<Point> newPoints) {
 		if(xx >= 0 && xx < w && yy >= 0 && yy < h) {
 			if(pGrid[xx][yy].x == -1 &&
