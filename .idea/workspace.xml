@@ -5,18 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd1fc296-99eb-4ce4-bf44-5f562e08c663" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Creatures/Creature.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Creatures/Creature.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Fight/ActionMove.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Fight/ActionMove.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Map/EmptyPlace.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Map/EmptyPlace.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creatures/Creature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Creatures/Creature.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Fight/AI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/AI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionAttack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionAttack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionMove.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionMove.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionRun.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Fight/ActionRunattack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionRunattack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map/EmptyPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/EmptyPlace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/Map.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,13 +43,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="9847" />
+          <entry key="java" value="9855" />
           <entry key="txt" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="9847" />
+          <entry key="JAVA" value="9855" />
           <entry key="PLAIN_TEXT" value="28" />
         </counts>
       </usages-collector>
@@ -71,18 +61,17 @@
         <entry file="file://$PROJECT_DIR$/src/Fight/ActionRun.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="551">
-              <caret line="101" column="4" lean-forward="true" selection-start-line="101" selection-start-column="4" selection-end-line="101" selection-end-column="4" />
+              <caret line="101" column="4" selection-start-line="101" selection-start-column="4" selection-end-line="101" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Fight/AI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="56" column="61" selection-start-line="56" selection-start-column="56" selection-end-line="56" selection-end-column="61" />
+            <state relative-caret-position="225">
+              <caret line="55" column="57" selection-start-line="55" selection-start-column="57" selection-end-line="55" selection-end-column="57" />
               <folding>
-                <element signature="e#1122#1129#0" expanded="true" />
                 <element signature="e#3255#3256#0" expanded="true" />
                 <element signature="e#3277#3278#0" expanded="true" />
               </folding>
@@ -94,7 +83,7 @@
         <entry file="file://$PROJECT_DIR$/src/Creatures/Creature.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="328">
-              <caret line="35" column="28" lean-forward="true" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
+              <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -120,14 +109,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Fight/ActionRunattack.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="84" column="75" selection-start-line="84" selection-start-column="75" selection-end-line="84" selection-end-column="75" />
+            <state relative-caret-position="-1372">
+              <caret line="78" column="58" selection-start-line="78" selection-start-column="58" selection-end-line="78" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2227#2234#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -137,7 +125,7 @@
         <entry file="file://$PROJECT_DIR$/src/Map/Map.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="166">
-              <caret line="225" column="62" lean-forward="true" selection-start-line="225" selection-start-column="62" selection-end-line="225" selection-end-column="62" />
+              <caret line="225" column="62" selection-start-line="225" selection-start-column="62" selection-end-line="225" selection-end-column="62" />
               <folding>
                 <element signature="e#5167#5174#0" expanded="true" />
                 <element signature="e#5218#5225#0" expanded="true" />
@@ -192,9 +180,11 @@
     <findStrings>
       <find>al.</find>
       <find>c.getMY()</find>
+      <find>py</find>
     </findStrings>
     <replaceStrings>
       <replace>y1</replace>
+      <replace>ey</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -226,8 +216,8 @@
         <option value="$PROJECT_DIR$/src/Fight/ActionRun.java" />
         <option value="$PROJECT_DIR$/src/Creatures/Creature.java" />
         <option value="$PROJECT_DIR$/src/Map/Map.java" />
-        <option value="$PROJECT_DIR$/src/Fight/ActionRunattack.java" />
         <option value="$PROJECT_DIR$/src/Fight/AI.java" />
+        <option value="$PROJECT_DIR$/src/Fight/ActionRunattack.java" />
       </list>
     </option>
   </component>
@@ -634,7 +624,7 @@
     <entry file="file://$PROJECT_DIR$/src/Fight/ActionRun.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="551">
-          <caret line="101" column="4" lean-forward="true" selection-start-line="101" selection-start-column="4" selection-end-line="101" selection-end-column="4" />
+          <caret line="101" column="4" selection-start-line="101" selection-start-column="4" selection-end-line="101" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -645,17 +635,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Creatures/Creature.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="35" column="28" lean-forward="true" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Map/Map.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
-          <caret line="225" column="62" lean-forward="true" selection-start-line="225" selection-start-column="62" selection-end-line="225" selection-end-column="62" />
+          <caret line="225" column="62" selection-start-line="225" selection-start-column="62" selection-end-line="225" selection-end-column="62" />
           <folding>
             <element signature="e#5167#5174#0" expanded="true" />
             <element signature="e#5218#5225#0" expanded="true" />
@@ -673,25 +656,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Fight/ActionRunattack.java">
+    <entry file="file://$PROJECT_DIR$/src/Creatures/Creature.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="84" column="75" selection-start-line="84" selection-start-column="75" selection-end-line="84" selection-end-column="75" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2227#2234#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="328">
+          <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Fight/AI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="56" column="61" selection-start-line="56" selection-start-column="56" selection-end-line="56" selection-end-column="61" />
+        <state relative-caret-position="225">
+          <caret line="55" column="57" selection-start-line="55" selection-start-column="57" selection-end-line="55" selection-end-column="57" />
           <folding>
-            <element signature="e#1122#1129#0" expanded="true" />
             <element signature="e#3255#3256#0" expanded="true" />
             <element signature="e#3277#3278#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Fight/ActionRunattack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1372">
+          <caret line="78" column="58" selection-start-line="78" selection-start-column="58" selection-end-line="78" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

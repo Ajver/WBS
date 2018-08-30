@@ -27,16 +27,16 @@ public class AI {
 	public void round() {
 		if(am.current() == null) { // Selecting action
 			// Finding player
-			int px = handler.creatures.get(0).getMX();
-			int py = handler.creatures.get(0).getMY();
+			int ex = handler.creatures.get(0).getMX();
+			int ey = handler.creatures.get(0).getMY();
 			
 			// Is player in range
 			boolean mayAttack = false;
 			
 			for(int yy=-1; yy<=1; yy++) {
 				for(int xx=-1; xx<=1; xx++) {
-					if(c.getMX()+xx == px) {
-						if(c.getMY()+yy == py) {
+					if(c.getMX()+xx == ex) {
+						if(c.getMY()+yy == ey) {
 							mayAttack = true;
 							yy = xx = 10;
 						}
@@ -46,55 +46,51 @@ public class AI {
 			if(mayAttack) {
 				// Attack
 				am.select(new ActionAttack(c, handler));
-				am.current().use(px, py);
+				am.current().use(ex, ey);
 			}else {
-				int npx, npy;
+				int nex, ney;
 
 				float len;
 				boolean mayRunattack = false;
 
-				LinkedList<Point> moveP = new LinkedList<Point>();
-				LinkedList<Point> runP = new LinkedList<Point>();
+				LinkedList<Point> moveP = new LinkedList<>();
+				LinkedList<Point> runP = new LinkedList<>();
 
 				for(int yy=-1; yy<=1; yy++) {
 					for (int xx=-1; xx<=1; xx++) {
 						if(xx != 0 || yy != 0) {
-							len = handler.map.getPathLength(c.getMX(), c.getMY(), px + xx, py + yy);
+							len = handler.map.getPathLength(c.getMX(), c.getMY(), ex + xx, ey + yy);
 							if (len > 0 && len < c.att.getSz()) {
-								moveP.add(new Point(px+xx, py+yy));
+								moveP.add(new Point(ex+xx, ey+yy));
 							}else if(len >= c.att.getSz() && len <= c.att.getSz() * 2) {
 								mayRunattack = true;
-								yy = xx = 2;
+								yy = xx = 10;
 							}else if(len > c.att.getSz() * 2) {
-								runP.add(new Point(px+xx, py+yy));
+								runP.add(new Point(ex+xx, ey+yy));
 							}
 						}
 					}
 				}
 
 				if(mayRunattack) {
-					npx = px;
-					npy = py;
+					nex = ex;
+					ney = ey;
 					am.select(new ActionRunattack(c, handler));
-					am.current().use(npx, npy);
+					am.current().use(nex, ney);
 				}else if(moveP.size() > 0) {
 					Point selP = handler.map.getNearestPoint(moveP, c.getMX(), c.getMY());
-
-					npx = selP.x;
-					npy = selP.y;
-
-					System.out.println("AI: move to " + npx + " | " + npy);
+					nex = selP.x;
+					ney = selP.y;
+					System.out.println("AI: move to " + nex + " | " + ney);
 					am.select(new ActionMove(c, handler));
-					am.current().use(npx, npy);
+					am.current().use(nex, ney);
 				}else if(runP.size() > 0) {
 					Point selP = handler.map.getNearestPoint(runP, c.getMX(), c.getMY());
-
-					npx = selP.x;
-					npy = selP.y;
-
-					System.out.println("AI: run to " + npx + " | " + npy);
+					nex = selP.x;
+					ney = selP.y;
+					System.out.println("AI: run to " + nex + " | " + ney);
 					am.select(new ActionRun(c, handler));
-					am.current().use(npx, npy);
+					am.current().use(nex, ney);
 				}else {
 					System.out.println("Can't go to the player");
 				}

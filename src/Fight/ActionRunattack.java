@@ -76,7 +76,7 @@ public class ActionRunattack extends Action {
 
             float len;
 
-            LinkedList<Point> runattackP = new LinkedList<Point>();
+            LinkedList<Point> runattackP = new LinkedList<>();
 
             for(int yy=-1; yy<=1; yy++) {
                 for (int xx=-1; xx<=1; xx++) {
