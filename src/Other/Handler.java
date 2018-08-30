@@ -157,7 +157,7 @@ public class Handler extends MouseAdapter {
 		if(e.getButton() == 2) {
             int mapX = (int) ((e.getX() + camera.getX()) / Handler.cellW);
             int mapY = (int) ((e.getY() + camera.getY()) / Handler.cellH);
-		    creatures.get(0).setFocus(mapX, mapY);
+			System.out.println("Clicked: " + mapX + " | " + mapY);
         }
 	}
 	

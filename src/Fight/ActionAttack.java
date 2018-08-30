@@ -12,7 +12,8 @@ public class ActionAttack extends Action {
 
 	public ActionAttack(Creature c, Handler handler) {
 		super(c, handler);
-		this.img = MainClass.tex.swordIcon;
+		this.img[0] = MainClass.tex.swordIcon;
+		this.img[1] = MainClass.tex.swordIcon;
 	}
 
 	public void slUpdate(float et) {

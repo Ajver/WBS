@@ -88,17 +88,9 @@ public class Map {
 					for(int xx=-1; xx<=1; xx++) {
 						if(p.x+xx >= 0 && p.x+xx < w && p.y+yy >= 0 && p.y+yy < h) { // Over the map
 							if (!visited[p.x + xx][p.y + yy]) {
-								if (grid[p.x + xx][p.y + yy].mayBePath()) {
-									if (p.x + xx == finish.x && p.y + yy == finish.y) { // (Is'n a rock, or something...)
-
-										if (p.x + xx == finish.x) {
-											if (p.y + yy == finish.y) {
-												return len;
-											}
-										}
-										visited[p.x + xx][p.y + yy] = true;
-										newPoints.add(new Point(p.x + xx, p.y + yy));
-									} else if (handler.getFromMap(p.x + xx, p.y + yy) == null) { // (Is'n a rock, or something...)
+								if (grid[p.x + xx][p.y + yy].mayBePath()) { // (Is'n a rock, or something...)
+									if (handler.getFromMap(p.x + xx, p.y + yy) == null ||
+											(p.x + xx == finish.x && p.y + yy == finish.y)) {
 
 										if (p.x + xx == finish.x) {
 											if (p.y + yy == finish.y) {
@@ -191,6 +183,18 @@ public class Map {
 		return null;
 	}
 
+	private void pathElement(Point p, int xx, int yy, Point finish, Point[][] pGrid, LinkedList<Point> newPoints) {
+		if(xx >= 0 && xx < w && yy >= 0 && yy < h) {
+			if(pGrid[xx][yy].x == -1 &&
+					handler.getFromMap(xx, yy) == null &&
+					grid[xx][yy].mayBePath()) {
+				pGrid[xx][yy].x = p.x;
+				pGrid[xx][yy].y = p.y;
+				newPoints.add(new Point(xx, yy));
+			}
+		}
+	}
+
 	public void clearColors() {
 		for(int yy=0; yy<h; yy++) {
 			for(int xx=0; xx<w; xx++) {
@@ -219,15 +223,54 @@ public class Map {
 		}
 	}
 
-	private void pathElement(Point p, int xx, int yy, Point finish, Point[][] pGrid, LinkedList<Point> newPoints) {
-		if(xx >= 0 && xx < w && yy >= 0 && yy < h) {
-			if(pGrid[xx][yy].x == -1 &&
-					handler.getFromMap(xx, yy) == null &&
-					grid[xx][yy].mayBePath()) { 
-				pGrid[xx][yy].x = p.x;
-				pGrid[xx][yy].y = p.y;
-				newPoints.add(new Point(xx, yy));
-			}
+	public Point getNearestPoint(int x1, int y1, int x2, int y2) {
+		int len, curLen, nx = x2, ny = y2-1;
+
+		len = getPathLength(x1, y1, x2, y2-1);
+		curLen = len;
+
+		if((len = getPathLength(x1, y1, x2+1, y2)) < curLen || curLen == -1 && len >= 0) {
+			curLen = len;
+			nx = x2+1;
+			ny = y2;
+		}else System.out.print(len+", ");
+		if((len = getPathLength(x1, y1, x2, y2+1)) < curLen || curLen == -1 && len >= 0) {
+			curLen = len;
+			nx = x2;
+			ny = y2+1;
+		}else System.out.print(len+", ");
+		if((len = getPathLength(x1, y1, x2-1, y2)) < curLen || curLen == -1 && len >= 0) {
+			curLen = len;
+			nx = x2-1;
+			ny = y2;
+		}else System.out.print(len+", ");
+
+		if((len = getPathLength(x1, y1, x2-1, y2-1)) < curLen || curLen == -1 && len >= 0) {
+			curLen = len;
+			nx = x2-1;
+			ny = y2-1;
+		}else System.out.print(len+", ");
+		if((len = getPathLength(x1, y1, x2+1, y2-1)) < curLen || curLen == -1 && len >= 0) {
+			curLen = len;
+			nx = x2+1;
+			ny = y2-1;
+		}else System.out.print(len+", ");
+		if((len = getPathLength(x1, y1, x2+1, y2+1)) < curLen || curLen == -1 && len >= 0) {
+			curLen = len;
+			nx = x2+1;
+			ny = y2+1;
+		}else System.out.print(len+", ");
+		if((len = getPathLength(x1, y1, x2-1, y2+1)) < curLen || curLen == -1 && len >= 0) {
+			curLen = len;
+			nx = x2-1;
+			ny = y2+1;
+		}else System.out.print(len+", ");
+		System.out.println();
+
+		if(curLen == -1) {
+			return null;
 		}
+
+		return new Point(nx, ny);
 	}
 }

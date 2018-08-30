@@ -1,7 +1,6 @@
 package Fight;
 
 import Creatures.Creature;
-import Creatures.Human;
 import MainFiles.MainClass;
 import Other.Handler;
 
@@ -19,7 +18,8 @@ public class ActionRunattack extends Action {
     public ActionRunattack(Creature c, Handler handler) {
         super(c, handler);
         this.duration = 2;
-        this.img = MainClass.tex.runattackIcon;
+        this.img[0] = MainClass.tex.runattackIcon;
+        this.img[1] = MainClass.tex.runattackIcon;
     }
 
     public void slUpdate(float et) {
@@ -35,8 +35,8 @@ public class ActionRunattack extends Action {
         int cx = c.getMX();
         int cy = c.getMY();
 
-        int minLen = c.att.getSz() * 2;
-        int maxLen = c.att.getSz() * 4 + 1;
+        int minLen = c.att.getSz() + 1;
+        int maxLen = c.att.getSz() * 2;
 
         slMouseLeved();
 
@@ -57,7 +57,7 @@ public class ActionRunattack extends Action {
         }
 
         if(!isInRange) {
-            handler.msg.set("Nie ma do kogo zaszar¿owaæ");
+            handler.msg.set("Nie ma na kogo zaszar¿owaæ");
         }
     }
 
@@ -76,29 +76,18 @@ public class ActionRunattack extends Action {
 
             c.setFocus(mapX, mapY);
 
-            int npx = mapX, npy = mapY;
-            float len = -1;
-            for(int yy=-1; yy<=1; yy++) {
-                for(int xx=-1; xx<=1; xx++) {
-                    int diffX = mapX+xx - c.getMX();
-                    int diffY = mapY+yy - c.getMY();
-                    float newLen = (float)(Math.sqrt(diffX*diffX + diffY*diffY));
-                    if(len == -1 || newLen < len) {
-                        if(newLen > 0) {
-                            len = newLen;
-                            npx = mapX+xx;
-                            npy = mapY+yy;
-                        }
-                    }
-                }
+            Point bp = handler.map.getNearestPoint(cx, cy, mapX, mapY);
+
+            if(bp != null) {
+                LinkedList<Point> path = handler.map.getPath(cx, cy, bp.x, bp.y);
+
+                used = true;
+
+                c.move(path);
+                startLocalTimer((int) (c.moveDuration * (path.size()) * 1000.0f));
+            }else {
+                System.out.println("Path to run attack is null");
             }
-
-            LinkedList<Point> path = handler.map.getPath(cx, cy, npx, npy);
-
-            used = true;
-
-            c.move(path);
-            startLocalTimer((int)(c.moveDuration * (path.size()) * 1000.0f));
         }
     }
 
@@ -113,6 +102,14 @@ public class ActionRunattack extends Action {
                 handler.map.setClickable(xx, yy, false);
             }
         }
+    }
+
+    public boolean can(int mapX, int mapY) {
+        int minLen = c.att.getSz() + 1;
+        int maxLen = c.att.getSz() * 2;
+        int len = handler.map.getPathLength(c.getMX(), c.getMY(), mapX, mapY);
+
+        return len >= minLen && len <= maxLen;
     }
 
     public void mouseReleased(MouseEvent e) {
@@ -131,8 +128,8 @@ public class ActionRunattack extends Action {
         int cx = c.getMX();
         int cy = c.getMY();
 
-        int minLen = c.att.getSz() * 2;
-        int maxLen = c.att.getSz() * 4 + 1;
+        int minLen = c.att.getSz() + 1;
+        int maxLen = c.att.getSz() * 2;
 
         for(int yy=-maxLen; yy<=maxLen; yy++) {
             for(int xx=-maxLen; xx<=maxLen; xx++) {

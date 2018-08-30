@@ -51,10 +51,10 @@ public class ActionManagerGUI extends ActionManager {
         g.drawImage(actionBg, (int)(selX + buttonW), (int)y, null);
 
         if(selected[0] != null) {
-            g.drawImage(selected[0].img, (int)selX, (int)y, null);
+            g.drawImage(selected[0].img[0], (int)selX, (int)y, null);
 
             if(selected[1] != null) {
-                g.drawImage(selected[1].img, (int)(selX+buttonW), (int)y, null);
+                g.drawImage(selected[1].img[0], (int)(selX+buttonW), (int)y, null);
             }
         }
 
@@ -93,21 +93,12 @@ public class ActionManagerGUI extends ActionManager {
     }
 
     public void mouseReleased(MouseEvent e) {
-        int mapX = (int) ((e.getX() + handler.camera.getX()) / Handler.cellW);
-        int mapY = (int) ((e.getY() + handler.camera.getY()) / Handler.cellH);
-
-        if(e.getButton() == 2) {
-            System.out.println(handler.map.getPathLength(c.getMX(), c.getMY(), mapX, mapY));
-        }
-
         if(current() == null) {
             for(ActionGroup ag : ag) {
                 Action a = ag.mouseReleased(e);
 
                 if(a != null) {
-                    if (a.getDuration() == 1 || (a.getDuration() == 2 && currentAction == 0)) {
-                        select(a);
-                    }
+                    select(a);
                 }
             }
         }else {
@@ -123,9 +114,9 @@ public class ActionManagerGUI extends ActionManager {
                 return;
             }
 
-            if(!selected[currentAction].used()) {
+            if(!current().used()) {
                 if(canelBtn.mouseOver(e.getX(), e.getY())) {
-                    selected[currentAction].canel();
+                    current().canel();
                     selected[currentAction] = null;
                     showActions();
                     return;
@@ -191,8 +182,11 @@ public class ActionManagerGUI extends ActionManager {
 
     public void select(Action a) {
         if(current() == null) {
-            selected[currentAction] = a;
-            hideActions();
+            if(a.getDuration() == 1 || currentAction == 0) {
+                selected[currentAction] = a;
+                a.select();
+                hideActions();
+            }
         }
     }
 

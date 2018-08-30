@@ -11,15 +11,19 @@ public class ActionManager {
 	protected Handler handler;
 	public Creature c;
 
+    public int attackCounter;
+
 	public ActionManager(Handler handler, Creature c) {
         this.handler = handler;
         this.c = c;
+        c.am = this;
 	}
 
     public void reset() {
         selected[0] = null;
         selected[1] = null;
         currentAction = 0;
+        attackCounter = 0;
     }
 
     public void nextAction() {

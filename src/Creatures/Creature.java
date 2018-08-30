@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import Character.Attributes;
-import Fight.ActionManager;
 import Fight.AI;
+import Fight.ActionManager;
 import Other.GameObject;
 import Other.Handler;
 import Other.SoundPlayer;
@@ -33,6 +33,7 @@ public abstract class Creature extends GameObject {
 
 	private boolean isAttacking = false;
 
+	public ActionManager am;
 	public AI AI;
 	private boolean hasAI = true;
 

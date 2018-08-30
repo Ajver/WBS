@@ -3,6 +3,9 @@ package Fight;
 import Creatures.Creature;
 import Other.Handler;
 
+import java.awt.*;
+import java.util.LinkedList;
+
 public class AI {
 	
 	private Creature c;
@@ -28,47 +31,64 @@ public class AI {
 			int py = handler.creatures.get(0).getMY();
 			
 			// Is player in range
-			boolean isPlayer = false;
+			boolean mayAttack = false;
 			
 			for(int yy=-1; yy<=1; yy++) {
 				for(int xx=-1; xx<=1; xx++) {
 					if(c.getMX()+xx == px) {
 						if(c.getMY()+yy == py) {
-							isPlayer = true;
+							mayAttack = true;
 							yy = xx = 10;
 						}
 					}
 				}
 			}
-			if(isPlayer) {
+			if(mayAttack) {
 				// Attack
 				am.select(new ActionAttack(c, handler));
 				am.current().use(px, py);
 			}else {
-				int npx = px, npy = py;
-				float len = -1;
+				float len;
+
+				boolean mayRunattack = false, mayMove = false;
+
 				for(int yy=-1; yy<=1; yy++) {
-					for(int xx=-1; xx<=1; xx++) {
-						int diffX = px+xx - c.getMX();
-						int diffY = py+yy - c.getMY();
-						float newLen = (float)(Math.sqrt(diffX*diffX + diffY*diffY));
-						if(len == -1 || newLen < len) {
-							if(newLen > 0) {
-								len = newLen;
-								npx = px+xx;
-								npy = py+yy;
+					for (int xx=-1; xx<=1; xx++) {
+						if(xx != 0 || yy != 0) {
+							len = handler.map.getPathLength(c.getMX(), c.getMY(), px + xx, py + yy);
+							if (len > 0 && len < c.att.getSz()) {
+								mayMove = true;
+							}else if(len >= c.att.getSz() && len <= c.att.getSz() * 2) {
+								mayRunattack = true;
+								yy = xx = 2;
 							}
 						}
 					}
 				}
-				
-				if(handler.map.getPathLength(c.getMX(), c.getMY(), npx, npy) <= c.att.getSz() * 2) {
-					am.select(new ActionMove(c, handler));
-				}else {
-					am.select(new ActionRun(c, handler));
-				}
 
-				am.current().use(npx, npy);
+				Point bp = handler.map.getNearestPoint(c.getMX(), c.getMY(), px, py);
+
+				if(bp != null) {
+					int npx = bp.x;
+					int npy = bp.y;
+
+					if(mayRunattack) {
+						npx = px;
+						npy = py;
+						am.select(new ActionRunattack(c, handler));
+						System.out.println("AI: runnatack to " + npx + " | " + npy);
+					}else if(mayMove) {
+						am.select(new ActionMove(c, handler));
+						System.out.println("AI: move to " + npx + " | " + npy);
+					}else {
+						am.select(new ActionRun(c, handler));
+						System.out.println("AI: run to " + npx + " | " + npy);
+					}
+
+					am.current().use(npx, npy);
+				}else {
+
+				}
 			}
 		}
 	}

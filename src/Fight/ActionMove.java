@@ -14,7 +14,8 @@ public class ActionMove extends Action {
 	public ActionMove(Creature c, Handler handler) {
 		super(c, handler);
 		
-		this.img = MainClass.tex.bootIcon;
+		this.img[0] = MainClass.tex.bootIcon;
+		this.img[1] = MainClass.tex.bootIcon;
 	}
 
 	public void slUpdate(float et) {
@@ -27,7 +28,7 @@ public class ActionMove extends Action {
 
 		slMouseLeved();
 
-		int maxLen = c.att.getSz() * 2;
+		int maxLen = c.att.getSz();
 		
 		for(int yy=-maxLen; yy<=maxLen; yy++) {
 			for(int xx=-maxLen; xx<=maxLen; xx++) {
@@ -50,7 +51,7 @@ public class ActionMove extends Action {
 
 			LinkedList<Point> path = handler.map.getPath(cx, cy, mapX, mapY);
 			if(path != null) {
-				int maxLen = c.att.getSz() * 2;
+				int maxLen = c.att.getSz();
 				if(path.size() > maxLen+1) {
 					LinkedList<Point> newPath = new LinkedList<Point>();
 
@@ -64,7 +65,7 @@ public class ActionMove extends Action {
 				c.move(path);
 				startTimer((int)(c.moveDuration * (path.size()+1) * 1000.0f));
 			}else {
-				handler.msg.set("No path");
+				handler.msg.set("No path to move");
 			}
 		}
 	}
@@ -83,7 +84,7 @@ public class ActionMove extends Action {
 		int cx = c.getMX();
 		int cy = c.getMY();
 
-		int maxLen = c.att.getSz() * 2;
+		int maxLen = c.att.getSz();
 
 		for(int yy=-maxLen; yy<=maxLen; yy++) {
 			for(int xx=-maxLen; xx<=maxLen; xx++) {

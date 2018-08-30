@@ -14,7 +14,7 @@ public abstract class Action {
 	// Position on Screen
 	protected float x, y;
 
-	public BufferedImage img;
+	public BufferedImage[] img = new BufferedImage[2];
 	protected boolean hover = false;
 	protected boolean wasHover = false;
 	private boolean soundPlayed = false;
@@ -22,7 +22,9 @@ public abstract class Action {
 	
 	// How long is this Action (no animation of this)
 	protected int duration = 1; 
-	
+
+	protected boolean isActive = true;
+
 	protected Creature c;
 	protected Handler handler;
 	
@@ -51,40 +53,32 @@ public abstract class Action {
 	}
 	
 	public void render(Graphics g) {
-		if(img == null) {
-			if(hover) {
-				g.setColor(new Color(162, 143, 64));
-			}else {
-				g.setColor(new Color(132, 103, 54));
-			}
+		if(hover) {
+			g.setColor(new Color(162, 143, 64));
+			g.fillRect((int)x-4, (int)y-4, (int)(ActionManagerGUI.buttonW * duration + 8), (int)(ActionManagerGUI.buttonW + 8));
 		}
-
-			if(img == null) {
-				g.fillRect((int)getX(), (int)getY(), (int)(ActionManagerGUI.buttonW * duration), (int)(ActionManagerGUI.buttonW));
-			}else {
-				g.drawImage(img, (int)getX(), (int)getY(), null);
-			}
-			if(img == null) {
-				g.fillRect((int)x, (int)y, (int)(ActionManagerGUI.buttonW * duration), (int)(ActionManagerGUI.buttonW));
-			}else {
-				if(hover) {
-					g.setColor(new Color(162, 143, 64));
-					g.fillRect((int)x-4, (int)y-4, (int)(ActionManagerGUI.buttonW * duration + 8), (int)(ActionManagerGUI.buttonW + 8));
-				}
-				g.drawImage(img, (int)x, (int)y, null);
-			}
-
+		g.drawImage(img[isActive ? 0 : 1], (int)x, (int)y, null);
 	}
 	
 	public abstract void slUpdate(float et);
 	public abstract void select();
 	public abstract void canel();
-	
+
 	public void use() { // To override 
 		System.out.println("Error: No set use() function!");
 	}
 	public void use(int mapx, int mapY) { // To override 
-		System.out.println("Error: No overrided use(mapX, mapY) function!");
+		System.out.println("Error: No set use(mapX, mapY) function!");
+	}
+
+	public boolean can() {
+		System.out.println("Error: No set can() function!");
+		return false;
+	}
+
+	public boolean can(int mapX, int mapY)  {
+		System.out.println("Error: No set can(mapX, mapY) function!");
+		return false;
 	}
 
 	public void setX(float x) { this.x = x; }

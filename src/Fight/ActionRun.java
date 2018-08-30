@@ -14,8 +14,9 @@ public class ActionRun extends Action {
 	public ActionRun(Creature c, Handler handler) {
 		super(c, handler);
 		
-		this.img = MainClass.tex.bigBootIcon;
-		
+		this.img[0] = MainClass.tex.bigBootIcon;
+		this.img[1] = MainClass.tex.bigBootIcon;
+
 		this.duration = 2;
 	}
 
@@ -29,7 +30,7 @@ public class ActionRun extends Action {
 
 		slMouseLeved();
 
-		int maxLen = c.att.getSz() * 4;
+		int maxLen = c.att.getSz() * 3;
 		
 		for(int yy=-maxLen; yy<=maxLen; yy++) {
 			for(int xx=-maxLen; xx<=maxLen; xx++) {
@@ -54,9 +55,9 @@ public class ActionRun extends Action {
 
 			LinkedList<Point> path = handler.map.getPath(cx, cy, mapX, mapY);
 			if(path != null) {
-				int maxLen = c.att.current[1][3] * 4;
+				int maxLen = c.att.getSz() * 3;
 				
-				if(path.size() > maxLen+1) {
+				if(path.size() > maxLen) {
 					LinkedList<Point> newPath = new LinkedList<Point>();
 
 					for(int i=0; i<maxLen+1; i++) {
@@ -70,7 +71,7 @@ public class ActionRun extends Action {
 				c.move(path);
 				startTimer((int)(c.moveDuration * (path.size()+1) * 1000.0f));
 			}else {
-				handler.msg.set("No path to run");
+				System.out.println("Path to run is null");
 			}
 		}
 	}
@@ -79,7 +80,7 @@ public class ActionRun extends Action {
 		int cx = c.getMX();
 		int cy = c.getMY();
 
-		int maxLen = c.att.getSz() * 4;
+		int maxLen = c.att.getSz() * 3;
 
 		for(int yy=-maxLen; yy<=maxLen; yy++) {
 			for(int xx=-maxLen; xx<=maxLen; xx++) {
