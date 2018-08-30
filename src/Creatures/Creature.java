@@ -24,7 +24,7 @@ public abstract class Creature extends GameObject {
 	private int currentPoint = 0;
 	private long timer;
 	
-	public static float moveDuration = 0.3f;
+	public static float moveDuration = 0.4f;
 	public static float attackDuration = 0.6f;
 
 	protected Animation moveAnimation;
@@ -56,7 +56,8 @@ public abstract class Creature extends GameObject {
 	public void hit(int dmg) {
 		this.hp -= dmg;
 		handler.msg.add("HP left: " + this.hp);
-		
+		SoundPlayer.playNextSound("res/Sounds/damage.wav");
+
 		if(hp < 0) {
 			//handler.removeCreature(this);
 		}

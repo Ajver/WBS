@@ -223,54 +223,48 @@ public class Map {
 		}
 	}
 
-	public Point getNearestPoint(int x1, int y1, int x2, int y2) {
-		int len, curLen, nx = x2, ny = y2-1;
+	public Point getNearestPoint(LinkedList<Point> list, int x1, int y1) {
+		int px = handler.creatures.get(0).getMX();
+		int py = handler.creatures.get(0).getMY();
 
-		len = getPathLength(x1, y1, x2, y2-1);
-		curLen = len;
+		LinkedList<Point> crossP = new LinkedList<Point>();
+		LinkedList<Point> exP = new LinkedList<Point>();
 
-		if((len = getPathLength(x1, y1, x2+1, y2)) < curLen || curLen == -1 && len >= 0) {
-			curLen = len;
-			nx = x2+1;
-			ny = y2;
-		}else System.out.print(len+", ");
-		if((len = getPathLength(x1, y1, x2, y2+1)) < curLen || curLen == -1 && len >= 0) {
-			curLen = len;
-			nx = x2;
-			ny = y2+1;
-		}else System.out.print(len+", ");
-		if((len = getPathLength(x1, y1, x2-1, y2)) < curLen || curLen == -1 && len >= 0) {
-			curLen = len;
-			nx = x2-1;
-			ny = y2;
-		}else System.out.print(len+", ");
+		for(int i=0; i<list.size(); i++) {
+			Point p = list.get(i);
 
-		if((len = getPathLength(x1, y1, x2-1, y2-1)) < curLen || curLen == -1 && len >= 0) {
-			curLen = len;
-			nx = x2-1;
-			ny = y2-1;
-		}else System.out.print(len+", ");
-		if((len = getPathLength(x1, y1, x2+1, y2-1)) < curLen || curLen == -1 && len >= 0) {
-			curLen = len;
-			nx = x2+1;
-			ny = y2-1;
-		}else System.out.print(len+", ");
-		if((len = getPathLength(x1, y1, x2+1, y2+1)) < curLen || curLen == -1 && len >= 0) {
-			curLen = len;
-			nx = x2+1;
-			ny = y2+1;
-		}else System.out.print(len+", ");
-		if((len = getPathLength(x1, y1, x2-1, y2+1)) < curLen || curLen == -1 && len >= 0) {
-			curLen = len;
-			nx = x2-1;
-			ny = y2+1;
-		}else System.out.print(len+", ");
-		System.out.println();
-
-		if(curLen == -1) {
-			return null;
+			if(px-p.x == 0 || py-p.y == 0) {
+				crossP.add(p);
+			}else {
+				exP.add(p);
+			}
 		}
 
-		return new Point(nx, ny);
+		int len;
+		Point selP;
+
+		if(crossP.size() > 0) {
+			selP = crossP.get(0);
+			len = handler.map.getPathLength(x1, y1, selP.x, selP.y);
+			for(int i=1; i<crossP.size(); i++) {
+				int nLen = handler.map.getPathLength(x1, y1, crossP.get(i).x, crossP.get(i).y);
+				if(nLen < len) {
+					selP = crossP.get(i);
+					len = nLen;
+				}
+			}
+		}else {
+			selP = exP.get(0);
+			len = handler.map.getPathLength(x1, y1, selP.x, selP.y);
+			for(int i=1; i<exP.size(); i++) {
+				int nLen = handler.map.getPathLength(x1, y1, exP.get(i).x, exP.get(i).y);
+				if(nLen < len) {
+					selP = exP.get(i);
+					len = nLen;
+				}
+			}
+		}
+
+		return selP;
 	}
 }

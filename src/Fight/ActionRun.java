@@ -88,7 +88,7 @@ public class ActionRun extends Action {
 					int len = handler.map.getPathLength(cx, cy, cx+xx, cy+yy);
 					if (len > 0 && len <= maxLen) {
 						if(handler.getFromMap(cx+xx, cy+yy) == null) {
-							handler.map.grid[cx + xx][cy + yy].setColor(new Color(50, 50, 255, 110));
+							handler.map.grid[cx + xx][cy + yy].setColor(new Color(0, 211, 211));
 						}
 					}
 				}

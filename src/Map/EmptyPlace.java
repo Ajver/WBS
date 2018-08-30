@@ -20,16 +20,15 @@ public class EmptyPlace extends MapObject {
 	}
 
 	public void render(Graphics g) {
-		g.setColor(new Color(20, 150, 50));
+		if(col != null) {
+			g.setColor(col);
+		}else {
+			g.setColor(new Color(20, 150, 50));
+		}
 		g.fillRect((int)(x), (int)(y), (int)Handler.cellW, (int)Handler.cellH);
 		
 		g.setColor(new Color(10, 135, 45));
 		g.drawRect((int)(x), (int)(y), (int)Handler.cellW, (int)Handler.cellH);
-
-		if(col != null) {
-			g.setColor(col);
-			g.fillRect((int)(x), (int)(y), (int)Handler.cellW, (int)Handler.cellH);
-		}
 
 		if(isClickable) {
 			if(hover) {

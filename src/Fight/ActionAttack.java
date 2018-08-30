@@ -83,7 +83,7 @@ public class ActionAttack extends Action {
 			for (int xx = -1; xx <= 1; xx++) {
 				if (cx + xx >= 0 && cx + xx < handler.map.w && cy + yy >= 0 && cy + yy < handler.map.h) {
 					if (xx != 0 || yy != 0) {
-						handler.map.grid[cx + xx][cy + yy].setColor(new Color(255, 0, 50, 110));
+						handler.map.grid[cx + xx][cy + yy].setColor(new Color(163, 32, 0));
 					}
 				}
 			}

@@ -36,7 +36,7 @@ public class ActionRunattack extends Action {
         int cy = c.getMY();
 
         int minLen = c.att.getSz() + 1;
-        int maxLen = c.att.getSz() * 2;
+        int maxLen = c.att.getSz() * 2 + 1;
 
         slMouseLeved();
 
@@ -74,19 +74,34 @@ public class ActionRunattack extends Action {
             int cx = c.getMX();
             int cy = c.getMY();
 
-            c.setFocus(mapX, mapY);
+            float len;
 
-            Point bp = handler.map.getNearestPoint(cx, cy, mapX, mapY);
+            LinkedList<Point> runattackP = new LinkedList<Point>();
 
-            if(bp != null) {
-                LinkedList<Point> path = handler.map.getPath(cx, cy, bp.x, bp.y);
+            for(int yy=-1; yy<=1; yy++) {
+                for (int xx=-1; xx<=1; xx++) {
+                    if(xx != 0 || yy != 0) {
+                        len = handler.map.getPathLength(c.getMX(), c.getMY(), mapX + xx, mapY + yy);
+                        if(len >= c.att.getSz() && len <= c.att.getSz() * 2) {
+                            runattackP.add(new Point(mapX+xx, mapY+yy));
+                        }
+                    }
+                }
+            }
+
+            if(runattackP.size() > 0) {
+                Point selP = handler.map.getNearestPoint(runattackP, c.getMX(), c.getMY());
+
+                System.out.println("Runattack to " + selP.x + " | " + selP.y);
+
+                LinkedList<Point> path = handler.map.getPath(cx, cy, selP.x, selP.y);
 
                 used = true;
 
                 c.move(path);
                 startLocalTimer((int) (c.moveDuration * (path.size()) * 1000.0f));
             }else {
-                System.out.println("Path to run attack is null");
+                System.out.println("Can't runattack to " + mapX + " | " + mapY);
             }
         }
     }
@@ -102,14 +117,6 @@ public class ActionRunattack extends Action {
                 handler.map.setClickable(xx, yy, false);
             }
         }
-    }
-
-    public boolean can(int mapX, int mapY) {
-        int minLen = c.att.getSz() + 1;
-        int maxLen = c.att.getSz() * 2;
-        int len = handler.map.getPathLength(c.getMX(), c.getMY(), mapX, mapY);
-
-        return len >= minLen && len <= maxLen;
     }
 
     public void mouseReleased(MouseEvent e) {
@@ -129,14 +136,14 @@ public class ActionRunattack extends Action {
         int cy = c.getMY();
 
         int minLen = c.att.getSz() + 1;
-        int maxLen = c.att.getSz() * 2;
+        int maxLen = c.att.getSz() * 2 + 1;
 
         for(int yy=-maxLen; yy<=maxLen; yy++) {
             for(int xx=-maxLen; xx<=maxLen; xx++) {
                 if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
                     int len = handler.map.getPathLength(cx, cy, cx+xx, cy+yy);
                     if (len >= minLen && len <= maxLen) {
-                        handler.map.grid[cx + xx][cy + yy].setColor(new Color(255, 0, 50, 110));
+                        handler.map.grid[cx + xx][cy + yy].setColor(new Color(163, 32, 0));
                     }
                 }
             }

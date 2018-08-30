@@ -48,46 +48,55 @@ public class AI {
 				am.select(new ActionAttack(c, handler));
 				am.current().use(px, py);
 			}else {
-				float len;
+				int npx, npy;
 
-				boolean mayRunattack = false, mayMove = false;
+				float len;
+				boolean mayRunattack = false;
+
+				LinkedList<Point> moveP = new LinkedList<Point>();
+				LinkedList<Point> runP = new LinkedList<Point>();
 
 				for(int yy=-1; yy<=1; yy++) {
 					for (int xx=-1; xx<=1; xx++) {
 						if(xx != 0 || yy != 0) {
 							len = handler.map.getPathLength(c.getMX(), c.getMY(), px + xx, py + yy);
 							if (len > 0 && len < c.att.getSz()) {
-								mayMove = true;
+								moveP.add(new Point(px+xx, py+yy));
 							}else if(len >= c.att.getSz() && len <= c.att.getSz() * 2) {
 								mayRunattack = true;
 								yy = xx = 2;
+							}else if(len > c.att.getSz() * 2) {
+								runP.add(new Point(px+xx, py+yy));
 							}
 						}
 					}
 				}
 
-				Point bp = handler.map.getNearestPoint(c.getMX(), c.getMY(), px, py);
+				if(mayRunattack) {
+					npx = px;
+					npy = py;
+					am.select(new ActionRunattack(c, handler));
+					am.current().use(npx, npy);
+				}else if(moveP.size() > 0) {
+					Point selP = handler.map.getNearestPoint(moveP, c.getMX(), c.getMY());
 
-				if(bp != null) {
-					int npx = bp.x;
-					int npy = bp.y;
+					npx = selP.x;
+					npy = selP.y;
 
-					if(mayRunattack) {
-						npx = px;
-						npy = py;
-						am.select(new ActionRunattack(c, handler));
-						System.out.println("AI: runnatack to " + npx + " | " + npy);
-					}else if(mayMove) {
-						am.select(new ActionMove(c, handler));
-						System.out.println("AI: move to " + npx + " | " + npy);
-					}else {
-						am.select(new ActionRun(c, handler));
-						System.out.println("AI: run to " + npx + " | " + npy);
-					}
+					System.out.println("AI: move to " + npx + " | " + npy);
+					am.select(new ActionMove(c, handler));
+					am.current().use(npx, npy);
+				}else if(runP.size() > 0) {
+					Point selP = handler.map.getNearestPoint(runP, c.getMX(), c.getMY());
 
+					npx = selP.x;
+					npy = selP.y;
+
+					System.out.println("AI: run to " + npx + " | " + npy);
+					am.select(new ActionRun(c, handler));
 					am.current().use(npx, npy);
 				}else {
-
+					System.out.println("Can't go to the player");
 				}
 			}
 		}
