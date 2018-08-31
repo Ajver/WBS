@@ -18,7 +18,9 @@ public class KeyInput extends KeyAdapter {
 	
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			System.exit(0);
+			System.exit(999);
+		}else {
+			handler.keyPressed(e);
 		}
 	}
 	

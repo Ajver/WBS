@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="WBS:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/WBS_jar</output-path>
+    <root id="archive" name="WBS.jar">
+      <element id="module-output" name="WBS" />
+    </root>
+  </artifact>
+</component>

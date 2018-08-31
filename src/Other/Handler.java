@@ -1,6 +1,7 @@
 package Other;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
@@ -180,6 +181,14 @@ public class Handler extends MouseAdapter {
 
 	public void mouseDragged(MouseEvent e) {
 		camera.mouseDragged(e);
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////
+
+	public void keyPressed(KeyEvent e) {
+		if(currentCreature == 0) {
+			actionManager.keyPressed(e);
+		}
 	}
 
 }

@@ -6,6 +6,7 @@ import Other.Button;
 import Other.Handler;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -14,6 +15,7 @@ public class ActionManagerGUI extends ActionManager {
     public static float buttonW = 64;
 
     private ActionGroup[] ag = new ActionGroup[3];
+    private Action previousAction = null;
 
     private Button canelBtn;
 
@@ -182,15 +184,30 @@ public class ActionManagerGUI extends ActionManager {
 
     public void select(Action a) {
         if(current() == null) {
-            if(a.getDuration() == 1 || currentAction == 0) {
-                selected[currentAction] = a;
-                a.select();
-                hideActions();
+            if(a != null) {
+                if (a.getDuration() == 1 || currentAction == 0) {
+                    selected[currentAction] = a;
+                    previousAction = a;
+                    a.select();
+                    hideActions();
+                }
             }
         }
     }
 
     private boolean mouseOver(int mx, int my, float x, float y, float w, float h) {
         return mx >= x && mx <= x+w && my >= y && my <= y+h;
+    }
+
+    public void keyPressed(KeyEvent e) {
+        System.out.println(":(((");
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_SHIFT:
+                System.out.println(":D");
+                select(previousAction);
+                break;
+            default:
+                System.out.println(e.getKeyChar());
+        }
     }
 }

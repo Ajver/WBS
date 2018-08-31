@@ -2,9 +2,13 @@ package Map;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.LinkedList;
 
 import Other.Handler;
+
+import javax.imageio.ImageIO;
 
 public class Map {
 
@@ -23,18 +27,20 @@ public class Map {
 		this.w = w;
 		this.h = h;
 		this.handler = handler;
-		
-		grid = new MapObject[w][h];
-		
-		for(int yy=0; yy<h; yy++) {
-			for(int xx=0; xx<w; xx++) {
-				grid[xx][yy] = new EmptyPlace(xx, yy);
-			}
-		}
-		
-		for(int yy=0; yy<8; yy++) {
-			grid[8][yy+5] = new Rock(8, yy+5);
-		}
+
+		loadFromImg("res/Maps/map1.png");
+
+
+//
+//		for(int yy=0; yy<h; yy++) {
+//			for(int xx=0; xx<w; xx++) {
+//				grid[xx][yy] = new EmptyPlace(xx, yy);
+//			}
+//		}
+//
+//		for(int yy=0; yy<8; yy++) {
+//			grid[8][yy+5] = new Rock(8, yy+5);
+//		}
 	}
 	
 	public void update(float et) {
@@ -266,5 +272,39 @@ public class Map {
 		}
 
 		return selP;
+	}
+
+	public void loadFromImg(String path) {
+		try {
+			BufferedImage frame = ImageIO.read(new File(path));
+
+			this.w = frame.getWidth();
+			this.h = frame.getHeight();
+
+			grid = new MapObject[w][h];
+
+			for(int yy=0; yy<h; yy++) {
+				for(int xx=0; xx<w; xx++) {
+					MapObject field;
+
+					int rgb = frame.getRGB(xx, yy);
+					int r = (rgb >> 16) & 0xff;
+					int g = (rgb >> 8) & 0xff;
+					int b = (rgb) & 0xff;
+
+					if(r == 100 && g == 100 && b == 100) {
+						field = new Rock(xx, yy);
+					}
+
+					else {
+						field = new EmptyPlace(xx, yy);
+					}
+
+					this.grid[xx][yy] = field;
+				}
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
