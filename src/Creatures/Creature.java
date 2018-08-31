@@ -1,7 +1,6 @@
 package Creatures;
 
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -55,8 +54,9 @@ public abstract class Creature extends GameObject {
 	
 	public void hit(int dmg) {
 		this.hp -= dmg;
-		handler.msg.add("HP left: " + this.hp);
 		SoundPlayer.playNextSound("res/Sounds/damage.wav");
+
+		handler.addSmallMessage(this, "-"+dmg, new Color(255, 0, 0));
 
 		if(hp < 0) {
 			//handler.removeCreature(this);

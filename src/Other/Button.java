@@ -61,6 +61,7 @@ public class Button {
 		this.hover = mouseOver(mx, my);
 		
 		if(this.hover) {
+			CursorManager.setCursor(CursorManager.HAND);
 			if(!soundPlayed) {
 				soundPlayed = (new SoundPlayer()).playSound("res/Sounds/click.wav");
 			}				

@@ -37,6 +37,8 @@ public class ActionManagerGUI extends ActionManager {
         this.ag[0] = new ActionGroup(x, y+64, new ActionAttack(p, handler), new ActionRunattack(p, handler));
         this.ag[1] = new ActionGroup(x+96, y+64, new ActionMove(p, handler), new ActionRun(p, handler));
         this.ag[2] = new ActionGroup(x+192, y+64, new ActionAttack(p, handler));
+
+        refresh();
     }
 
     public void update(float et) {
@@ -159,8 +161,18 @@ public class ActionManagerGUI extends ActionManager {
         }
     }
 
+    public void refresh() {
+        for(ActionGroup ag : ag) {
+            for (Action a : ag.actions) {
+                a.refresh();
+            }
+        }
+    }
+
     public void nextAction() {
         currentAction++;
+
+        refresh();
 
         if(currentAction > 1 || selected[0].getDuration() == 2) { // End of round
             reset();
@@ -185,11 +197,13 @@ public class ActionManagerGUI extends ActionManager {
     public void select(Action a) {
         if(current() == null) {
             if(a != null) {
-                if (a.getDuration() == 1 || currentAction == 0) {
-                    selected[currentAction] = a;
-                    previousAction = a;
-                    a.select();
-                    hideActions();
+                if(a.isActive) {
+                    if (a.getDuration() == 1 || currentAction == 0) {
+                        selected[currentAction] = a;
+                        previousAction = a;
+                        a.select();
+                        hideActions();
+                    }
                 }
             }
         }
@@ -200,10 +214,8 @@ public class ActionManagerGUI extends ActionManager {
     }
 
     public void keyPressed(KeyEvent e) {
-        System.out.println(":(((");
         switch (e.getKeyCode()) {
             case KeyEvent.VK_SHIFT:
-                System.out.println(":D");
                 select(previousAction);
                 break;
             default:

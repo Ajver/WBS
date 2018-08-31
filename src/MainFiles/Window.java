@@ -16,7 +16,7 @@ public class Window {
 		f.setResizable(false);
 		
 		f.setSize(MainClass.WW, MainClass.WH);
-		
+
 		m.start();
 	}
 }

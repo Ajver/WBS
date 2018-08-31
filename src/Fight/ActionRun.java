@@ -14,14 +14,9 @@ public class ActionRun extends Action {
 	public ActionRun(Creature c, Handler handler) {
 		super(c, handler);
 		
-		this.img[0] = MainClass.tex.bigBootIcon;
-		this.img[1] = MainClass.tex.bigBootIcon;
+		this.img = MainClass.tex.bigBootIcon;
 
 		this.duration = 2;
-	}
-
-	public void slUpdate(float et) {
-		
 	}
 	
 	public void select() {
@@ -74,6 +69,25 @@ public class ActionRun extends Action {
 				System.out.println("Path to run is null");
 			}
 		}
+	}
+
+	public void refresh() {
+		if(c.am.currentAction == 0) {
+			for (int yy = -1; yy <= 1; yy++) {
+				for (int xx = -1; xx <= 1; xx++) {
+					if (handler.map.mayBePath(c.getMX() + xx, c.getMY() + yy)) {
+						isActive = true;
+						return;
+					}
+				}
+			}
+
+			comment = "Nie masz którêdy biec";
+		}else {
+			comment = "Nie mo¿esz ju¿ biec w tej rundzie";
+		}
+
+		isActive = false;
 	}
 
 	public void slMouseEntered() {

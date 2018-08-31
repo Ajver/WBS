@@ -14,12 +14,7 @@ public class ActionMove extends Action {
 	public ActionMove(Creature c, Handler handler) {
 		super(c, handler);
 		
-		this.img[0] = MainClass.tex.bootIcon;
-		this.img[1] = MainClass.tex.bootIcon;
-	}
-
-	public void slUpdate(float et) {
-		
+		this.img = MainClass.tex.bootIcon;
 	}
 	
 	public void select() {
@@ -69,7 +64,20 @@ public class ActionMove extends Action {
 			}
 		}
 	}
-	
+
+	public void refresh() {
+		for(int yy=-1; yy<=1; yy++) {
+			for(int xx=-1; xx<=1; xx++) {
+				if(handler.map.mayBePath(c.getMX() + xx, c.getMY() + yy)) {
+					isActive = true;
+					return;
+				}
+			}
+		}
+
+		isActive = false;
+	}
+
 	public void mouseReleased(MouseEvent e) {
 		int mapX = (int) ((e.getX() + handler.camera.getX()) / Handler.cellW);
 		int mapY = (int) ((e.getY() + handler.camera.getY()) / Handler.cellH);

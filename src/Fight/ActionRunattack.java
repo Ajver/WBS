@@ -18,8 +18,7 @@ public class ActionRunattack extends Action {
     public ActionRunattack(Creature c, Handler handler) {
         super(c, handler);
         this.duration = 2;
-        this.img[0] = MainClass.tex.runattackIcon;
-        this.img[1] = MainClass.tex.runattackIcon;
+        this.img = MainClass.tex.runattackIcon;
     }
 
     public void slUpdate(float et) {
@@ -40,8 +39,6 @@ public class ActionRunattack extends Action {
 
         slMouseLeved();
 
-        boolean isInRange = false;
-
         for(int yy=-maxLen; yy<=maxLen; yy++) {
             for(int xx=-maxLen; xx<=maxLen; xx++) {
                 if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
@@ -49,15 +46,10 @@ public class ActionRunattack extends Action {
                     if (len >= minLen && len <= maxLen) {
                         if (handler.getFromMap(cx + xx, cy + yy) != null) {
                             handler.map.setClickable(cx+xx, cy+yy, 1);
-                            isInRange = true;
                         }
                     }
                 }
             }
-        }
-
-        if(!isInRange) {
-            handler.msg.set("Nie ma na kogo zaszar¿owaæ");
         }
     }
 
@@ -117,6 +109,36 @@ public class ActionRunattack extends Action {
                 handler.map.setClickable(xx, yy, false);
             }
         }
+    }
+
+    public void refresh() {
+        if(c.am.currentAction == 0) {
+            int cx = c.getMX();
+            int cy = c.getMY();
+
+            int minLen = c.att.getSz() + 1;
+            int maxLen = c.att.getSz() * 2 + 1;
+
+            for (int yy = -maxLen; yy <= maxLen; yy++) {
+                for (int xx = -maxLen; xx <= maxLen; xx++) {
+                    if (cx + xx >= 0 && cx + xx < handler.map.w && cy + yy >= 0 && cy + yy < handler.map.h) {
+                        int len = handler.map.getPathLength(cx, cy, cx + xx, cy + yy);
+                        if (len >= minLen && len <= maxLen) {
+                            if (handler.getFromMap(cx + xx, cy + yy) != null) {
+                                isActive = true;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+            comment = "Nie masz na kogo szar¿owaæ";
+        }else {
+            comment = "Nie mo¿esz ju¿ szar¿owaæ w tej rundzie";
+        }
+
+        isActive = false;
     }
 
     public void mouseReleased(MouseEvent e) {

@@ -8,19 +8,19 @@ public class Attributes {
 	 * 0 - WW
 	 * 1 - US
 	 * 2 - K
-	 * 3 - Zr
-	 * 4 - Odp
+	 * 3 - Odp
+	 * 4 - Zr
 	 * 5 - Int
 	 * 6 - SW
 	 * 7 - Ogl
 	 */
 	
 	/* Attributes[1]: 
-	 * 0 - Zyw
-	 * 1 - A
+	 * 0 - A
+	 * 1 - Zyw
 	 * 2 - S
-	 * 3 - Sz
-	 * 4 - Wyt
+	 * 3 - Wyt
+	 * 4 - Sz
 	 * 5 - Mag
 	 * 6 - PO 
 	 * 7 - PP
@@ -45,11 +45,12 @@ public class Attributes {
 	public boolean WW(int mod) { return r.nextInt(100) < current[0][0] + mod; }
 	public boolean US(int mod) { return r.nextInt(100) < current[0][1] + mod; }
 	public boolean K(int mod) { return r.nextInt(100) < current[0][2] + mod; }
-	public boolean Zr(int mod) { return r.nextInt(100) < current[0][3] + mod; }
-	public boolean Odp(int mod) { return r.nextInt(100) < current[0][4] + mod; }
+	public boolean Odp(int mod) { return r.nextInt(100) < current[0][3] + mod; }
+	public boolean Zr(int mod) { return r.nextInt(100) < current[0][4] + mod; }
 	public boolean Int(int mod) { return r.nextInt(100) < current[0][5] + mod; }
 	public boolean SW(int mod) { return r.nextInt(100) < current[0][6] + mod; }
 	public boolean Ogl(int mod) { return r.nextInt(100) < current[0][7] + mod; }
 	
-	public int getSz() { return current[1][2]; }
+	public int getSz() { return current[1][4]; }
+	public int getA() { return current[1][1]; }
 }

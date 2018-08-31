@@ -1,12 +1,9 @@
 package MainFiles;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
 
+import Other.CursorManager;
 import Other.Handler;
 import Other.KeyInput;
 import Other.Textures;
@@ -85,9 +82,14 @@ public class MainClass extends Canvas implements Runnable {
 		
 		while(isRunning) {			
 			start = System.currentTimeMillis();
-		
+
 			this.update(elapsedTime);
 			this.render();
+
+			if(CursorManager.cursorChanged) {
+				setCursor(CursorManager.cursor);
+				CursorManager.cursorChanged = false;
+			}
 			
 			stop = System.currentTimeMillis();
 			elapsedTime = (stop - start) / 1000.0f;
@@ -109,7 +111,7 @@ public class MainClass extends Canvas implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 	}
-	
+
 	public static void main(String[] args) {
 		new Window("Warhammer Battle Simulator", new MainClass());
 	}

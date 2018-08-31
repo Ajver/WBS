@@ -1,6 +1,6 @@
 package Other;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,6 +11,7 @@ import Creatures.Human;
 import Fight.ActionManager;
 import Fight.ActionManagerGUI;
 import Fight.FightMessage;
+import Fight.Message;
 import MainFiles.MainClass;
 import Map.Map;
 
@@ -20,8 +21,10 @@ public class Handler extends MouseAdapter {
 	
 	public static float cellW = 32, cellH = 32;
 	
-	public LinkedList<Creature> creatures = new LinkedList<Creature>();
+	public LinkedList<Creature> creatures = new LinkedList<>();
 	private int currentCreature = 0;
+
+	private LinkedList<Message> smallMessages = new LinkedList<>();
 	
 	public Map map;
 	
@@ -41,7 +44,7 @@ public class Handler extends MouseAdapter {
 		creatures.get(0).setHasAI(false);
 		
 		// Other creatures
-		creatures.add(new Human(10, 10, this));
+		creatures.add(new Human(2, 10, this));
 		
 		map = new Map(50, 30, this);
 		actionManager = new ActionManagerGUI(this, creatures.get(0));
@@ -60,7 +63,13 @@ public class Handler extends MouseAdapter {
 		for(Creature c : creatures) {
 			c.update(et);
 		}
-		
+
+		for(Message m : smallMessages) {
+			if(!m.update(et)) {
+				smallMessages.remove(m);
+			}
+		}
+
 		map.update(et);
 		camera.update(et);
 	}
@@ -73,6 +82,10 @@ public class Handler extends MouseAdapter {
 			
 			for(Creature c:creatures) {
 				c.render(g);
+			}
+
+			for(Message m : smallMessages) {
+				m.render(g);
 			}
 			
 		////////////////////////////////////////////////////////////
@@ -102,6 +115,7 @@ public class Handler extends MouseAdapter {
 		
 		if(currentCreature >= creatures.size()) {
 			currentCreature = 0;
+			actionManager.refresh();
 		}
 		
 		camera.focus(creatures.get(currentCreature));
@@ -119,6 +133,14 @@ public class Handler extends MouseAdapter {
 		if(c != null) {
 			creatures.add(c);
 		}
+	}
+
+	public void addSmallMessage(float x, float y, String s, Color col) {
+		this.smallMessages.add(new Message(x, y, s, col));
+	}
+
+	public void addSmallMessage(Creature c, String s, Color col) {
+		this.smallMessages.add(new Message(c, s, col));
 	}
 	
 	public void removeCreature(Creature c) {
@@ -174,6 +196,8 @@ public class Handler extends MouseAdapter {
 	}
 	
 	public void mouseMoved(MouseEvent e) {
+		CursorManager.setCursor(CursorManager.DEFAULT);
+
 		if(currentCreature == 0) {
 			actionManager.mouseMoved(e);
 		}

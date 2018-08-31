@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import Creatures.Creature;
+import Other.CursorManager;
 import Other.Handler;
 import Other.SoundPlayer;
 
@@ -17,13 +18,13 @@ public abstract class Action {
 	public BufferedImage[] img = new BufferedImage[2];
 	protected boolean hover = false;
 	protected boolean wasHover = false;
-	private boolean soundPlayed = false;
 	private boolean isVisible = true;
 	
 	// How long is this Action (no animation of this)
 	protected int duration = 1; 
 
 	protected boolean isActive = true;
+	protected String comment = "";
 
 	protected Creature c;
 	protected Handler handler;
@@ -53,18 +54,23 @@ public abstract class Action {
 	}
 	
 	public void render(Graphics g) {
-		if(hover) {
-			g.setColor(new Color(162, 143, 64));
-			g.fillRect((int)x-4, (int)y-4, (int)(ActionManagerGUI.buttonW * duration + 8), (int)(ActionManagerGUI.buttonW + 8));
+		if (hover) {
+			if(isActive) {
+				g.setColor(new Color(162, 143, 64));
+				g.fillRect((int) x - 4, (int) y - 4, (int) (ActionManagerGUI.buttonW * duration + 8), (int) (ActionManagerGUI.buttonW + 8));
+			}else {
+				g.drawString(comment, (int)(x+ActionManagerGUI.buttonW * duration + 8), (int)(y+32));
+			}
 		}
-		g.drawImage(img[isActive ? 0 : 1], (int)x, (int)y, null);
-	}
-	
-	public abstract void slUpdate(float et);
-	public abstract void select();
-	public abstract void canel();
 
-	public void use() { // To override 
+		g.drawImage(img[isActive ? 0 : 1], (int) x, (int) y, null);
+	}
+
+	public abstract void refresh();
+	public abstract void canel();
+	public abstract void select();
+
+	public void use() { // To override
 		System.out.println("Error: No set use() function!");
 	}
 	public void use(int mapx, int mapY) { // To override 
@@ -93,26 +99,20 @@ public abstract class Action {
 	public float getX() { return x; }
 	public float getY() { return y; }
 	
-	public boolean mouseOver(int mx, int my) {
-		return mx >= x &&
-				mx <= x + (ActionManagerGUI.buttonW*duration) &&
-				my >= y &&
-				my <= y + ActionManagerGUI.buttonW;
-	}
-	
 	private void hover(MouseEvent e) {
 		this.hover = mouseOver(e.getX(), e.getY());
-		
-		if(this.hover) {
-			if(!soundPlayed) {
+
+		if (this.hover) {
+			if(isActive) {
+				CursorManager.setCursor(CursorManager.HAND);
+			}
+			if (!wasHover) {
 				wasHover = true;
-				slMouseEntered();
-				soundPlayed = (new SoundPlayer()).playSound("res/Sounds/click.wav");
-			}				
-		}else if(wasHover) {
+				mouseEntered();
+			}
+		} else if (wasHover) {
 			wasHover = false;
-			slMouseLeved();
-			soundPlayed = false;
+			mouseLeved();
 		}
 	}
 	
@@ -122,33 +122,54 @@ public abstract class Action {
 	public void slMouseMoved(MouseEvent e) {}
 	public void slMouseEntered() {}
 	public void slMouseLeved() {}
+	public void slUpdate(float et) {}
 
 	public void mouseMoved(MouseEvent e) {
+		if(isVisible) {
+			hover(e);
+		}
+
+		if(!isActive) return;
+
 		int mx = e.getX();
 		int my = e.getY();
 
 		int mapX = (int) ((mx + handler.camera.getX()) / Handler.cellW);
 		int mapY = (int) ((my + handler.camera.getY()) / Handler.cellH);
 
-		for(int yy=0; yy<handler.map.h; yy++) {
-			for(int xx=0; xx<handler.map.w; xx++) {
+		for (int yy = 0; yy < handler.map.h; yy++) {
+			for (int xx = 0; xx < handler.map.w; xx++) {
 				handler.map.grid[xx][yy].setHover(false);
 			}
 		}
-		if(mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
-			handler.map.grid[mapX][mapY].setHover(true);
-		}
 
-		if(isVisible) {
-			hover(e);
+		if (mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
+			if(handler.map.grid[mapX][mapY].isClickable()) {
+				handler.map.grid[mapX][mapY].setHover(true);
+				CursorManager.setCursor(CursorManager.HAND);
+			}
 		}
 
 		slMouseMoved(e);
 	}
 
-	private void mouseEntered(MouseEvent e) {
-		slMouseMoved(e);
+	private void mouseEntered() {
+		if(isActive) {
+			new SoundPlayer().playSound("res/Sounds/click.wav");
+		}
+		slMouseEntered();
+	}
+
+	private void mouseLeved() {
+		slMouseLeved();
 	}
 
 	public void setVisible(boolean flag) { this.isVisible = flag; }
+
+	public boolean mouseOver(int mx, int my) {
+		return mx >= x &&
+				mx <= x + (ActionManagerGUI.buttonW*duration) &&
+				my >= y &&
+				my <= y + ActionManagerGUI.buttonW;
+	}
 }

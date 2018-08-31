@@ -1,5 +1,7 @@
 package Fight;
 
+import Other.CursorManager;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -151,6 +153,7 @@ public class ActionGroup {
 	
 	public void hide() {
 	    close();
+		CursorManager.setCursor(CursorManager.DEFAULT);
 	    for (Action a : actions) {
 	    	a.setVisible(false);
 	    }

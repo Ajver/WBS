@@ -190,15 +190,23 @@ public class Map {
 	}
 
 	private void pathElement(Point p, int xx, int yy, Point finish, Point[][] pGrid, LinkedList<Point> newPoints) {
+		if(mayBePath(xx, yy) && pGrid[xx][yy].x == -1) {
+			pGrid[xx][yy].x = p.x;
+			pGrid[xx][yy].y = p.y;
+			newPoints.add(new Point(xx, yy));
+		}
+	}
+
+	public boolean mayBePath(int xx, int yy) {
 		if(xx >= 0 && xx < w && yy >= 0 && yy < h) {
-			if(pGrid[xx][yy].x == -1 &&
-					handler.getFromMap(xx, yy) == null &&
-					grid[xx][yy].mayBePath()) {
-				pGrid[xx][yy].x = p.x;
-				pGrid[xx][yy].y = p.y;
-				newPoints.add(new Point(xx, yy));
+			if(handler.getFromMap(xx, yy) == null) {
+				if(grid[xx][yy].mayBePath()) {
+					return true;
+				}
 			}
 		}
+
+		return false;
 	}
 
 	public void clearColors() {

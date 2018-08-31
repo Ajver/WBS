@@ -12,19 +12,12 @@ public class ActionAttack extends Action {
 
 	public ActionAttack(Creature c, Handler handler) {
 		super(c, handler);
-		this.img[0] = MainClass.tex.swordIcon;
-		this.img[1] = MainClass.tex.swordIcon;
-	}
-
-	public void slUpdate(float et) {
-
+		this.img = MainClass.tex.swordIcon;
 	}
 
 	public void select() {
 		int cx = c.getMX();
 		int cy = c.getMY();
-
-		boolean isInRange = false;
 
 		slMouseLeved();
 
@@ -32,15 +25,10 @@ public class ActionAttack extends Action {
 			for(int xx=-1; xx<=1; xx++) {
 				if(xx != 0 || yy != 0) {
 					if(handler.getFromMap(c.getMX()+xx, c.getMY()+yy) != null) {
-						isInRange = true;
 						handler.map.setClickable(cx+xx, cy+yy, 1);
 					}
 				}
 			}
-		}
-		
-		if(!isInRange) {
-			handler.msg.set("No enemies in Range");
 		}
 	}
 	
@@ -59,10 +47,36 @@ public class ActionAttack extends Action {
 		}else {
 			handler.msg.set("Miss");
 		}
+		c.am.attackCounter++;
 		used = true;
 
 		startTimer((long)(c.attackDuration * 1000.0f));
 		c.attack();
+	}
+
+	public void refresh() {
+		this.isActive = can();
+	}
+
+	public boolean can() {
+		boolean good = false;
+
+		for(int yy=-1; yy<=1; yy++) {
+			for(int xx=-1; xx<=1; xx++) {
+				if(xx != 0 || yy != 0) {
+					if(handler.getFromMap(c.getMX()+xx, c.getMY()+yy) != null) {
+						good = true;
+						yy = xx = 10;
+					}
+				}
+			}
+		}
+
+		if(!good) {
+			comment = "Nie ma przeciwnika w zasiêgu";
+		}
+
+		return c.am.attackCounter < c.att.getA() && good;
 	}
 	
 	public void mouseReleased(MouseEvent e) {
