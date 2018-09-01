@@ -32,7 +32,10 @@ public abstract class Action {
 	protected long breakTime;
 	protected boolean isTimer = false;
 	protected boolean used = false;
-	
+
+	private int pMapX, pMapY = -1;
+	private long sound_bt = 0;
+
 	public Action(Creature c, Handler handler) {
 		this.c = c;
 		this.handler = handler;
@@ -147,8 +150,17 @@ public abstract class Action {
 
 		if (mapX >= 0 && mapX < handler.map.w && mapY >= 0 && mapY < handler.map.h) {
 			if(handler.map.grid[mapX][mapY].isClickable()) {
-				handler.map.grid[mapX][mapY].setHover(true);
 				CursorManager.setCursor(CursorManager.HAND);
+				handler.map.grid[mapX][mapY].setHover(true);
+
+				if(mapX != pMapX || mapY != pMapY) {
+					if(System.currentTimeMillis() >= sound_bt) {
+						new SoundPlayer().playSound("res/Sounds/click.wav");
+						pMapX = mapX;
+						pMapY = mapY;
+						sound_bt = System.currentTimeMillis() + 150;
+					}
+				}
 			}
 		}
 

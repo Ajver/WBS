@@ -42,6 +42,9 @@ public abstract class Creature extends GameObject {
 
 	public Attributes att;
 	public int hp;
+
+	public String name;
+	public int group;
 	
 	public Creature(int mx, int my, Handler handler) {
 		super(mx, my);
@@ -132,7 +135,7 @@ public abstract class Creature extends GameObject {
 		stepTimer = System.currentTimeMillis() + (long)(moveDuration * 500.0f);
 		timer = 0;
 	}
-	
+
 	public void round() {
 		if(hasAI) {
 			AI.round();

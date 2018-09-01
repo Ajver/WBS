@@ -1,14 +1,12 @@
 package Other;
 
-import Fight.ActionManagerGUI;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class Comment {
 
     private float mx, my;
-    private String caption = "";
+    private String caption;
 
     public Comment() {
         this("");
@@ -33,11 +31,11 @@ public class Comment {
         g.fillRoundRect((int)x, (int)(y),
                 w, h, r, r);
 
-        g.setColor(new Color(10, 10, 10));
+        g.setColor(Gamecol.DARK);
         g.drawRoundRect((int)x, (int)(y),
                 w, h, r, r);
 
-        g.setColor(new Color(190, 190, 190));
+        g.setColor(Gamecol.LIGHT);
         g.drawString(caption, (int)(x+8), (int)(y+22));
     }
 

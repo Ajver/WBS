@@ -51,6 +51,29 @@ public class Attributes {
 	public boolean SW(int mod) { return r.nextInt(100) < current[0][6] + mod; }
 	public boolean Ogl(int mod) { return r.nextInt(100) < current[0][7] + mod; }
 	
+	public int getA() { return current[1][0]; }
+	public int getZyw() { return current[1][1]; }
+	public int getS() { return current[1][2]; }
+	public int getWyt() { return current[1][3]; }
 	public int getSz() { return current[1][4]; }
-	public int getA() { return current[1][1]; }
+	public int getMag() { return current[1][5]; }
+	public int getPO() { return current[1][6]; }
+	public int getPP() { return current[1][7]; }
+
+	public static String[] getShortcutOrder(int nr) {
+		return nr == 0 ? new String[] { "WW", "US", "K", "Odp", "Zr", "Int", "SW", "Og³" }
+		               : new String[] { "A", "¯yw", "S", "Wyt", "Sz", "Mag", "PO", "PP" };
+	}
+
+	public static String[] getNamesOrder(int nr) {
+		return nr == 0 ? new String[] { "Walka Wrêcz", "Umiejêtnoœci Strzeleckie",
+				"Krzepa", "Odpornoœæ",
+				"Zrêcznoœæ", "Inteligencja",
+				"Si³a Woli", "Og³ada" }
+
+				: new String[] { "Ataki", "¯ywotnoœæ",
+				"Si³a", "Wytrzyma³oœæ",
+				"Szybkoœæ", "Magia",
+				"Punkty Ob³êdu", "Punkty Przeznaczenia" };
+	}
 }

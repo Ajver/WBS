@@ -3,6 +3,7 @@ package Fight;
 import Creatures.Creature;
 import MainFiles.MainClass;
 import Other.Button;
+import Other.Gamecol;
 import Other.Handler;
 
 import java.awt.*;
@@ -28,6 +29,7 @@ public class ActionManagerGUI extends ActionManager {
     public ActionManagerGUI(Handler handler, Creature c) {
         super(handler, c);
 
+        this.c.name = "Ty";
         this.actionBg = MainClass.tex.actionBg;
 
         canelBtn = new Button(buttonW-16, y+buttonW+20, buttonW*2.0f+32, 32, "Anuluj akcjê");
@@ -64,7 +66,7 @@ public class ActionManagerGUI extends ActionManager {
 
         g.setFont(new Font("arial", 0, 30));
 
-        g.setColor(new Color(30, 30, 30));
+        g.setColor(Gamecol.DARK);
         FontMetrics f = g.getFontMetrics();
 
         int sx = (int)(selX + buttonW - f.stringWidth("Wybrane akcje") / 2.0f);

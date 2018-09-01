@@ -3,10 +3,7 @@ package MainFiles;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-import Other.CursorManager;
-import Other.Handler;
-import Other.KeyInput;
-import Other.Textures;
+import Other.*;
 
 public class MainClass extends Canvas implements Runnable {
 
@@ -61,7 +58,7 @@ public class MainClass extends Canvas implements Runnable {
 		handler.render(g);
 
 		g.setFont(new Font("arial", 0, 25));
-		g.setColor(new Color(190, 190, 190));
+		g.setColor(Gamecol.LIGHT);
 		g.drawString("FPS: "+this.fps, 50, 50);
 		
 		/////////////////////////////////////////////////

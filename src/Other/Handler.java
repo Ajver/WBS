@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 import Creatures.Creature;
 import Creatures.Human;
-import Fight.ActionManager;
+import Character.HUD;
 import Fight.ActionManagerGUI;
 import Fight.FightMessage;
 import Fight.Message;
@@ -25,11 +25,12 @@ public class Handler extends MouseAdapter {
 	private int currentCreature = 0;
 
 	private LinkedList<Message> smallMessages = new LinkedList<>();
-	private LinkedList<Comment> comments = new LinkedList<>();
+	private Comment comment = new Comment();
 	
 	public Map map;
 	
 	public ActionManagerGUI actionManager;
+	public HUD hud;
 	public Camera camera;
 	public FightMessage msg;
 	
@@ -49,7 +50,9 @@ public class Handler extends MouseAdapter {
 		
 		map = new Map(50, 30, this);
 		actionManager = new ActionManagerGUI(this, creatures.get(0));
-		
+
+		hud = new HUD(this);
+
 		camera = new Camera(this);
 		camera.focus(creatures.get(currentCreature));
 	}
@@ -72,6 +75,7 @@ public class Handler extends MouseAdapter {
 		}
 
 		map.update(et);
+		hud.update(et);
 		camera.update(et);
 	}
 	
@@ -97,16 +101,18 @@ public class Handler extends MouseAdapter {
 		if(currentCreature == 0) {
 			actionManager.render(g);
 		}
+
+		hud.render(g);
 		
 		msg.render(g);
-		for(Comment com : comments) {
-			com.render(g);
+
+		if(comment != null) {
+			comment.render(g);
 		}
-		comments = new LinkedList<>();
 	}
 
 	public void addComment(Comment c) {
-		comments.add(c);
+		comment = c;
 	}
 	
 	public Creature getFromMap(int x, int y) {
@@ -179,9 +185,6 @@ public class Handler extends MouseAdapter {
 	////////////////////////////////////////////////////////////////////////////////
 	
 	public void mousePressed(MouseEvent e) {
-		int mx = e.getX();
-		int my = e.getY();
-
 		camera.mousePressed(e);
 
 		if(e.getButton() == 2) {
@@ -192,12 +195,11 @@ public class Handler extends MouseAdapter {
 	}
 	
 	public void mouseReleased(MouseEvent e) {
-		int mx = e.getX();
-		int my = e.getY();
-		
 		if(currentCreature == 0) {
 			actionManager.mouseReleased(e);
 		}
+
+		hud.mousePressed(e);
 
         camera.mouseReleased(e);
 	}
@@ -205,9 +207,24 @@ public class Handler extends MouseAdapter {
 	public void mouseMoved(MouseEvent e) {
 		CursorManager.setCursor(CursorManager.DEFAULT);
 
+		int mapX = (int) ((e.getX() + camera.getX()) / Handler.cellW);
+		int mapY = (int) ((e.getY() + camera.getY()) / Handler.cellH);
+
+		Creature c = getFromMap(mapX, mapY);
+		if(c != null) {
+			comment = new Comment(c.name);
+		}else {
+			comment = null;
+		}
+
+		if(comment != null) {
+			comment.mouseMoved(e);
+		}
+
 		if(currentCreature == 0) {
 			actionManager.mouseMoved(e);
 		}
+		hud.mouseMoved(e);
 
 		m.setCursor(CursorManager.cursor);
 	}

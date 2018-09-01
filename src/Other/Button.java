@@ -56,6 +56,10 @@ public class Button {
 			e.printStackTrace();
 		}
 	}
+
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
 	
 	public void hover(int mx, int my) { 
 		this.hover = mouseOver(mx, my);
