@@ -57,11 +57,11 @@ public class MainClass extends Canvas implements Runnable {
 		/////////////////////////////////////////////////
 		g.setColor(new Color(94, 93, 89));
 		g.fillRect(0, 0, WW, WH);
-		
-		g.setFont(new Font("arial", 0, 35));
+
 		handler.render(g);
-		
-		g.setColor(new Color(255, 255, 255));
+
+		g.setFont(new Font("arial", 0, 25));
+		g.setColor(new Color(190, 190, 190));
 		g.drawString("FPS: "+this.fps, 50, 50);
 		
 		/////////////////////////////////////////////////
@@ -85,11 +85,6 @@ public class MainClass extends Canvas implements Runnable {
 
 			this.update(elapsedTime);
 			this.render();
-
-			if(CursorManager.cursorChanged) {
-				setCursor(CursorManager.cursor);
-				CursorManager.cursorChanged = false;
-			}
 			
 			stop = System.currentTimeMillis();
 			elapsedTime = (stop - start) / 1000.0f;

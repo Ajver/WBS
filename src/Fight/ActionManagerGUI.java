@@ -62,7 +62,9 @@ public class ActionManagerGUI extends ActionManager {
             }
         }
 
-        g.setColor(new Color(0,0, 0));
+        g.setFont(new Font("arial", 0, 30));
+
+        g.setColor(new Color(30, 30, 30));
         FontMetrics f = g.getFontMetrics();
 
         int sx = (int)(selX + buttonW - f.stringWidth("Wybrane akcje") / 2.0f);
@@ -120,9 +122,7 @@ public class ActionManagerGUI extends ActionManager {
 
             if(!current().used()) {
                 if(canelBtn.mouseOver(e.getX(), e.getY())) {
-                    current().canel();
-                    selected[currentAction] = null;
-                    showActions();
+                    canelAction();
                     return;
                 }
             }
@@ -172,12 +172,12 @@ public class ActionManagerGUI extends ActionManager {
     public void nextAction() {
         currentAction++;
 
-        refresh();
-
         if(currentAction > 1 || selected[0].getDuration() == 2) { // End of round
             reset();
             handler.nextRound();
         }
+
+        refresh();
 
         showActions();
     }
@@ -209,6 +209,12 @@ public class ActionManagerGUI extends ActionManager {
         }
     }
 
+    private void canelAction() {
+        current().canel();
+        selected[currentAction] = null;
+        showActions();
+    }
+
     private boolean mouseOver(int mx, int my, float x, float y, float w, float h) {
         return mx >= x && mx <= x+w && my >= y && my <= y+h;
     }
@@ -217,6 +223,9 @@ public class ActionManagerGUI extends ActionManager {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_SHIFT:
                 select(previousAction);
+                break;
+            case KeyEvent.VK_ESCAPE:
+                canelAction();
                 break;
             default:
                 System.out.println(e.getKeyChar());

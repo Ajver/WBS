@@ -75,7 +75,9 @@ public class Handler extends MouseAdapter {
 	}
 	
 	public void render(Graphics g) {
-		g.translate((int)-camera.getX(), (int)-camera.getY());
+		int tx = (int)camera.getX();
+		int ty = (int)camera.getY();
+		g.translate(-tx, -ty);
 		////////////////////////////////////////////////////////////
 			
 			map.render(g);
@@ -89,7 +91,7 @@ public class Handler extends MouseAdapter {
 			}
 			
 		////////////////////////////////////////////////////////////
-		g.translate((int)camera.getX(), (int)camera.getY());
+		g.translate(tx, ty);
 			
 		if(currentCreature == 0) {
 			actionManager.render(g);
@@ -122,11 +124,7 @@ public class Handler extends MouseAdapter {
 	}
 	
 	public void nextAction() {
-		if(currentCreature == 0) {
-			actionManager.nextAction();
-		}else {
-			creatures.get(currentCreature).AI.nextAction();
-		}
+		creatures.get(currentCreature).am.nextAction();
 	}
 	
 	public void addCreature(Creature c) {
@@ -201,6 +199,8 @@ public class Handler extends MouseAdapter {
 		if(currentCreature == 0) {
 			actionManager.mouseMoved(e);
 		}
+
+		m.setCursor(CursorManager.cursor);
 	}
 
 	public void mouseDragged(MouseEvent e) {

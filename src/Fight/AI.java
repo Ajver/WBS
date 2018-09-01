@@ -97,8 +97,4 @@ public class AI {
 			}
 		}
 	}
-
-	public void nextAction() {
-		am.nextAction();
-	}
 }

@@ -133,7 +133,7 @@ public class ActionRunattack extends Action {
                 }
             }
 
-            comment = "Nie masz na kogo szar¿owaæ";
+            comment = "Nie ma przeciwnika w zasiêgu";
         }else {
             comment = "Nie mo¿esz ju¿ szar¿owaæ w tej rundzie";
         }
@@ -165,7 +165,7 @@ public class ActionRunattack extends Action {
                 if(cx+xx >= 0 && cx+xx < handler.map.w && cy+yy >= 0 && cy+yy < handler.map.h) {
                     int len = handler.map.getPathLength(cx, cy, cx+xx, cy+yy);
                     if (len >= minLen && len <= maxLen) {
-                        handler.map.grid[cx + xx][cy + yy].setColor(new Color(163, 32, 0));
+                        handler.map.grid[cx + xx][cy + yy].setColor(new Color(142, 29, 1));
                     }
                 }
             }

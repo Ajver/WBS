@@ -19,6 +19,7 @@ public class ActionAttack extends Action {
 		int cx = c.getMX();
 		int cy = c.getMY();
 
+		this.hover = false;
 		slMouseLeved();
 
 		for(int yy=-1; yy<=1; yy++) {
@@ -74,9 +75,15 @@ public class ActionAttack extends Action {
 
 		if(!good) {
 			comment = "Nie ma przeciwnika w zasiêgu";
+		}else {
+			good = good && c.am.attackCounter < c.att.getA();
+
+			if(!good) {
+				comment = "Nie mo¿esz ju¿ atakowaæ w tej rundzie";
+			}
 		}
 
-		return c.am.attackCounter < c.att.getA() && good;
+		return good;
 	}
 	
 	public void mouseReleased(MouseEvent e) {
@@ -97,7 +104,7 @@ public class ActionAttack extends Action {
 			for (int xx = -1; xx <= 1; xx++) {
 				if (cx + xx >= 0 && cx + xx < handler.map.w && cy + yy >= 0 && cy + yy < handler.map.h) {
 					if (xx != 0 || yy != 0) {
-						handler.map.grid[cx + xx][cy + yy].setColor(new Color(163, 32, 0));
+						handler.map.grid[cx + xx][cy + yy].setColor(new Color(142, 29, 1));
 					}
 				}
 			}
