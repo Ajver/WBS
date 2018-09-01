@@ -133,9 +133,9 @@ public class ActionRunattack extends Action {
                 }
             }
 
-            comment = "Nie ma przeciwnika w zasiêgu";
+            comment.set("Nie ma przeciwnika w zasiêgu");
         }else {
-            comment = "Nie mo¿esz ju¿ szar¿owaæ w tej rundzie";
+            comment.set("Nie mo¿esz ju¿ szar¿owaæ w tej rundzie");
         }
 
         isActive = false;

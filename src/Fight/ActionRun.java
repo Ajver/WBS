@@ -82,9 +82,9 @@ public class ActionRun extends Action {
 				}
 			}
 
-			comment = "Nie masz którêdy biec";
+			comment.set("Nie masz którêdy biec");
 		}else {
-			comment = "Nie mo¿esz ju¿ biec w tej rundzie";
+			comment.set("Nie mo¿esz ju¿ biec w tej rundzie");
 		}
 
 		isActive = false;

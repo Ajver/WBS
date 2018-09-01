@@ -25,6 +25,7 @@ public class Handler extends MouseAdapter {
 	private int currentCreature = 0;
 
 	private LinkedList<Message> smallMessages = new LinkedList<>();
+	private LinkedList<Comment> comments = new LinkedList<>();
 	
 	public Map map;
 	
@@ -98,7 +99,15 @@ public class Handler extends MouseAdapter {
 		}
 		
 		msg.render(g);
-	}	
+		for(Comment com : comments) {
+			com.render(g);
+		}
+		comments = new LinkedList<>();
+	}
+
+	public void addComment(Comment c) {
+		comments.add(c);
+	}
 	
 	public Creature getFromMap(int x, int y) {
 		for(Creature c : creatures) {

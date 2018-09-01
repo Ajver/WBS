@@ -75,6 +75,8 @@ public class ActionMove extends Action {
 			}
 		}
 
+		comment.set("Nie masz którêdy iœæ");
+
 		isActive = false;
 	}
 

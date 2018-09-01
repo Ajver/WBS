@@ -74,12 +74,12 @@ public class ActionAttack extends Action {
 		}
 
 		if(!good) {
-			comment = "Nie ma przeciwnika w zasiêgu";
+			comment.set("Nie ma przeciwnika w zasiêgu");
 		}else {
 			good = good && c.am.attackCounter < c.att.getA();
 
 			if(!good) {
-				comment = "Nie mo¿esz ju¿ atakowaæ w tej rundzie";
+				comment.set("Nie mo¿esz ju¿ atakowaæ w tej rundzie");
 			}
 		}
 

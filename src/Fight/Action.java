@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import Creatures.Creature;
+import Other.Comment;
 import Other.CursorManager;
 import Other.Handler;
 import Other.SoundPlayer;
@@ -23,7 +24,7 @@ public abstract class Action {
 	protected int duration = 1; 
 
 	protected boolean isActive = true;
-	protected String comment = "";
+	protected Comment comment = new Comment();
 
 	protected Creature c;
 	protected Handler handler;
@@ -58,20 +59,7 @@ public abstract class Action {
 				g.setColor(new Color(162, 143, 64));
 				g.fillRect((int)(x-4), (int)(y-4), (int)(ActionManagerGUI.buttonW * duration + 8), (int)(ActionManagerGUI.buttonW + 8));
 			}else {
-				g.setFont(new Font("arial", 0, 20));
-				FontMetrics f = g.getFontMetrics();
-
-				int r = 5;
-				g.setColor(new Color(99, 59, 7));
-				g.fillRoundRect((int)(x+ActionManagerGUI.buttonW * duration), (int)(y+10),
-						f.stringWidth(comment) + 16, f.getHeight()+6, r, r);
-
-				g.setColor(new Color(10, 10, 10));
-				g.drawRoundRect((int)(x+ActionManagerGUI.buttonW * duration), (int)(y+10),
-						f.stringWidth(comment) + 16, f.getHeight()+6, r, r);
-
-				g.setColor(new Color(190, 190, 190));
-				g.drawString(comment, (int)(x+ActionManagerGUI.buttonW * duration + 8), (int)(y+32));
+				handler.addComment(comment);
 			}
 		}
 
@@ -137,6 +125,8 @@ public abstract class Action {
 	public void slUpdate(float et) {}
 
 	public void mouseMoved(MouseEvent e) {
+		comment.mouseMoved(e);
+
 		if(isVisible) {
 			hover(e);
 		}
