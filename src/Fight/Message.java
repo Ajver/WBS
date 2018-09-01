@@ -56,6 +56,8 @@ public class Message {
     public void render(Graphics g) {
         g.setFont(new Font("arial", 0, 20));
         g.setColor(col);
-        g.drawString(caption, (int)x, (int)y);
+
+        FontMetrics f = g.getFontMetrics();
+        g.drawString(caption, (int)(x - f.stringWidth(caption)/2.0f), (int)y);
     }
 }

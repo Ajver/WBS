@@ -43,10 +43,9 @@ public class ActionAttack extends Action {
 
 		if(c.att.WW(0)) {
 			int dmg = Dice.roll1d10();
-			handler.msg.set("Damage: " + dmg);
 			enemy.hit(dmg);
 		}else {
-			handler.msg.set("Miss");
+			handler.addSmallMessage(enemy, "Pud³o", new Color(0, 0, 255));
 		}
 		c.am.attackCounter++;
 		used = true;
