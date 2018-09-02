@@ -174,11 +174,13 @@ public class HUD {
     }
 
     public void mousePressed(MouseEvent e) {
-        if(hideButton.mouseOver(e.getX(), e.getY() - (int)(tx*progress))) {
-            if(isVisible) {
-                hide();
-            }else {
-                show();
+        if(e.getButton() == 1) {
+            if (hideButton.mouseOver(e.getX(), e.getY() - (int) (tx * progress))) {
+                if (isVisible) {
+                    hide();
+                } else {
+                    show();
+                }
             }
         }
     }

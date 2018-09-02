@@ -101,36 +101,38 @@ public class ActionManagerGUI extends ActionManager {
     }
 
     public void mouseReleased(MouseEvent e) {
-        if(current() == null) {
-            for(ActionGroup ag : ag) {
-                Action a = ag.mouseReleased(e);
+        if(e.getButton() == 1) {
+            if (current() == null) {
+                for (ActionGroup ag : ag) {
+                    Action a = ag.mouseReleased(e);
 
-                if(a != null) {
-                    select(a);
+                    if (a != null) {
+                        select(a);
+                    }
                 }
-            }
-        }else {
-            for(ActionGroup ag : ag) {
-                for(Action a : ag.actions) {
-                    if(a.mouseOver(e.getX(), e.getY())) {
+            } else {
+                for (ActionGroup ag : ag) {
+                    for (Action a : ag.actions) {
+                        if (a.mouseOver(e.getX(), e.getY())) {
+                            return;
+                        }
+                    }
+                }
+
+                if (mouseOver(e.getX(), e.getY(), selX, y, buttonW * 2, buttonW)) {
+                    return;
+                }
+
+                if (!current().used()) {
+                    if (canelBtn.mouseOver(e.getX(), e.getY())) {
+                        canelAction();
                         return;
                     }
                 }
-            }
 
-            if(mouseOver(e.getX(), e.getY(), selX, y, buttonW*2, buttonW)) {
-                return;
-            }
-
-            if(!current().used()) {
-                if(canelBtn.mouseOver(e.getX(), e.getY())) {
-                    canelAction();
-                    return;
+                if (!current().used()) {
+                    current().mouseReleased(e);
                 }
-            }
-
-            if(!current().used()) {
-                current().mouseReleased(e);
             }
         }
     }
