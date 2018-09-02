@@ -12,6 +12,9 @@ import java.awt.event.MouseEvent;
 
 public class HUD {
 
+    public static final int WW=0, US=1, K=2, Odp=3, Zr=4, Int=5, SW=6, Ogl=7;
+    public static final int A=8, Zyw=9, S=10, Wyt=11, Sz=12, Mag=13, PO=14, PP=15;
+
     private float x, y;
     private float w, h;
     private float cellW, cellH = 32;
@@ -20,6 +23,7 @@ public class HUD {
     private Handler handler;
 
     private String[][] attNames = { Attributes.getShortcutOrder(0), Attributes.getShortcutOrder(1) };
+    private boolean[][] attLight = new boolean[2][8];
 
     private boolean isComment = false;
     private Comment comment = new Comment();
@@ -96,33 +100,24 @@ public class HUD {
 
             g.setFont(new Font("arial", 1, 16));
             f = g.getFontMetrics();
-            for (int i = 0; i < 8; i++) {
-                // Main attributes
-                String name = attNames[0][i];
-                String value = "" + c.att.current[0][i];
-                int nx = (int) (x + i * cellW + (cellW - f.stringWidth(name)) / 2.0f);
-                int vx = (int) (x + i * cellW + (cellW - f.stringWidth(value)) / 2.0f);
-                int offset = (int) (y + 32 + cellH - 9);
+            long start = System.currentTimeMillis();
+            for(int nr=0; nr<2; nr++) {
+                for (int i = 0; i < 8; i++) {
+                    String name = attNames[nr][i];
+                    String value = "" + c.att.current[nr][i];
+                    int nx = (int) (x + i * cellW + (cellW - f.stringWidth(name)) / 2.0f);
+                    int vx = (int) (x + i * cellW + (cellW - f.stringWidth(value)) / 2.0f);
+                    int offset = (int) (y + 32 + cellH - 9) + 72*nr;
 
-                g.setColor(Gamecol.LIGHT);
-                g.drawString(name, nx, (offset));
+                    g.setColor(Gamecol.LIGHT);
+                    g.drawString(name, nx, (offset));
 
-                g.setColor(Gamecol.DARK);
-                g.drawString(value, vx, (int) (cellH + offset));
-
-                // Second attributes
-                name = attNames[1][i];
-                value = "" + c.att.current[1][i];
-                nx = (int) (x + i * cellW + (cellW - f.stringWidth(name)) / 2.0f);
-                vx = (int) (x + i * cellW + (cellW - f.stringWidth(value)) / 2.0f);
-                offset += 72;
-
-                g.setColor(Gamecol.LIGHT);
-                g.drawString(name, nx, (offset));
-
-                g.setColor(Gamecol.DARK);
-                g.drawString(value, vx, (int) (cellH + offset));
+                    g.setColor(Gamecol.DARK);
+                    g.drawString(value, vx, (int) (cellH + offset));
+                }
             }
+            long stop = System.currentTimeMillis();
+            System.out.println("time 244: "+(stop-start));
 
             if(isComment) {
                 handler.addComment(comment);
@@ -142,6 +137,14 @@ public class HUD {
     private void hide() {
         isAnimating = true;
         vel = 4.0f;
+    }
+
+    public void light(int i) {
+        attLight[i/8][i%8] = true;
+    }
+
+    public void unlight(int i) {
+        attLight[i/8][i%8] = false;
     }
 
     public void mouseMoved(MouseEvent e) {
