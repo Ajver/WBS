@@ -135,13 +135,13 @@ public class HUD {
 
     private void show() {
         isAnimating = true;
-        vel = -4.0f;
+        vel = -3.0f;
         isVisible = true;
     }
 
     private void hide() {
         isAnimating = true;
-        vel = 4.0f;
+        vel = 3.0f;
     }
 
     public void light(int i) {

@@ -17,6 +17,7 @@ public class Textures {
 	public BufferedImage[] runattackIcon = new BufferedImage[2];
 	public BufferedImage[] bootIcon = new BufferedImage[2];
 	public BufferedImage[] bigBootIcon = new BufferedImage[2];
+	public BufferedImage[] timerIcon = new BufferedImage[2];
 
 	/*	[Type] 	[Action]
 	 * 	
@@ -46,6 +47,8 @@ public class Textures {
 
 			bigBootIcon[0] = getHalfFromSS(ImageIO.read(new File("res/Graphics/Icons/BigBootIcon.png")), 0);
 			bigBootIcon[1] = getHalfFromSS(ImageIO.read(new File("res/Graphics/Icons/BigBootIcon.png")), 1);
+
+			timerIcon[0] = timerIcon[0] = ImageIO.read(new File("res/Graphics/Icons/TimerIcon.png"));
 
 			mapTile[0][0] = ImageIO.read(new File("res/Graphics/Icons/mapClick.png"));
 			mapTile[0][1] = ImageIO.read(new File("res/Graphics/Icons/mapHover.png"));

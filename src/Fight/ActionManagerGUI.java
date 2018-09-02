@@ -39,7 +39,7 @@ public class ActionManagerGUI extends ActionManager {
         float x = (MainClass.WW - 288) / 2.0f;
         this.ag[0] = new ActionGroup(x, y+64, new ActionAttack(p, handler, hud), new ActionRunattack(p, handler, hud));
         this.ag[1] = new ActionGroup(x+96, y+64, new ActionMove(p, handler, hud), new ActionRun(p, handler, hud));
-        this.ag[2] = new ActionGroup(x+192, y+64, new ActionAttack(p, handler, hud));
+        this.ag[2] = new ActionGroup(x+192, y+64, new ActionSkip(p, handler, hud));
 
         refresh();
     }

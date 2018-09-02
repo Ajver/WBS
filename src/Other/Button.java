@@ -30,14 +30,14 @@ public class Button {
 	public void render(Graphics g) {
 		if(img == null) {
 			if(hover) {
-				g.setColor(Color.GREEN);
+				g.setColor(new Color(102, 51, 19));
 			}else {
-				g.setColor(Color.GRAY);
+				g.setColor(Gamecol.DARK);
 			}
 			
 			g.fillRect((int)x, (int)y, (int)w, (int)h);
-			
-			g.setColor(Color.WHITE); 
+
+			g.setColor(Gamecol.LIGHT);
 		}else {
 			g.drawImage(img, (int)x, (int)y, null);
 		}

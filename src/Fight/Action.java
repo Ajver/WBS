@@ -100,6 +100,10 @@ public abstract class Action {
 		this.breakTime = System.currentTimeMillis() + bt;
 		this.isTimer = true;
 	}
+
+	protected void stopTimer() {
+		this.isTimer = false;
+	}
 	
 	public int getDuration() { return duration; }
 	public float getX() { return x; }
