@@ -5,6 +5,7 @@ import MainFiles.MainClass;
 import Other.Button;
 import Other.Gamecol;
 import Other.Handler;
+import Character.HUD;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -26,7 +27,7 @@ public class ActionManagerGUI extends ActionManager {
 
     float selX = buttonW;
 
-    public ActionManagerGUI(Handler handler, Creature c) {
+    public ActionManagerGUI(Handler handler, Creature c, HUD hud) {
         super(handler, c);
 
         this.c.name = "Ty";
@@ -36,9 +37,9 @@ public class ActionManagerGUI extends ActionManager {
 
         Creature p = handler.creatures.get(0);
         float x = (MainClass.WW - 288) / 2.0f;
-        this.ag[0] = new ActionGroup(x, y+64, new ActionAttack(p, handler), new ActionRunattack(p, handler));
-        this.ag[1] = new ActionGroup(x+96, y+64, new ActionMove(p, handler), new ActionRun(p, handler));
-        this.ag[2] = new ActionGroup(x+192, y+64, new ActionAttack(p, handler));
+        this.ag[0] = new ActionGroup(x, y+64, new ActionAttack(p, handler, hud), new ActionRunattack(p, handler, hud));
+        this.ag[1] = new ActionGroup(x+96, y+64, new ActionMove(p, handler, hud), new ActionRun(p, handler, hud));
+        this.ag[2] = new ActionGroup(x+192, y+64, new ActionAttack(p, handler, hud));
 
         refresh();
     }

@@ -7,11 +7,12 @@ import Character.Dice;
 import Creatures.Creature;
 import MainFiles.MainClass;
 import Other.Handler;
+import Character.HUD;
 
 public class ActionAttack extends Action {
 
-	public ActionAttack(Creature c, Handler handler) {
-		super(c, handler);
+	public ActionAttack(Creature c, Handler handler, HUD hud) {
+		super(c, handler, hud);
 		this.img = MainClass.tex.swordIcon;
 	}
 
@@ -108,10 +109,13 @@ public class ActionAttack extends Action {
 				}
 			}
 		}
+
+		hud.light(HUD.WW);
 	}
 
 	public void slMouseLeved() {
 		handler.map.clearColors();
+		hud.unlight(HUD.WW);
 	}
 
 	public void canel() {
