@@ -96,33 +96,24 @@ public class HUD {
 
             g.setFont(new Font("arial", 1, 16));
             f = g.getFontMetrics();
-            for (int i = 0; i < 8; i++) {
-                // Main attributes
-                String name = attNames[0][i];
-                String value = "" + c.att.current[0][i];
-                int nx = (int) (x + i * cellW + (cellW - f.stringWidth(name)) / 2.0f);
-                int vx = (int) (x + i * cellW + (cellW - f.stringWidth(value)) / 2.0f);
-                int offset = (int) (y + 32 + cellH - 9);
+            long start = System.currentTimeMillis();
+            for(int nr=0; nr<2; nr++) {
+                for (int i = 0; i < 8; i++) {
+                    String name = attNames[nr][i];
+                    String value = "" + c.att.current[nr][i];
+                    int nx = (int) (x + i * cellW + (cellW - f.stringWidth(name)) / 2.0f);
+                    int vx = (int) (x + i * cellW + (cellW - f.stringWidth(value)) / 2.0f);
+                    int offset = (int) (y + 32 + cellH - 9) + 72*nr;
 
-                g.setColor(Gamecol.LIGHT);
-                g.drawString(name, nx, (offset));
+                    g.setColor(Gamecol.LIGHT);
+                    g.drawString(name, nx, (offset));
 
-                g.setColor(Gamecol.DARK);
-                g.drawString(value, vx, (int) (cellH + offset));
-
-                // Second attributes
-                name = attNames[1][i];
-                value = "" + c.att.current[1][i];
-                nx = (int) (x + i * cellW + (cellW - f.stringWidth(name)) / 2.0f);
-                vx = (int) (x + i * cellW + (cellW - f.stringWidth(value)) / 2.0f);
-                offset += 72;
-
-                g.setColor(Gamecol.LIGHT);
-                g.drawString(name, nx, (offset));
-
-                g.setColor(Gamecol.DARK);
-                g.drawString(value, vx, (int) (cellH + offset));
+                    g.setColor(Gamecol.DARK);
+                    g.drawString(value, vx, (int) (cellH + offset));
+                }
             }
+            long stop = System.currentTimeMillis();
+            System.out.println("time 244: "+(stop-start));
 
             if(isComment) {
                 handler.addComment(comment);
