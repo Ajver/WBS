@@ -100,14 +100,20 @@ public class HUD {
 
             g.setFont(new Font("arial", 1, 16));
             f = g.getFontMetrics();
-            long start = System.currentTimeMillis();
             for(int nr=0; nr<2; nr++) {
                 for (int i = 0; i < 8; i++) {
                     String name = attNames[nr][i];
                     String value = "" + c.att.current[nr][i];
                     int nx = (int) (x + i * cellW + (cellW - f.stringWidth(name)) / 2.0f);
                     int vx = (int) (x + i * cellW + (cellW - f.stringWidth(value)) / 2.0f);
-                    int offset = (int) (y + 32 + cellH - 9) + 72*nr;
+                    int offset = (int) (y + 32 + cellH - 9) + 72 * nr;
+
+                    if (attLight[nr][i]) {
+                        int cy = (int) (y + 32 + 72 * nr);
+                        g.setColor(new Color(183, 92, 36));
+                        g.fillRect((int) (x + i * cellW), cy, (int) cellW, (int) cellH);
+                        g.drawRect((int) (x + i * cellW), (int) (cy + cellH), (int) cellW, (int) cellH);
+                    }
 
                     g.setColor(Gamecol.LIGHT);
                     g.drawString(name, nx, (offset));
@@ -116,8 +122,6 @@ public class HUD {
                     g.drawString(value, vx, (int) (cellH + offset));
                 }
             }
-            long stop = System.currentTimeMillis();
-            System.out.println("time 244: "+(stop-start));
 
             if(isComment) {
                 handler.addComment(comment);

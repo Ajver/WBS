@@ -115,7 +115,7 @@ public class ActionAttack extends Action {
 
 	public void slMouseLeved() {
 		handler.map.clearColors();
-		hud.light(HUD.WW);
+		hud.unlight(HUD.WW);
 	}
 
 	public void canel() {
