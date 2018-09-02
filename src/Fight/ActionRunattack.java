@@ -3,6 +3,7 @@ package Fight;
 import Creatures.Creature;
 import MainFiles.MainClass;
 import Other.Handler;
+import Character.HUD;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -15,8 +16,8 @@ public class ActionRunattack extends Action {
     private boolean isLocalTimer = false;
     private long localBreakTime;
 
-    public ActionRunattack(Creature c, Handler handler) {
-        super(c, handler);
+    public ActionRunattack(Creature c, Handler handler, HUD hud) {
+        super(c, handler, hud);
         this.duration = 2;
         this.img = MainClass.tex.runattackIcon;
     }
@@ -54,7 +55,7 @@ public class ActionRunattack extends Action {
     }
 
     private void attack() {
-        new ActionAttack(c, handler).use(mapX, mapY);
+        new ActionAttack(c, handler, hud).use(mapX, mapY);
         startTimer((long)(c.attackDuration*1000.0f));
     }
 
@@ -170,9 +171,14 @@ public class ActionRunattack extends Action {
                 }
             }
         }
+
+        hud.light(HUD.WW);
+        hud.light(HUD.Sz);
     }
 
     public void slMouseLeved() {
         handler.map.clearColors();
+        hud.unlight(HUD.WW);
+        hud.unlight(HUD.Sz);
     }
 }

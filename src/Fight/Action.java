@@ -9,6 +9,7 @@ import Other.Comment;
 import Other.CursorManager;
 import Other.Handler;
 import Other.SoundPlayer;
+import Character.HUD;
 
 public abstract class Action {
 	
@@ -28,6 +29,7 @@ public abstract class Action {
 
 	protected Creature c;
 	protected Handler handler;
+    protected HUD hud;
 	
 	protected long breakTime;
 	protected boolean isTimer = false;
@@ -36,9 +38,10 @@ public abstract class Action {
 	private int pMapX, pMapY = -1;
 	private long sound_bt = 0;
 
-	public Action(Creature c, Handler handler) {
+	public Action(Creature c, Handler handler, HUD hud) {
 		this.c = c;
 		this.handler = handler;
+        this.hud = hud;
 	}
 	
 	public void update(float et) {

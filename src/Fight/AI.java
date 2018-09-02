@@ -45,7 +45,7 @@ public class AI {
 			}
 			if(mayAttack) {
 				// Attack
-				am.select(new ActionAttack(c, handler));
+				am.select(new ActionAttack(c, handler, null));
 				am.current().use(ex, ey);
 			}else {
 				int nex, ney;
@@ -75,21 +75,21 @@ public class AI {
 				if(mayRunattack) {
 					nex = ex;
 					ney = ey;
-					am.select(new ActionRunattack(c, handler));
+					am.select(new ActionRunattack(c, handler, null));
 					am.current().use(nex, ney);
 				}else if(moveP.size() > 0) {
 					Point selP = handler.map.getNearestPoint(moveP, c.getMX(), c.getMY());
 					nex = selP.x;
 					ney = selP.y;
 					System.out.println("AI: move to " + nex + " | " + ney);
-					am.select(new ActionMove(c, handler));
+					am.select(new ActionMove(c, handler, null));
 					am.current().use(nex, ney);
 				}else if(runP.size() > 0) {
 					Point selP = handler.map.getNearestPoint(runP, c.getMX(), c.getMY());
 					nex = selP.x;
 					ney = selP.y;
 					System.out.println("AI: run to " + nex + " | " + ney);
-					am.select(new ActionRun(c, handler));
+					am.select(new ActionRun(c, handler, null));
 					am.current().use(nex, ney);
 				}else {
 					System.out.println("Can't go to the player");

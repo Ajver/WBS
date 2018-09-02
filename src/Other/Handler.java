@@ -49,9 +49,8 @@ public class Handler extends MouseAdapter {
 		creatures.add(new Human(2, 10, this));
 		
 		map = new Map(50, 30, this);
-		actionManager = new ActionManagerGUI(this, creatures.get(0));
-
 		hud = new HUD(this);
+		actionManager = new ActionManagerGUI(this, creatures.get(0), hud);
 
 		camera = new Camera(this);
 		camera.focus(creatures.get(currentCreature));

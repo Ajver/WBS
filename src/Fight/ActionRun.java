@@ -5,14 +5,14 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 import Creatures.Creature;
-import Creatures.Human;
+import Character.HUD;
 import MainFiles.MainClass;
 import Other.Handler;
 
 public class ActionRun extends Action {
 	
-	public ActionRun(Creature c, Handler handler) {
-		super(c, handler);
+	public ActionRun(Creature c, Handler handler, HUD hud) {
+		super(c, handler, hud);
 		
 		this.img = MainClass.tex.bigBootIcon;
 
@@ -108,10 +108,13 @@ public class ActionRun extends Action {
 				}
 			}
 		}
+
+		hud.light(HUD.Sz);
 	}
 
 	public void slMouseLeved() {
 		handler.map.clearColors();
+		hud.unlight(HUD.Sz);
 	}
 	
 	public void mouseReleased(MouseEvent e) {
