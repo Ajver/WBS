@@ -48,12 +48,19 @@ public abstract class Creature extends GameObject {
 	public int group;
 	
 	public Creature(int mx, int my, Handler handler) {
-		super(mx, my);
-		this.handler = handler;	
-		
-		this.att = new Attributes();
+		this(mx, my, handler, true);
+	}
 
-		this.AI = new AI(this, handler);
+	public Creature(int mx, int my, Handler handler, boolean hasAI) {
+		super(mx, my);
+		this.handler = handler;
+
+		this.att = new Attributes();
+		this.hasAI = hasAI;
+
+		if(hasAI) {
+			this.AI = new AI(this, handler);
+		}
 	}
 	
 	public void hit(int dmg) {

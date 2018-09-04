@@ -45,6 +45,7 @@ public class Animation {
 		g2d.rotate(theta, rx, ry);
 
 		int currentFrame = (int)((progress * frames) / duration);
+		while (currentFrame > imgs.length) { currentFrame--; }
 		g.drawImage(imgs[currentFrame], (int)x, (int)y, null);
 
 		g2d.rotate(-theta, rx, ry);
