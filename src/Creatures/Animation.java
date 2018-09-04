@@ -52,5 +52,7 @@ public class Animation {
 
 	public void render(Graphics g, float x, float y, float theta) {
 		render(g, x, y, theta, x+Handler.cellW/2.0f, y+Handler.cellH/2.0f);
-	}	
+	}
+
+	public void setDuration(float duration) { this.duration = duration; }
 }

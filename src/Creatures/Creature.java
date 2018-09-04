@@ -23,7 +23,7 @@ public abstract class Creature extends GameObject {
 	private int currentPoint = 0;
 	private long timer;
 	
-	public static float moveDuration = 0.4f;
+	public static float moveDuration = 0.6f;
 	public static float attackDuration = 0.6f;
 
 	protected Animation moveAnimation;
@@ -37,7 +37,8 @@ public abstract class Creature extends GameObject {
 	private boolean hasAI = true;
 
 	private long stepTimer;
-	private String[] stepsPath = { "step_0.wav", "step_1.wav", "step_2.wav" };
+	private int currentStep = 0;
+	private String[] stepsPath = { "step_0.wav", "step_1.wav" };
 	private Random r = new Random();
 
 	public Attributes att;
@@ -109,8 +110,10 @@ public abstract class Creature extends GameObject {
 	
 	protected void move(float et) {
 		if(System.currentTimeMillis() >= stepTimer) {
-			stepTimer += (long)(moveDuration*500.0f + (r.nextFloat()-0.5f)*20.0f);
-			SoundPlayer.playNextSound("res/Sounds/" + stepsPath[r.nextInt(3)]);
+			stepTimer += (long)(moveDuration*500.0f);
+//			SoundPlayer.playNextSound("res/Sounds/" + stepsPath[r.nextInt(stepsPath.length)]);
+			SoundPlayer.playNextSound("res/Sounds/" + stepsPath[currentStep]);
+			currentStep = (currentStep+1) % 2;
 		}
 
 		if(System.currentTimeMillis() >= timer) {
@@ -130,10 +133,17 @@ public abstract class Creature extends GameObject {
 	}
 	
 	public void move(LinkedList<Point> path) {
-		isMoving = true;
-		this.path = path;
-		stepTimer = System.currentTimeMillis() + (long)(moveDuration * 500.0f);
-		timer = 0;
+		if(path.size() > 0) {
+			this.moveDuration = 3.0f / path.size();
+			if(this.moveDuration < 0.35f) { this.moveDuration = 0.35f; }
+			else if(this.moveDuration > 0.5f) { this.moveDuration = 0.5f; }
+
+			moveAnimation.setDuration(this.moveDuration);
+			isMoving = true;
+			this.path = path;
+			stepTimer = System.currentTimeMillis() + (long) (moveDuration * 500.0f);
+			timer = 0;
+		}
 	}
 
 	public void round() {

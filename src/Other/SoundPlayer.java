@@ -10,7 +10,7 @@ import javax.sound.sampled.FloatControl;
 
 public class SoundPlayer {
 	
-	private static float level = 0.8f; // < 0.0; 1.0 >
+	private static float level = 0.6f; // < 0.0; 1.0 >
 	private Clip clip;
 	private boolean isRunning = false;
 	private String path;
