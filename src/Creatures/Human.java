@@ -7,11 +7,7 @@ import Other.Handler;
 public class Human extends Creature {
 
 	public Human(int mx, int my, Handler handler) {
-		this(mx, my, handler, true);
-	}
-
-	public Human(int mx, int my, Handler handler, boolean hasAI) {
-		super(mx, my, handler, hasAI);
+		super(mx, my, handler);
 				
 		for(int at=0; at<8; at++) {
 			att.begin[0][at] = att.current[0][at] = 20 + Dice.roll2d10();
