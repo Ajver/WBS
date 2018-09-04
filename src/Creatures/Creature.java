@@ -85,7 +85,7 @@ public abstract class Creature extends GameObject {
 			else if(velX < 0 && velY > 0) direction = 5;
 			else if(velX < 0 && velY == 0) direction = 6;
 			else if(velX < 0 && velY < 0) direction = 7;
-			
+
 			moveAnimation.update(et);
 		}else {
 			if(isAttacking) {
@@ -137,7 +137,6 @@ public abstract class Creature extends GameObject {
 			this.moveDuration = 3.0f / path.size();
 			if(this.moveDuration < 0.35f) { this.moveDuration = 0.35f; }
 			else if(this.moveDuration > 0.5f) { this.moveDuration = 0.5f; }
-
 			moveAnimation.setDuration(this.moveDuration);
 			isMoving = true;
 			this.path = path;
