@@ -12,6 +12,7 @@ public class ActionManager {
 	public Creature c;
 
     public int attackCounter;
+    public int[] MOD = new int[8];
 
 	public ActionManager(Handler handler, Creature c) {
         this.handler = handler;
@@ -24,6 +25,10 @@ public class ActionManager {
         selected[1] = null;
         currentAction = 0;
         attackCounter = 0;
+
+        for(int i=0; i<8; i++) {
+            MOD[i] = 0;
+        }
     }
 
     public void nextAction() {

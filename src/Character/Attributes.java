@@ -42,14 +42,14 @@ public class Attributes {
 		}
 	}
 	
-	public boolean WW(int mod) { return r.nextInt(100) < current[0][0] + mod; }
-	public boolean US(int mod) { return r.nextInt(100) < current[0][1] + mod; }
-	public boolean K(int mod) { return r.nextInt(100) < current[0][2] + mod; }
-	public boolean Odp(int mod) { return r.nextInt(100) < current[0][3] + mod; }
-	public boolean Zr(int mod) { return r.nextInt(100) < current[0][4] + mod; }
-	public boolean Int(int mod) { return r.nextInt(100) < current[0][5] + mod; }
-	public boolean SW(int mod) { return r.nextInt(100) < current[0][6] + mod; }
-	public boolean Ogl(int mod) { return r.nextInt(100) < current[0][7] + mod; }
+	public boolean WW(int mod) { return r.nextInt(100) <= current[0][0] + getMOD(mod); }
+	public boolean US(int mod) { return r.nextInt(100) <= current[0][1] + getMOD(mod); }
+	public boolean K(int mod) { return r.nextInt(100) <= current[0][2] + getMOD(mod); }
+	public boolean Odp(int mod) { return r.nextInt(100) <= current[0][3] + getMOD(mod); }
+	public boolean Zr(int mod) { return r.nextInt(100) <= current[0][4] + getMOD(mod); }
+	public boolean Int(int mod) { return r.nextInt(100) <= current[0][5] + getMOD(mod); }
+	public boolean SW(int mod) { return r.nextInt(100) <= current[0][6] + getMOD(mod); }
+	public boolean Ogl(int mod) { return r.nextInt(100) <= current[0][7] + getMOD(mod); }
 	
 	public int getA() { return current[1][0]; }
 	public int getZyw() { return current[1][1]; }
@@ -75,5 +75,9 @@ public class Attributes {
 				"Si³a", "Wytrzyma³oœæ",
 				"Szybkoœæ", "Magia",
 				"Punkty Ob³êdu", "Punkty Przeznaczenia" };
+	}
+
+	private int getMOD(int mod) {
+		return mod > 30 ? 30 : mod < -30 ? -30 : mod;
 	}
 }

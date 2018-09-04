@@ -42,7 +42,7 @@ public class ActionAttack extends Action {
 		Creature enemy = handler.getFromMap(mapX, mapY);
 		c.setFocus(mapX, mapY);
 
-		if(c.att.WW(0)) {
+		if(c.att.WW(c.am.MOD[HUD.WW])) {
 			int dmg = Dice.roll1d10();
 			enemy.hit(dmg);
 		}else {

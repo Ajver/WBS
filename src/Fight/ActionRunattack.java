@@ -26,6 +26,7 @@ public class ActionRunattack extends Action {
         if(isLocalTimer) {
             if(System.currentTimeMillis() >= localBreakTime) {
                 isLocalTimer = false;
+                c.am.MOD[HUD.WW] += 10;
                 attack();
             }
         }
