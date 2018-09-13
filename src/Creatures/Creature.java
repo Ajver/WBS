@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import Character.Attributes;
+import Eq.Equipment;
 import Fight.AI;
 import Fight.ActionManager;
 import Other.GameObject;
@@ -44,6 +45,8 @@ public abstract class Creature extends GameObject {
 	public Attributes att;
 	public int hp;
 
+	public Equipment eq;
+
 	public String name;
 	public int group;
 	
@@ -52,6 +55,7 @@ public abstract class Creature extends GameObject {
 		this.handler = handler;	
 		
 		this.att = new Attributes();
+		this.eq = new Equipment(this);
 
 		this.AI = new AI(this, handler);
 	}
