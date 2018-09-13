@@ -14,7 +14,7 @@ public class ActionGroup {
 
 	// Translate y (while is hided)
     private float ty = ActionManagerGUI.buttonW*2, velY = 0;
-	private float movingProgress = 0.0f, movingSpeed = 3.0f;
+	private float movingProgress = 0.0f, movingSpeed = 6.0f;
 
 	public LinkedList<Action> actions = new LinkedList<Action>();
 	

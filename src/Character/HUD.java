@@ -30,6 +30,7 @@ public class HUD {
 
     private Button hideButton;
     private float progress = 0.0f, vel = 1.0f;
+    private float movingSpeed = 5.0f;
     private float tx;
     private boolean isAnimating = false;
     private boolean isVisible = true;
@@ -133,14 +134,14 @@ public class HUD {
 
     private void show() {
         isAnimating = true;
-        vel = -3.0f;
+        vel = -movingSpeed;
         isVisible = true;
         hideButton.setCaption("Schowaj");
     }
 
     private void hide() {
         isAnimating = true;
-        vel = 3.0f;
+        vel = movingSpeed;
         hideButton.setCaption("Poka¿");
     }
 

@@ -93,6 +93,7 @@ public class ActionRunattack extends Action {
                 used = true;
 
                 c.move(path);
+                c.moveDuration *= 0.75f;
                 startLocalTimer((int) (c.moveDuration * (path.size()) * 1000.0f));
             }else {
                 System.out.println("Can't runattack to " + mapX + " | " + mapY);
