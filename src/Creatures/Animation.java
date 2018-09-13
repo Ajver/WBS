@@ -15,13 +15,9 @@ public class Animation {
 	
 	public Animation(float duration, BufferedImage... allFrames) {
 		this.duration = duration;
-		
+
 		this.frames = allFrames.length;
-		this.imgs = new BufferedImage[frames];
-		
-		for(int i=0; i<frames; i++) {
-			this.imgs[i] = allFrames[i];
-		}
+		this.imgs = allFrames;
 	}
 	
 	public boolean update(float et) {
