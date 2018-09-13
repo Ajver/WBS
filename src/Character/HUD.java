@@ -61,11 +61,9 @@ public class HUD {
                 progress = 1.0f;
                 isAnimating = false;
                 isVisible = false;
-                hideButton.setCaption("Poka¿");
             }else if(progress < 0.0f) {
                 progress = 0.0f;
                 isAnimating = false;
-                hideButton.setCaption("Schowaj");
             }
         }
     }
@@ -137,11 +135,13 @@ public class HUD {
         isAnimating = true;
         vel = -3.0f;
         isVisible = true;
+        hideButton.setCaption("Schowaj");
     }
 
     private void hide() {
         isAnimating = true;
         vel = 3.0f;
+        hideButton.setCaption("Poka¿");
     }
 
     public void light(int i) {
