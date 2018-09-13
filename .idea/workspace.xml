@@ -10,12 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd1fc296-99eb-4ce4-bf44-5f562e08c663" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Fight/ActionStrongattack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/Action.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionAttack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionAttack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionManagerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Fight/ActionStrongattack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionStrongattack.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,13 +48,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="23572" />
+          <entry key="java" value="23671" />
           <entry key="txt" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="23572" />
+          <entry key="JAVA" value="23671" />
           <entry key="PLAIN_TEXT" value="28" />
         </counts>
       </usages-collector>
@@ -103,18 +98,18 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Fight/ActionStrongattack.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="45" column="41" selection-start-line="45" selection-start-column="41" selection-end-line="45" selection-end-column="41" />
+            <state relative-caret-position="214">
+              <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#522#523#0" expanded="true" />
-                <element signature="e#543#544#0" expanded="true" />
-                <element signature="e#707#708#0" expanded="true" />
-                <element signature="e#742#743#0" expanded="true" />
-                <element signature="e#1235#1236#0" expanded="true" />
-                <element signature="e#1256#1257#0" expanded="true" />
-                <element signature="e#1308#1309#0" expanded="true" />
-                <element signature="e#1329#1330#0" expanded="true" />
+                <element signature="e#758#759#0" expanded="true" />
+                <element signature="e#788#789#0" expanded="true" />
+                <element signature="e#816#817#0" expanded="true" />
+                <element signature="e#851#852#0" expanded="true" />
+                <element signature="e#1677#1678#0" expanded="true" />
+                <element signature="e#1716#1717#0" expanded="true" />
+                <element signature="e#1750#1751#0" expanded="true" />
+                <element signature="e#1787#1788#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -433,7 +428,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/Git repositories/WBS/src/Other/Handler.java" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536872302185" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536872811811" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
@@ -854,18 +849,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Fight/ActionStrongattack.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="45" column="41" selection-start-line="45" selection-start-column="41" selection-end-line="45" selection-end-column="41" />
+        <state relative-caret-position="214">
+          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#522#523#0" expanded="true" />
-            <element signature="e#543#544#0" expanded="true" />
-            <element signature="e#707#708#0" expanded="true" />
-            <element signature="e#742#743#0" expanded="true" />
-            <element signature="e#1235#1236#0" expanded="true" />
-            <element signature="e#1256#1257#0" expanded="true" />
-            <element signature="e#1308#1309#0" expanded="true" />
-            <element signature="e#1329#1330#0" expanded="true" />
+            <element signature="e#758#759#0" expanded="true" />
+            <element signature="e#788#789#0" expanded="true" />
+            <element signature="e#816#817#0" expanded="true" />
+            <element signature="e#851#852#0" expanded="true" />
+            <element signature="e#1677#1678#0" expanded="true" />
+            <element signature="e#1716#1717#0" expanded="true" />
+            <element signature="e#1750#1751#0" expanded="true" />
+            <element signature="e#1787#1788#0" expanded="true" />
           </folding>
         </state>
       </provider>

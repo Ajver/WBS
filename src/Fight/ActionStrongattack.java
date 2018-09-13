@@ -21,8 +21,13 @@ public class ActionStrongattack extends Action {
     }
 
     public void refresh() {
-        this.isActive = c.am.currentAction == 0 && attack.can();
-        this.comment = attack.comment;
+        if(c.am.currentAction == 1) {
+            this.isActive = false;
+            comment.set("Nie mo¿esz ju¿ wykonaæ silnego ataku w tej rundzie");
+        }else {
+            this.isActive = attack.can();
+            this.comment = attack.comment;
+        }
     }
 
     public void canel() {
