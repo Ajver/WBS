@@ -61,13 +61,19 @@ public abstract class Creature extends GameObject {
 	}
 	
 	public void hit(int dmg) {
-		this.hp -= dmg;
-		SoundPlayer.playNextSound("res/Sounds/damage.wav");
+		dmg -= this.att.getWyt();
 
-		handler.addSmallMessage(this, "-"+dmg, new Color(255, 0, 0));
+		if(dmg > 0) {
+			this.hp -= dmg;
+			SoundPlayer.playNextSound("res/Sounds/damage.wav");
 
-		if(hp < 0) {
-			//handler.removeCreature(this);
+			handler.addSmallMessage(this, "-" + dmg, new Color(255, 0, 0));
+
+			if (hp < 0) {
+				//handler.removeCreature(this);
+			}
+		}else {
+			handler.addSmallMessage(this, "Pud³o", new Color(0, 0, 255));
 		}
 	}
 	
