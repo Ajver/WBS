@@ -191,8 +191,16 @@ public class HUD {
                     int i = (int) ((mx - x) / cellW);
 
                     String[] names = Attributes.getNamesOrder(nr);
+                    String comm = names[i];
 
-                    comment.set(names[i]);
+                    int mod = Attributes.getMOD(MOD[nr][i]);
+                    if(mod > 0) {
+                        comm += " (+" + mod + ")";
+                    }else if(mod < 0) {
+                        comm += " (" + mod + ")";
+                    }
+
+                    comment.set(comm);
                 } else {
                     isComment = false;
                 }
