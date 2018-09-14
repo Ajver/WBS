@@ -18,7 +18,7 @@ public class ActionPreciseattack extends ActionAttack {
     public void refresh() {
         if(c.am.currentAction == 1) {
             this.isActive = false;
-            comment.set("Nie mo¿esz ju¿ wykonaæ silnego ataku w tej rundzie");
+            comment.set("Nie mo¿esz ju¿ wykonaæ precyzyjnego ataku w tej rundzie");
         }else {
             this.isActive = can();
         }
