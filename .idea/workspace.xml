@@ -9,9 +9,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/MainFiles/MainClass.java" line="34" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1fc296-99eb-4ce4-bf44-5f562e08c663" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionPreciseattack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionPreciseattack.java" afterDir="false" />
-    </list>
+    <list default="true" id="bd1fc296-99eb-4ce4-bf44-5f562e08c663" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +21,7 @@
     <session id="-899608171">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="17" />
+          <entry key="project.closed" value="18" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="2" />
@@ -500,7 +498,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
@@ -514,7 +511,7 @@
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" sideWeight="0.49946696" visible="true" weight="0.17462039" />
+      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49946696" weight="0.17462039" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
