@@ -21,7 +21,7 @@ public class ActionMove extends Action {
 		int cx = c.getMX();
 		int cy = c.getMY();
 
-		slMouseLeved();
+		clearColors();
 
 		int maxLen = c.att.getSz();
 		
@@ -110,11 +110,6 @@ public class ActionMove extends Action {
 		}
 
 		hud.light(HUD.Sz);
-	}
-
-	public void slMouseLeved() {
-		handler.map.clearColors();
-		hud.unlight(HUD.Sz);
 	}
 
 	public void canel() {

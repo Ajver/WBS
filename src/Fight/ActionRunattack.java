@@ -39,7 +39,7 @@ public class ActionRunattack extends Action {
         int minLen = c.att.getSz() + 1;
         int maxLen = c.att.getSz() * 2 + 1;
 
-        slMouseLeved();
+        clearColors();
 
         for(int yy=-maxLen; yy<=maxLen; yy++) {
             for(int xx=-maxLen; xx<=maxLen; xx++) {
@@ -176,11 +176,11 @@ public class ActionRunattack extends Action {
 
         hud.light(HUD.WW);
         hud.light(HUD.Sz);
+
+        incMOD(HUD.WW, 10);
     }
 
-    public void slMouseLeved() {
-        handler.map.clearColors();
-        hud.unlight(HUD.WW);
-        hud.unlight(HUD.Sz);
+    protected void slResetMOD() {
+        hud.incMOD(HUD.WW, -10);
     }
 }

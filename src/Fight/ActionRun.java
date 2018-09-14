@@ -23,7 +23,7 @@ public class ActionRun extends Action {
 		int cx = c.getMX();
 		int cy = c.getMY();
 
-		slMouseLeved();
+		clearColors();
 
 		int maxLen = c.att.getSz() * 3;
 		
@@ -113,8 +113,7 @@ public class ActionRun extends Action {
 	}
 
 	public void slMouseLeved() {
-		handler.map.clearColors();
-		hud.unlight(HUD.Sz);
+		clearColors();
 	}
 	
 	public void mouseReleased(MouseEvent e) {

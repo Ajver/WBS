@@ -30,9 +30,10 @@ public abstract class Action {
 	protected Creature c;
 	protected Handler handler;
     protected HUD hud;
+    protected boolean isModed = false;
 	
-	protected long breakTime;
-	protected boolean isTimer = false;
+	private long breakTime;
+	private boolean isTimer = false;
 	protected boolean used = false;
 
 	private int pMapX, pMapY = -1;
@@ -53,6 +54,7 @@ public abstract class Action {
 				handler.nextAction();
 
 				// Reset
+				resetMOD();
 				isTimer = false;
 				used = false;
 			}
@@ -183,6 +185,8 @@ public abstract class Action {
 	}
 
 	private void mouseLeved() {
+		clearColors();
+		resetMOD();
 		slMouseLeved();
 	}
 
@@ -194,4 +198,14 @@ public abstract class Action {
 				my >= y &&
 				my <= y + ActionManagerGUI.buttonW;
 	}
+
+	protected void clearColors() {
+		handler.map.clearColors();
+		hud.unlight();
+	}
+
+	protected void resetMOD() { if(isModed) { isModed = false; slResetMOD(); } }
+	protected void slResetMOD() {}
+
+	protected void incMOD(int i, int mod) { if(!isModed) { hud.incMOD(i, mod); isModed = true; } }
 }

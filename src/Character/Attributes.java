@@ -77,7 +77,7 @@ public class Attributes {
 				"Punkty Ob³êdu", "Punkty Przeznaczenia" };
 	}
 
-	private int getMOD(int mod) {
+	public static int getMOD(int mod) {
 		return mod > 30 ? 30 : mod < -30 ? -30 : mod;
 	}
 }

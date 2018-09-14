@@ -20,7 +20,7 @@ public class ActionAttack extends Action {
 		int cy = c.getMY();
 
 		this.hover = false;
-		slMouseLeved();
+		clearColors();
 
 		for(int yy=-1; yy<=1; yy++) {
 			for(int xx=-1; xx<=1; xx++) {
@@ -111,12 +111,6 @@ public class ActionAttack extends Action {
 
 		hud.light(HUD.WW);
 		hud.light(HUD.A);
-	}
-
-	public void slMouseLeved() {
-		handler.map.clearColors();
-		hud.unlight(HUD.WW);
-		hud.unlight(HUD.A);
 	}
 
 	public void canel() {

@@ -15,6 +15,8 @@ public class HUD {
     public static final int WW=0, US=1, K=2, Odp=3, Zr=4, Int=5, SW=6, Ogl=7;
     public static final int A=8, Zyw=9, S=10, Wyt=11, Sz=12, Mag=13, PO=14, PP=15;
 
+    private int MOD[][] = new int[2][8];
+
     private float x, y;
     private float w, h;
     private float cellW, cellH = 32;
@@ -101,8 +103,10 @@ public class HUD {
             f = g.getFontMetrics();
             for(int nr=0; nr<2; nr++) {
                 for (int i = 0; i < 8; i++) {
+                    int mod = Attributes.getMOD(MOD[nr][i]);
                     String name = attNames[nr][i];
-                    String value = "" + c.att.current[nr][i];
+                    String value = "" + (c.att.current[nr][i] + mod);
+
                     int nx = (int) (x + i * cellW + (cellW - f.stringWidth(name)) / 2.0f);
                     int vx = (int) (x + i * cellW + (cellW - f.stringWidth(value)) / 2.0f);
 
@@ -118,7 +122,15 @@ public class HUD {
                     g.setColor(Gamecol.LIGHT);
                     g.drawString(name, nx, (offset));
 
-                    g.setColor(Gamecol.DARK);
+                    if(mod == 0) {
+                        g.setColor(Gamecol.DARK);
+                    }else {
+                        if(mod > 0) {
+                            g.setColor(new Color(3, 111, 0));
+                        }else {
+                            g.setColor(new Color(160, 0, 12));
+                        }
+                    }
                     g.drawString(value, vx, (int) (cellH + offset));
                 }
             }
@@ -145,12 +157,22 @@ public class HUD {
         hideButton.setCaption("Poka¿");
     }
 
+    public void incMOD(int i, int mod) {
+        MOD[i/8][i%8] += mod;
+    }
+
     public void light(int i) {
         attLight[i/8][i%8] = true;
     }
 
     public void unlight(int i) {
         attLight[i/8][i%8] = false;
+    }
+
+    public void unlight() {
+        for(int i=0; i<16; i++) {
+            attLight[i / 8][i % 8] = false;
+        }
     }
 
     public void mouseMoved(MouseEvent e) {

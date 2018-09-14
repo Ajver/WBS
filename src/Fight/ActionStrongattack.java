@@ -41,7 +41,7 @@ public class ActionStrongattack extends Action {
     public void select() {
         attack.select();
         this.hover = false;
-        slMouseLeved();
+        clearColors();
     }
 
     public boolean mouseOver(int mx, int my) {
@@ -66,10 +66,25 @@ public class ActionStrongattack extends Action {
     }
 
     public void slMouseEntered() {
-        attack.slMouseEntered();
+        int cx = c.getMX();
+        int cy = c.getMY();
+
+        for(int yy=-1; yy<=1; yy++) {
+            for (int xx = -1; xx <= 1; xx++) {
+                if (cx + xx >= 0 && cx + xx < handler.map.w && cy + yy >= 0 && cy + yy < handler.map.h) {
+                    if (xx != 0 || yy != 0) {
+                        handler.map.grid[cx + xx][cy + yy].setColor(new Color(142, 29, 1));
+                    }
+                }
+            }
+        }
+
+        hud.light(HUD.WW);
+        hud.light(HUD.S);
+        incMOD(HUD.S, 2);
     }
 
-    public void slMouseLeved() {
-        attack.slMouseLeved();
+    protected void slResetMOD() {
+        hud.incMOD(HUD.S, -2);
     }
 }
