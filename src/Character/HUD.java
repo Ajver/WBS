@@ -79,6 +79,8 @@ public class HUD {
     }
 
     public void render(Graphics g) {
+        eq.render(g);
+
         g.translate((int)(tx*progress), 0);
         if(isVisible) {
             // Health Points
@@ -154,8 +156,6 @@ public class HUD {
         hideButton.rotateTo(-progress * (float)Math.PI / 2.0f);
         hideButton.render(g);
         g.translate(-(int)((64-hideButton.getH()/2)*progress), 0);
-
-        eq.render(g);
     }
 
     private void show() {

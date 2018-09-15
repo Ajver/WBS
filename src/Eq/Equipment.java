@@ -1,19 +1,13 @@
 package Eq;
 
 import Creatures.Creature;
-import MainFiles.MainClass;
-import Other.Button;
-import Other.Gamecol;
-
-import java.awt.*;
-
 
 public class Equipment {
 
-    private Creature c;
+    protected Creature c;
 
     public Item weapon;
-    private Item[] backpack = new Item[10];
+    protected Item[] backpack = new Item[10];
 
     public Equipment(Creature c) {
         this.c = c;

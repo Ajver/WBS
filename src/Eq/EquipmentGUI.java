@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 public class EquipmentGUI extends Equipment {
 
     private float x, y, w, h;
+    private float ch;
+    int margin = 16;
 
     private Button hideButton;
     private float progress = 0.0f, vel = 1.0f;
@@ -23,9 +25,12 @@ public class EquipmentGUI extends Equipment {
 
     public EquipmentGUI(Creature c) {
         super(c);
+        pushItem(new Sword(c));
+
+        ch = 32;
 
         w = 320;
-        h = 600;
+        h = 180 + backpack.length*(ch+8);
         x = MainClass.WW - w - 64;
         y = 64;
 
@@ -54,8 +59,25 @@ public class EquipmentGUI extends Equipment {
         g.translate((int)(tx*progress), 0);
 
         g.setColor(Gamecol.DARK_BROWN);
-
         g.fillRect((int)x, (int)y, (int)w, (int)h);
+
+        g.setColor(Gamecol.LIGHT);
+        g.setFont(new Font("arial", 0, (int)(ch * 0.6)));
+
+        for(int i=0; i<backpack.length; i++) {
+            int xx = (int)(x+ch+margin*2);
+            int yy = (int)(260 + (i+1)*(ch+4));
+            g.drawLine(xx, yy, (int)(x+w-margin), yy);
+
+            Item it = backpack[i];
+            if(it != null) {
+                g.drawString(it.name, xx, yy-6);
+            }
+
+            xx = (int)(x + margin);
+            yy = (int)(yy-ch);
+            g.drawRect(xx, yy, (int)ch, (int)ch);
+        }
 
         g.translate(-(int)(tx*progress), 0);
 
