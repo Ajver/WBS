@@ -92,6 +92,8 @@ public class AI {
 					am.select(new ActionRun(c, handler, null));
 					am.current().use(nex, ney);
 				}else {
+					am.select(new ActionSkip(null, handler, null));
+					am.current().use();
 					System.out.println("Can't go to the player");
 				}
 			}

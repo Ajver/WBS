@@ -13,8 +13,9 @@ public class ActionSkip extends Action {
     }
 
     public void select() {
-        startTimer(500);
+        use();
     }
+    public void use() { startTimer(500); }
 
     public void refresh() {}
     public void canel() { stopTimer(); }
