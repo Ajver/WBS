@@ -14,7 +14,7 @@ public class ActionStrongattack extends Action {
 
     public ActionStrongattack(Creature c, Handler handler, HUD hud) {
         super(c, handler, hud);
-        this.img = MainClass.tex.swordIcon;
+        this.img = MainClass.tex.swordAB;
         this.duration = 2;
 
         this.attack = new ActionAttack(c, handler, hud);

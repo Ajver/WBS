@@ -9,7 +9,7 @@ public class ActionSkip extends Action {
 
     public ActionSkip(Creature c, Handler handler, HUD hud) {
         super(c, handler, hud);
-        this.img = MainClass.tex.timerIcon;
+        this.img = MainClass.tex.timerAB;
     }
 
     public void select() {

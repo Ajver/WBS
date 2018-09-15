@@ -21,8 +21,8 @@ public abstract class Item {
         this.icon = icon;
     }
 
-    public void render(Graphics g) {
-
+    public void render(Graphics g, float x, float y) {
+        g.drawImage(icon, (int)x, (int)y, null);
     }
 
     public void use() { System.out.println("To override use method from Item"); }

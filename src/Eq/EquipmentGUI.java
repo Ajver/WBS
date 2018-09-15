@@ -74,9 +74,14 @@ public class EquipmentGUI extends Equipment {
                 g.drawString(it.name, xx, yy-6);
             }
 
-            xx = (int)(x + margin);
-            yy = (int)(yy-ch);
-            g.drawRect(xx, yy, (int)ch, (int)ch);
+            xx = (int) (x + margin);
+            yy = (int) (yy - ch);
+
+            if(it != null) {
+                it.render(g, xx, yy);
+            }else {
+                g.drawRect(xx, yy, (int) ch, (int) ch);
+            }
         }
 
         g.translate(-(int)(tx*progress), 0);

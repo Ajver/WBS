@@ -19,7 +19,7 @@ public class ActionRunattack extends Action {
     public ActionRunattack(Creature c, Handler handler, HUD hud) {
         super(c, handler, hud);
         this.duration = 2;
-        this.img = MainClass.tex.runattackIcon;
+        this.img = MainClass.tex.runattackAB;
     }
 
     public void slUpdate(float et) {

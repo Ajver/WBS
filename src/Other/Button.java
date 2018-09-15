@@ -40,7 +40,7 @@ public class Button {
 
 		if(img == null) {
 			if(hover) {
-				g.setColor(Gamecol.BROWN);
+				g.setColor(Gamecol.GRAY);
 			}else {
 				g.setColor(Gamecol.DARK);
 			}

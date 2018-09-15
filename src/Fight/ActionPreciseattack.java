@@ -11,7 +11,7 @@ public class ActionPreciseattack extends ActionAttack {
 
     public ActionPreciseattack(Creature c, Handler handler, HUD hud) {
         super(c, handler, hud);
-        this.img = MainClass.tex.swordIcon;
+        this.img = MainClass.tex.swordAB;
         this.duration = 2;
     }
 

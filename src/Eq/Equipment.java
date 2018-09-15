@@ -14,23 +14,23 @@ public class Equipment {
 
         this.weapon = new Sword(c);
     }
-
-    public void H_PrintBackpack() {
-        System.out.println("=====================================");
-        System.out.println("Backpack:");
-        System.out.println("Weapon: "+weapon.name);
-
-        for(int i=0; i<backpack.length; i++) {
-            System.out.print("Backpack " + i + "> ");
-            if(backpack[i] != null) {
-                System.out.println(backpack[i].name);
-            }else {
-                System.out.println("---");
-            }
-        }
-
-        System.out.println("=====================================");
-    }
+//
+//    public void H_PrintBackpack() {
+//        System.out.println("=====================================");
+//        System.out.println("Backpack:");
+//        System.out.println("Weapon: "+weapon.name);
+//
+//        for(int i=0; i<backpack.length; i++) {
+//            System.out.print("Backpack " + i + "> ");
+//            if(backpack[i] != null) {
+//                System.out.println(backpack[i].name);
+//            }else {
+//                System.out.println("---");
+//            }
+//        }
+//
+//        System.out.println("=====================================");
+//    }
 
     public boolean pushItem(Item it) {
         for(int i=0; i<backpack.length; i++) {

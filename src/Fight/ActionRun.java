@@ -14,7 +14,7 @@ public class ActionRun extends Action {
 	public ActionRun(Creature c, Handler handler, HUD hud) {
 		super(c, handler, hud);
 		
-		this.img = MainClass.tex.bigBootIcon;
+		this.img = MainClass.tex.bigBootAB;
 
 		this.duration = 2;
 	}

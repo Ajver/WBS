@@ -14,7 +14,7 @@ public class ActionMove extends Action {
 	public ActionMove(Creature c, Handler handler, HUD hud) {
 		super(c, handler, hud);
 		
-		this.img = MainClass.tex.bootIcon;
+		this.img = MainClass.tex.bootAB;
 	}
 	
 	public void select() {

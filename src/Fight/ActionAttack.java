@@ -12,7 +12,7 @@ public class ActionAttack extends Action {
 
 	public ActionAttack(Creature c, Handler handler, HUD hud) {
 		super(c, handler, hud);
-		this.img = MainClass.tex.swordIcon;
+		this.img = MainClass.tex.swordAB;
 	}
 
 	public void select() {
