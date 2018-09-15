@@ -19,6 +19,8 @@ public class EquipmentGUI extends Equipment {
     private boolean isAnimating = false;
     private boolean isVisible = true;
 
+    int bw = 100, bh = 30;
+
     public EquipmentGUI(Creature c) {
         super(c);
 
@@ -27,7 +29,6 @@ public class EquipmentGUI extends Equipment {
         x = MainClass.WW - w - 64;
         y = 64;
 
-        int bw = 100, bh = 30;
         this.hideButton = new Button(x+w-bw,y-bh, bw, bh, "Schowaj");
         this.hideButton.setRX(hideButton.getX()+bw);
 

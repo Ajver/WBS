@@ -19,6 +19,10 @@ public class Button {
 	private float rotate = 0.0f;
 	private float rx, ry;
 
+	public Button(String caption) {
+		this(0,0,0,0, caption);
+	}
+
 	public Button(float x, float y, float w, float h, String caption) {
 		this.x = x;
 		this.y = y;
@@ -113,4 +117,9 @@ public class Button {
 
 	public void setRX(float rx) { this.rx = rx; }
 	public void setRY(float ry) { this.ry = ry; }
+
+	public void setPosition(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
 }

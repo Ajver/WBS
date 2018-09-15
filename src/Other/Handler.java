@@ -191,14 +191,14 @@ public class Handler extends MouseAdapter {
             int mapY = (int) ((e.getY() + camera.getY()) / Handler.cellH);
 			System.out.println("Clicked: " + mapX + " | " + mapY);
         }
+
+		hud.mousePressed(e);
 	}
 	
 	public void mouseReleased(MouseEvent e) {
 		if(currentCreature == 0) {
 			actionManager.mouseReleased(e);
 		}
-
-		hud.mousePressed(e);
 
         camera.mouseReleased(e);
 	}

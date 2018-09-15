@@ -18,7 +18,7 @@ public class ActionAttack extends Action {
 	public void select() {
 		int cx = c.getMX();
 		int cy = c.getMY();
-		
+
 		clearColors();
 
 		for(int yy=-1; yy<=1; yy++) {
