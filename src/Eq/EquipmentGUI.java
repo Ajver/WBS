@@ -10,8 +10,14 @@ import java.awt.event.MouseEvent;
 
 public class EquipmentGUI extends Equipment {
 
-    private Button hideButton;
     private float x, y, w, h;
+
+    private Button hideButton;
+    private float progress = 0.0f, vel = 1.0f;
+    private float movingSpeed = 5.0f;
+    private float tx;
+    private boolean isAnimating = false;
+    private boolean isVisible = true;
 
     public EquipmentGUI(Creature c) {
         super(c);
@@ -23,17 +29,67 @@ public class EquipmentGUI extends Equipment {
 
         int bw = 100, bh = 30;
         this.hideButton = new Button(x+w-bw,y-bh, bw, bh, "Schowaj");
+        this.hideButton.setRX(hideButton.getX()+bw);
+
+        tx = w + 64;
+    }
+
+    public void update(float et) {
+        if(isAnimating) {
+            progress += et * vel;
+
+            if(progress >= 1.0f) {
+                progress = 1.0f;
+                isAnimating = false;
+                isVisible = false;
+            }else if(progress < 0.0f) {
+                progress = 0.0f;
+                isAnimating = false;
+            }
+        }
     }
 
     public void render(Graphics g) {
+        g.translate((int)(tx*progress), 0);
+
         g.setColor(Gamecol.DARK_BROWN);
 
         g.fillRect((int)x, (int)y, (int)w, (int)h);
 
+        g.translate(-(int)(tx*progress), 0);
+
+        g.translate((int)((64-hideButton.getH()/2)*progress), 0);
+        hideButton.rotateTo(-progress * (float)Math.PI / 2.0f);
         hideButton.render(g);
+        g.translate(-(int)((64-hideButton.getH()/2)*progress), 0);
+    }
+
+    private void show() {
+        isAnimating = true;
+        vel = -movingSpeed;
+        isVisible = true;
+        hideButton.setCaption("Schowaj");
+    }
+
+    private void hide() {
+        isAnimating = true;
+        vel = movingSpeed;
+        hideButton.setCaption("Poka¿");
     }
 
     public void mouseMoved(MouseEvent e) {
-        hideButton.hover(e.getX(), e.getY());
+        hideButton.hover(e.getX()-(int)((64-hideButton.getH()/2)*progress), e.getY());
+    }
+
+    public void mousePressed(MouseEvent e) {
+        if(e.getButton() == 1) {
+            if (hideButton.mouseOver(e.getX()-(int)((64-hideButton.getH()/2)*progress), e.getY())) {
+                if (isVisible) {
+                    hide();
+                } else {
+                    show();
+                }
+            }
+        }
     }
 }

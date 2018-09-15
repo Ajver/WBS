@@ -104,6 +104,7 @@ public class ActionGroup {
 		if(isOpen && isVisible) {
 			for (Action a : actions) {
 				if (a.mouseOver(e.getX(), e.getY())) {
+					a.hover = false;
 					return a;
 				}
 			}

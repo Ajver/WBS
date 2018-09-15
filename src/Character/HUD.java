@@ -54,10 +54,11 @@ public class HUD {
         this.x = MainClass.WW - w - 64;
         this.y = MainClass.WH - h - 64;
 
-        tx = h + 64;
+        tx = w + 64;
 
         int bw = 100, bh = 30;
         hideButton = new Button(MainClass.WW-bw-64, y-bh, bw, bh, "Schowaj");
+        hideButton.setRX(hideButton.getX()+bw);
     }
 
     public void update(float et) {
@@ -73,10 +74,12 @@ public class HUD {
                 isAnimating = false;
             }
         }
+
+        eq.update(et);
     }
 
     public void render(Graphics g) {
-        g.translate(0, (int)(tx*progress));
+        g.translate((int)(tx*progress), 0);
         if(isVisible) {
             // Health Points
             g.setColor(new Color(48, 24, 3));
@@ -144,8 +147,13 @@ public class HUD {
             }
         }
 
+        g.translate((int)-(tx*progress), 0);
+
+
+        g.translate((int)((64-hideButton.getH()/2)*progress), 0);
+        hideButton.rotateTo(-progress * (float)Math.PI / 2.0f);
         hideButton.render(g);
-        g.translate(0, (int)-(tx*progress));
+        g.translate(-(int)((64-hideButton.getH()/2)*progress), 0);
 
         eq.render(g);
     }
@@ -215,14 +223,14 @@ public class HUD {
             }
         }
 
-        hideButton.hover(mx, my);
+        hideButton.hover(mx-(int)((64-hideButton.getH()/2)*progress), e.getY());
 
         eq.mouseMoved(e);
     }
 
     public void mousePressed(MouseEvent e) {
         if(e.getButton() == 1) {
-            if (hideButton.mouseOver(e.getX(), e.getY() - (int) (tx * progress))) {
+            if (hideButton.mouseOver(e.getX()-(int)((64-hideButton.getH()/2)*progress), e.getY())) {
                 if (isVisible) {
                     hide();
                 } else {
@@ -230,6 +238,8 @@ public class HUD {
                 }
             }
         }
+
+        eq.mousePressed(e);
     }
 
     private boolean mouseOver(int mx, int my) {
