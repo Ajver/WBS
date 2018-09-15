@@ -9,28 +9,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/MainFiles/MainClass.java" line="34" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1fc296-99eb-4ce4-bf44-5f562e08c663" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Eq/Equipment.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Eq/Equipment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Eq/EquipmentGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Eq/EquipmentGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Eq/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Eq/Item.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Eq/Sword.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Eq/Sword.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Other/Textures.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Other/Textures.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Eq/Equipment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Eq/Equipment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Eq/EquipmentGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Eq/EquipmentGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Eq/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Eq/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Eq/Sword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Eq/Sword.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionAttack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionAttack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionMove.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionMove.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionPreciseattack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionPreciseattack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionRun.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionRunattack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionRunattack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionSkip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionSkip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionStrongattack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionStrongattack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Other/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Other/Button.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Other/Gamecol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Other/Gamecol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Other/Textures.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Other/Textures.java" afterDir="false" />
-    </list>
+    <list default="true" id="bd1fc296-99eb-4ce4-bf44-5f562e08c663" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +21,7 @@
     <session id="-899608171">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="18" />
+          <entry key="project.closed" value="19" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="2" />
@@ -150,23 +129,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Eq/EquipmentGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="498">
-              <caret line="81" column="19" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
+            <state relative-caret-position="549">
+              <caret line="116" column="24" lean-forward="true" selection-start-line="116" selection-start-column="24" selection-end-line="116" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Other/Gamecol.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -242,9 +212,9 @@
         <option value="$PROJECT_DIR$/src/Eq/Item.java" />
         <option value="$PROJECT_DIR$/src/Other/Textures.java" />
         <option value="$PROJECT_DIR$/src/Eq/Sword.java" />
-        <option value="$PROJECT_DIR$/src/Eq/EquipmentGUI.java" />
         <option value="$PROJECT_DIR$/src/Other/Button.java" />
         <option value="$PROJECT_DIR$/src/Other/Gamecol.java" />
+        <option value="$PROJECT_DIR$/src/Eq/EquipmentGUI.java" />
       </list>
     </option>
   </component>
@@ -435,7 +405,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/Git repositories/WBS/src/Other/Handler.java" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537047348026" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537047686870" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
@@ -495,7 +465,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
@@ -509,7 +478,7 @@
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" sideWeight="0.49946696" visible="true" weight="0.1637744" />
+      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49946696" weight="0.1637744" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -867,16 +836,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Eq/EquipmentGUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="81" column="19" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Character/HUD.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
@@ -900,6 +859,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Eq/EquipmentGUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="116" column="24" lean-forward="true" selection-start-line="116" selection-start-column="24" selection-end-line="116" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
