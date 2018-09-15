@@ -1,8 +1,12 @@
 package Eq;
 
 import Creatures.Creature;
+import MainFiles.MainClass;
+import Other.Button;
+import Other.Gamecol;
 
 import java.awt.*;
+
 
 public class Equipment {
 
@@ -11,21 +15,10 @@ public class Equipment {
     public Item weapon;
     private Item[] backpack = new Item[10];
 
-    private Button closeButton;
-
     public Equipment(Creature c) {
         this.c = c;
-        this.closeButton = new Button("Open");
 
         this.weapon = new Sword(c);
-    }
-
-    public void update(float et) {
-
-    }
-
-    public void render(Graphics g) {
-
     }
 
     public void H_PrintBackpack() {

@@ -1,6 +1,7 @@
 package Character;
 
 import Creatures.Creature;
+import Eq.EquipmentGUI;
 import MainFiles.MainClass;
 import Other.Button;
 import Other.Comment;
@@ -23,6 +24,7 @@ public class HUD {
 
     private Creature c;
     private Handler handler;
+    private EquipmentGUI eq;
 
     private String[][] attNames = { Attributes.getShortcutOrder(0), Attributes.getShortcutOrder(1) };
     private boolean[][] attLight = new boolean[2][8];
@@ -40,6 +42,8 @@ public class HUD {
     public HUD(Handler handler) {
         this.handler = handler;
         this.c = handler.creatures.get(0);
+        this.eq = new EquipmentGUI(c);
+        c.eq = this.eq;
 
         this.w = 320;
 
@@ -92,7 +96,7 @@ public class HUD {
             // Attributes
             for (int i = 0; i < 2; i++) {
                 int offset = (int) (72 * i + y + 32);
-                g.setColor(new Color(48, 24, 3));
+                g.setColor(Gamecol.DARK_BROWN);
                 g.fillRect((int) x, (int) (offset), (int) w, (int) cellH);
 
                 g.setColor(Gamecol.LIGHT);
@@ -142,6 +146,8 @@ public class HUD {
 
         hideButton.render(g);
         g.translate(0, (int)-(tx*progress));
+
+        eq.render(g);
     }
 
     private void show() {
@@ -210,6 +216,8 @@ public class HUD {
         }
 
         hideButton.hover(mx, my);
+
+        eq.mouseMoved(e);
     }
 
     public void mousePressed(MouseEvent e) {

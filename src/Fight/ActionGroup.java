@@ -1,6 +1,7 @@
 package Fight;
 
 import Other.CursorManager;
+import Other.Gamecol;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -83,7 +84,8 @@ public class ActionGroup {
 
 		if(isOpen) {
 			float h = 80 + progress * (actions.size()-1) * 80;
-			g.setColor(new Color(200, 200, 200));
+//			g.setColor(new Color(30, 30, 30, 150));
+			g.setColor(Gamecol.LIGHT);
 			g.fillRect((int)(x-16+((1-progress)*64)), (int)(y-h), (int)(160-((1-progress)*128)), (int)h+16);
 			
 			for(int i=0; i<actions.size(); i++) {
