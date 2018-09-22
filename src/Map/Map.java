@@ -42,6 +42,7 @@ public class Map {
 //			grid[8][yy+5] = new Rock(8, yy+5);
 //		}
 
+		/*
 		int totalPosible = 0;
 		int good = 0;
 
@@ -84,6 +85,7 @@ public class Map {
 			System.out.println("Good paths: " + good);
 			System.out.println("Total paths: " + totalPosible);
 		}
+		*/
 	}
 	
 	public void update(float et) {
