@@ -49,7 +49,7 @@ public class Map {
 			for (int xx=0; xx<w; xx++) {
 				if (mayBePath(xx, yy)) {
 					for (int t_yy = yy; t_yy < h; t_yy++) {
-						for (int t_xx = xx; t_xx < h; t_xx++) {
+						for (int t_xx = 0; t_xx < h; t_xx++) {
 							if(xx != t_xx || yy != t_yy) {
 								if (mayBePath(t_xx, t_yy)) {
 									totalPosible++;

@@ -10,16 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd1fc296-99eb-4ce4-bf44-5f562e08c663" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/MainFiles/MainClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/MainFiles/MainClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/MainFiles/Window.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/MainFiles/Window.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Map/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Map/Map.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MainFiles/MainClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainFiles/MainClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MainFiles/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainFiles/Window.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Map/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Other/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Other/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Other/CursorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Other/CursorManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Other/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Other/Handler.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,13 +49,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="28563" />
+          <entry key="java" value="28566" />
           <entry key="txt" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="28563" />
+          <entry key="JAVA" value="28566" />
           <entry key="PLAIN_TEXT" value="28" />
         </counts>
       </usages-collector>
@@ -133,8 +124,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Map/Map.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="598">
-              <caret line="70" column="75" selection-start-line="70" selection-start-column="75" selection-end-line="70" selection-end-column="75" />
+            <state relative-caret-position="171">
+              <caret line="51" column="41" selection-start-line="51" selection-start-column="41" selection-end-line="51" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -253,8 +244,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="920" />
-    <option name="y" value="-8" />
+    <option name="x" value="-1257" />
+    <option name="y" value="-141" />
     <option name="width" value="861" />
     <option name="height" value="922" />
   </component>
@@ -439,7 +430,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/Git repositories/WBS/src/Other/Handler.java" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537643709441" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537643840558" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
@@ -896,8 +887,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Map/Map.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="70" column="75" selection-start-line="70" selection-start-column="75" selection-end-line="70" selection-end-column="75" />
+        <state relative-caret-position="171">
+          <caret line="51" column="41" selection-start-line="51" selection-start-column="41" selection-end-line="51" selection-end-column="41" />
         </state>
       </provider>
     </entry>
