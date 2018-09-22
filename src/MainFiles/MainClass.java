@@ -28,7 +28,10 @@ public class MainClass extends Canvas implements Runnable {
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		MainClass.WW = (int)tk.getScreenSize().getWidth();
 		MainClass.WH = (int)tk.getScreenSize().getHeight();
-		
+
+//		MainClass.WW = 1280;
+//		MainClass.WH = 760;
+
 		tex = new Textures();
 		
 		handler = new Handler(this);

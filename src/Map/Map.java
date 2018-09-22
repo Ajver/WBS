@@ -41,6 +41,49 @@ public class Map {
 //		for(int yy=0; yy<8; yy++) {
 //			grid[8][yy+5] = new Rock(8, yy+5);
 //		}
+
+		int totalPosible = 0;
+		int good = 0;
+
+		for(int yy=0; yy<h; yy++) {
+			for (int xx=0; xx<w; xx++) {
+				if (mayBePath(xx, yy)) {
+					for (int t_yy = yy; t_yy < h; t_yy++) {
+						for (int t_xx = xx; t_xx < h; t_xx++) {
+							if(xx != t_xx || yy != t_yy) {
+								if (mayBePath(t_xx, t_yy)) {
+									totalPosible++;
+									int len = getPathLength(xx, yy, t_xx, t_yy);
+
+									if (len > 0) {
+										LinkedList<Point> path = getPath(xx, yy, t_xx, t_yy);
+
+										if (path != null) {
+											if (path.size() == len) {
+												good++;
+											} else {
+												System.out.println("Error in map: 2> " + xx + "," + yy + " to " + t_xx + "," + t_yy);
+											}
+										} else {
+											System.out.println("Error in map: 1> " + xx + "," + yy + " to " + t_xx + "," + t_yy);
+										}
+									} else {
+										System.out.println("Error in map: 3> " + xx + "," + yy + " to " + t_xx + "," + t_yy);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if(good == totalPosible) {
+			System.out.println("Everything is good with pathfinder!");
+		}else {
+			System.out.println("Good paths: " + good);
+			System.out.println("Total paths: " + totalPosible);
+		}
 	}
 	
 	public void update(float et) {
@@ -141,7 +184,7 @@ public class Map {
 		LinkedList<Point> newPoints;
 		
 		while(points.size() > 0) {
-			newPoints = new LinkedList<Point>();
+			newPoints = new LinkedList<>();
 			
 			for(Point p : points) {
 				if(p.x == finish.x) {
@@ -151,7 +194,7 @@ public class Map {
 						int cx = finish.x;
 						int cy = finish.y;
 																	
-						LinkedList<Point> tempPath = new LinkedList<Point>();
+						LinkedList<Point> tempPath = new LinkedList<>();
 						
 						tempPath.add(new Point(cx, cy));
 						
@@ -162,7 +205,7 @@ public class Map {
 							tempPath.add(new Point(cx, cy));
 						}while(cx != x1 || cy != y1);
 						
-						LinkedList<Point> path = new LinkedList<Point>();
+						LinkedList<Point> path = new LinkedList<>();
 						
 						for(int i=tempPath.size()-2; i>=0; i--) {
 							path.add(tempPath.get(i));

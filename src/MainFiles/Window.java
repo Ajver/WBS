@@ -8,7 +8,7 @@ public class Window {
 		JFrame f = new JFrame(title);
 		
 		f.setUndecorated(true);
-		f.setAlwaysOnTop(true);	
+		f.setAlwaysOnTop(false);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.add(m);
 		f.pack();

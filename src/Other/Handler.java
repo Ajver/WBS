@@ -193,6 +193,8 @@ public class Handler extends MouseAdapter {
         }
 
 		hud.mousePressed(e);
+
+		setCursor();
 	}
 	
 	public void mouseReleased(MouseEvent e) {
@@ -201,11 +203,11 @@ public class Handler extends MouseAdapter {
 		}
 
         camera.mouseReleased(e);
+
+		setCursor();
 	}
 	
 	public void mouseMoved(MouseEvent e) {
-		CursorManager.setCursor(CursorManager.DEFAULT);
-
 		int mapX = (int) ((e.getX() + camera.getX()) / Handler.cellW);
 		int mapY = (int) ((e.getY() + camera.getY()) / Handler.cellH);
 
@@ -225,11 +227,13 @@ public class Handler extends MouseAdapter {
 		}
 		hud.mouseMoved(e);
 
-		m.setCursor(CursorManager.cursor);
+		setCursor();
 	}
 
 	public void mouseDragged(MouseEvent e) {
 		camera.mouseDragged(e);
+
+		setCursor();
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////
@@ -237,6 +241,15 @@ public class Handler extends MouseAdapter {
 	public void keyPressed(KeyEvent e) {
 		if(currentCreature == 0) {
 			actionManager.keyPressed(e);
+		}
+	}
+
+	private void setCursor() {
+		if(CursorManager.cursorChanged) {
+			m.setCursor(CursorManager.cursor);
+			CursorManager.reset();
+		}else {
+			CursorManager.setCursor(CursorManager.DEFAULT);
 		}
 	}
 

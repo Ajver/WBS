@@ -3,6 +3,7 @@ package Other;
 import Creatures.Creature;
 import MainFiles.MainClass;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class Camera {
@@ -52,11 +53,10 @@ public class Camera {
             pmx = e.getX() + (int) x;
             pmy = e.getY() + (int) y;
 
+            CursorManager.setCursor(CursorManager.MOVE);
+
             isDragging = true;
-
-            System.out.println("mouseBtn: " + e.getButton());
         }
-
     }
 
 	public void mouseDragged(MouseEvent e) {
@@ -70,7 +70,8 @@ public class Camera {
     }
 
     public void mouseReleased(MouseEvent e) {
-	    isDragging = false;
+		isDragging = false;
+		CursorManager.setCursor(CursorManager.DEFAULT);
     }
 	
 	public float getX() { return x; }
