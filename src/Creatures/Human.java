@@ -10,7 +10,7 @@ public class Human extends Creature {
 		super(mx, my, handler);
 				
 		for(int at=0; at<8; at++) {
-			att.begin[0][at] = att.current[0][at] = 20;// + Dice.roll2d10();
+			att.begin[0][at] = att.current[0][at] = 20 + Dice.roll2d10();
 		}
 		
 		att.begin[1][0] = 1;

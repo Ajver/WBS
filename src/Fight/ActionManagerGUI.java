@@ -122,14 +122,6 @@ public class ActionManagerGUI extends ActionManager {
                     }
                 }
             } else {
-                for (ActionGroup ag : ag) {
-                    for (Action a : ag.actions) {
-                        if (a.mouseOver(e.getX(), e.getY())) {
-                            return;
-                        }
-                    }
-                }
-
                 if (mouseOver(e.getX(), e.getY(), selX, y, buttonW * 2, buttonW)) {
                     return;
                 }

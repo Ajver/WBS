@@ -81,14 +81,12 @@ public class ActionMove extends Action {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		System.out.print("Hmmm?");
 		int mapX = (int) ((e.getX() + handler.camera.getX()) / Handler.cellW);
 		int mapY = (int) ((e.getY() + handler.camera.getY()) / Handler.cellH);
 
 		if(handler.map.isClickable(mapX, mapY)) {
 			canel();
 			use(mapX, mapY);
-		}else {
 		}
 	}
 
