@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bd1fc296-99eb-4ce4-bf44-5f562e08c663" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/Eq/Equipment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Eq/Equipment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fight/ActionAttack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fight/ActionAttack.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,13 +49,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="28735" />
+          <entry key="java" value="28736" />
           <entry key="txt" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="28735" />
+          <entry key="JAVA" value="28736" />
           <entry key="PLAIN_TEXT" value="28" />
         </counts>
       </usages-collector>
@@ -76,11 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Fight/ActionPreciseattack.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+            <state relative-caret-position="150">
+              <caret line="26" column="41" lean-forward="true" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -88,11 +87,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Eq/Equipment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+            <state relative-caret-position="198">
+              <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -234,9 +233,9 @@
         <option value="$PROJECT_DIR$/src/MainFiles/MainClass.java" />
         <option value="$PROJECT_DIR$/src/MainFiles/Window.java" />
         <option value="$PROJECT_DIR$/src/Map/Map.java" />
-        <option value="$PROJECT_DIR$/src/Eq/Equipment.java" />
         <option value="$PROJECT_DIR$/src/Fight/ActionAttack.java" />
         <option value="$PROJECT_DIR$/src/Fight/ActionPreciseattack.java" />
+        <option value="$PROJECT_DIR$/src/Eq/Equipment.java" />
       </list>
     </option>
   </component>
@@ -427,7 +426,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/Git repositories/WBS/src/Other/Handler.java" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537651599135" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537651710408" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
@@ -497,11 +496,11 @@
       <window_info id="Structure" order="5" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50161815" side_tool="true" weight="0.1743649" />
-      <window_info active="true" anchor="bottom" id="Messages" order="2" visible="true" weight="0.19522777" />
+      <window_info anchor="bottom" id="Messages" order="2" weight="0.19522777" />
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49838188" weight="0.1637744" />
+      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49838188" visible="true" weight="0.1637744" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -514,7 +513,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Project" order="8" visible="true" weight="0.15511727" />
+      <window_info active="true" anchor="right" content_ui="combo" id="Project" order="8" visible="true" weight="0.15511727" />
     </layout>
     <layout-to-restore>
       <window_info id="Designer" order="0" />
@@ -855,13 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Eq/Equipment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Character/HUD.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
@@ -881,11 +873,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Fight/ActionPreciseattack.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+        <state relative-caret-position="150">
+          <caret line="26" column="41" lean-forward="true" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Eq/Equipment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
         </state>
       </provider>
     </entry>
