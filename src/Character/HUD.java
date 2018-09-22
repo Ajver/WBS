@@ -242,6 +242,9 @@ public class HUD {
         eq.mousePressed(e);
     }
 
+    public void mouseReleased(MouseEvent e) { eq.mouseReleased(e); }
+    public void mouseDragged(MouseEvent e) { eq.mouseDragged(e); }
+
     private boolean mouseOver(int mx, int my) {
         return mx >= x && mx <= x+w && my >= y && my <= y+h;
     }

@@ -31,16 +31,16 @@ public class MainClass extends Canvas implements Runnable {
 		MainClass.WW = (int)tk.getScreenSize().getWidth();
 		MainClass.WH = (int)tk.getScreenSize().getHeight();
 
-		MainClass.WW = 1340;
+		MainClass.WW = 1280;
 		MainClass.WH = (int)(WW * 0.618);
 
-		if(MainClass.WW < 1400) {
-			margin = 48;
-
-			if(MainClass.WW < 1280) {
-				margin = 32;
-			}
-		}
+//		if(MainClass.WW < 1400) {
+//			margin = 48;
+//
+//			if(MainClass.WW < 1280) {
+//				margin = 32;
+//			}
+//		}
 
 		tex = new Textures();
 		

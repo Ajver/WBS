@@ -27,7 +27,7 @@ public class EquipmentGUI extends Equipment {
         super(c);
         pushItem(new Sword(c));
 
-        ch = 24;
+        ch = 28;
 
         w = 320;
         h = 180 + backpack.length*(ch+8);
@@ -119,5 +119,13 @@ public class EquipmentGUI extends Equipment {
                 }
             }
         }
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        
+    }
+
+    public void mouseDragged(MouseEvent e) {
+
     }
 }

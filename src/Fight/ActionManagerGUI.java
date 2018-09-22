@@ -23,12 +23,14 @@ public class ActionManagerGUI extends ActionManager {
 
     private BufferedImage actionBg;
 
-    float y = MainClass.WH - buttonW - MainClass.margin;
+    float y;
 
     float selX = buttonW;
 
     public ActionManagerGUI(Handler handler, Creature c, HUD hud) {
         super(handler, c);
+
+        y = MainClass.WH - buttonW - MainClass.margin;
 
         this.c.name = "Ty";
         this.actionBg = MainClass.tex.actionBg;
@@ -38,17 +40,19 @@ public class ActionManagerGUI extends ActionManager {
         Creature p = handler.creatures.get(0);
         float x = (MainClass.WW - 288) / 2.0f;
 
-        this.ag[0] = new ActionGroup(x, y+MainClass.margin,
+        float agy = y + MainClass.margin;
+
+        this.ag[0] = new ActionGroup(x, agy,
                 new ActionAttack(p, handler, hud),
                 new ActionRunattack(p, handler, hud),
                 new ActionStrongattack(p, handler, hud),
                 new ActionPreciseattack(p, handler, hud));
 
-        this.ag[1] = new ActionGroup(x+96, y+MainClass.margin,
+        this.ag[1] = new ActionGroup(x+96, agy,
                 new ActionMove(p, handler, hud),
                 new ActionRun(p, handler, hud));
 
-        this.ag[2] = new ActionGroup(x+192, y+MainClass.margin,
+        this.ag[2] = new ActionGroup(x+192, agy,
                 new ActionSkip(p, handler, hud));
 
         refresh();

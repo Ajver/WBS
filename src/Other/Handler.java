@@ -202,6 +202,8 @@ public class Handler extends MouseAdapter {
 			actionManager.mouseReleased(e);
 		}
 
+		hud.mouseReleased(e);
+
         camera.mouseReleased(e);
 
 		setCursor();
@@ -232,8 +234,7 @@ public class Handler extends MouseAdapter {
 
 	public void mouseDragged(MouseEvent e) {
 		camera.mouseDragged(e);
-
-		setCursor();
+		hud.mouseDragged(e);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////
