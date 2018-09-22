@@ -13,7 +13,7 @@ public class Window {
 		f.add(m);
 		f.pack();
 		f.setVisible(true);
-		f.setResizable(false);
+		f.setResizable(true);
 		
 		f.setSize(MainClass.WW, MainClass.WH);
 

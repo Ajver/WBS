@@ -27,17 +27,17 @@ public class EquipmentGUI extends Equipment {
         super(c);
         pushItem(new Sword(c));
 
-        ch = 32;
+        ch = 24;
 
         w = 320;
         h = 180 + backpack.length*(ch+8);
-        x = MainClass.WW - w - 64;
-        y = 64;
+        x = MainClass.WW - w - MainClass.margin;
+        y = MainClass.margin;
 
         this.hideButton = new Button(x+w-bw,y-bh, bw, bh, "Schowaj");
         this.hideButton.setRX(hideButton.getX()+bw);
 
-        tx = w + 64;
+        tx = w + MainClass.margin;
     }
 
     public void update(float et) {

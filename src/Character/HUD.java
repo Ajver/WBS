@@ -51,13 +51,13 @@ public class HUD {
 
         this.h = 16 + cellH*4 + 24;
 
-        this.x = MainClass.WW - w - 64;
-        this.y = MainClass.WH - h - 64;
+        this.x = MainClass.WW - w - MainClass.margin;
+        this.y = MainClass.WH - h - MainClass.margin;
 
-        tx = w + 64;
+        tx = w + MainClass.margin;
 
         int bw = 100, bh = 30;
-        hideButton = new Button(MainClass.WW-bw-64, y-bh, bw, bh, "Schowaj");
+        hideButton = new Button(MainClass.WW-bw-MainClass.margin, y-bh, bw, bh, "Schowaj");
         hideButton.setRX(hideButton.getX()+bw);
     }
 
@@ -152,10 +152,10 @@ public class HUD {
         g.translate((int)-(tx*progress), 0);
 
 
-        g.translate((int)((64-hideButton.getH()/2)*progress), 0);
+        g.translate((int)((MainClass.margin-hideButton.getH()/2)*progress), 0);
         hideButton.rotateTo(-progress * (float)Math.PI / 2.0f);
         hideButton.render(g);
-        g.translate(-(int)((64-hideButton.getH()/2)*progress), 0);
+        g.translate(-(int)((MainClass.margin-hideButton.getH()/2)*progress), 0);
     }
 
     private void show() {

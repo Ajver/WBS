@@ -101,7 +101,6 @@ public abstract class Action {
 	protected void startTimer(long bt) {
 		this.breakTime = System.currentTimeMillis() + bt;
 		this.isTimer = true;
-		System.out.println("started timer bt: "+bt);
 	}
 
 	protected void stopTimer() {

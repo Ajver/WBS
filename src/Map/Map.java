@@ -170,7 +170,7 @@ public class Map {
 				return null;
 			}
 		}
-		
+
 		LinkedList<Point> points = new LinkedList<Point>();
 		points.add(new Point(x1, y1));
 		Point finish = new Point(x2, y2);
@@ -230,7 +230,7 @@ public class Map {
 			
 			points = newPoints;
 		}
-		
+
 		return null;
 	}
 

@@ -17,6 +17,8 @@ public class MainClass extends Canvas implements Runnable {
 	public static Textures tex;
 	
 	private int fps = 0;
+
+	public static float margin = 64;
 	
 	public static STATE state = STATE.game;
 	public enum STATE {
@@ -29,8 +31,16 @@ public class MainClass extends Canvas implements Runnable {
 		MainClass.WW = (int)tk.getScreenSize().getWidth();
 		MainClass.WH = (int)tk.getScreenSize().getHeight();
 
-//		MainClass.WW = 1280;
-//		MainClass.WH = 760;
+		MainClass.WW = 1340;
+		MainClass.WH = (int)(WW * 0.618);
+
+		if(MainClass.WW < 1400) {
+			margin = 48;
+
+			if(MainClass.WW < 1280) {
+				margin = 32;
+			}
+		}
 
 		tex = new Textures();
 		
