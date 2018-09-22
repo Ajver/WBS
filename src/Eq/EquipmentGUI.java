@@ -122,7 +122,7 @@ public class EquipmentGUI extends Equipment {
     }
 
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     public void mouseDragged(MouseEvent e) {
