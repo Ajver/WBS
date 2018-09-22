@@ -41,7 +41,7 @@ public class ActionAttack extends Action {
 		c.setFocus(mapX, mapY);
 
 		if(c.att.WW(c.am.MOD[HUD.WW])) {
-			int dmg = c.eq.weapon.useInt() + c.am.MOD_DMG;
+			int dmg = c.eq.mainHand.useInt() + c.am.MOD_DMG;
 			enemy.hit(dmg);
 		}else {
 			handler.addSmallMessage(enemy, "Pud³o", new Color(0, 0, 255));

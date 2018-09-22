@@ -6,13 +6,24 @@ public class Equipment {
 
     protected Creature c;
 
-    public Item weapon;
+    public Item mainHand;
+    public Item secondHand;
+
     protected Item[] backpack = new Item[10];
+
+    protected Item[] armor = new Item[6];
+    /* 0 - Head
+     * 1 - Body
+     * 2 - Left hand
+     * 3 - Right hand
+     * 4 - Left leg
+     * 5 - Right leg
+     */
 
     public Equipment(Creature c) {
         this.c = c;
 
-        this.weapon = new Sword(c);
+        this.mainHand = new Sword(c);
     }
 //
 //    public void H_PrintBackpack() {
