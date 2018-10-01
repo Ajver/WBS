@@ -44,6 +44,9 @@ public class AnimationTiming {
         progress = (float)Math.sin(progress);
         progress = (progress+1.0f) / 2.0f;
 
+        if(progress < 0.4f)
+        System.out.print("WOo: " + progress);
+
         return true;
     }
 

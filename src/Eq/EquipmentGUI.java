@@ -40,7 +40,7 @@ public class EquipmentGUI extends Equipment {
         this.hideButton = new Button(x+w-bw,y-bh, bw, bh, "Schowaj");
         this.hideButton.setRX(hideButton.getX()+bw);
 
-        animation = new AnimationTiming(10000, AnimationTiming.TimingFun.ease, AnimationTiming.RepeatableFun.norepeat);
+        animation = new AnimationTiming(3000, AnimationTiming.TimingFun.ease, AnimationTiming.RepeatableFun.norepeat);
 
         tx = w + MainClass.margin;
     }
@@ -48,7 +48,8 @@ public class EquipmentGUI extends Equipment {
     public void update(float et) {
         if(isAnimating) {
             animation.update(et);
-            System.out.println(animation.getProgress());
+//            if(animation.getProgress() < 0.3f)
+//            System.out.println(animation.getProgress());
             progress += et * vel;
 
             progress = animation.getProgress();
