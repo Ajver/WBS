@@ -4,6 +4,7 @@ public class AnimationTiming {
 
     private float progress = 0.0f;
     private long duration;
+    private int dir = 1; // 1 or -1
     private long startedAt;
     private TimingFun fun;
     private RepeatableFun rFun;
@@ -25,32 +26,43 @@ public class AnimationTiming {
         start();
     }
 
-    public boolean update(float et) {
-        progress = (float)((System.currentTimeMillis() - startedAt) / (double)duration);
+    public boolean update() {
+        progress = (float) ((System.currentTimeMillis() - startedAt) / (double) duration);
 
-        if(progress >= 1.0f) {
-            if(rFun == RepeatableFun.repeat) {
-                while (progress > 1.0f) {
-                    progress -= 1.0f;
+        if (rFun == RepeatableFun.norepeat) {
+            if (progress >= 1.0f) {
+                if (dir == 1) {
+                    progress = 1.0f;
+                } else {
+                    progress = 0.0f;
                 }
-            }else {
-                progress = 1.0f;
+                return false;
             }
-
-            return false;
+        }else {
+            while (progress > 1.0f) {
+                progress -= 1.0f;
+            }
         }
 
-        progress = (progress-0.5f) * (float)Math.PI;
-        progress = (float)Math.sin(progress);
-        progress = (progress+1.0f) / 2.0f;
+        if(fun == TimingFun.ease) {
+            progress = (progress - 0.5f) * (float) Math.PI;
+            progress = (float) Math.sin(progress);
+            progress = (progress + 1.0f) / 2.0f;
+        }
 
-        if(progress < 0.4f)
-        System.out.print("WOo: " + progress);
+        if(dir == -1) {
+            progress = 1.0f - progress;
+        }
 
         return true;
     }
 
     public void start() { startedAt = System.currentTimeMillis(); }
+
+    public void front() { dir = 1; }
+    public void back() { dir = -1; }
+
+
 
     public float getProgress() { return progress; }
 }

@@ -16,12 +16,9 @@ public class EquipmentGUI extends Equipment {
     int margin = 16;
 
     private Button hideButton;
-    private float progress = 0.0f, vel = 1.0f;
-    private float movingSpeed = 5.0f;
     private float tx;
     private boolean isAnimating = false;
     private boolean isVisible = true;
-
     private AnimationTiming animation;
 
     int bw = 100, bh = 30;
@@ -40,33 +37,25 @@ public class EquipmentGUI extends Equipment {
         this.hideButton = new Button(x+w-bw,y-bh, bw, bh, "Schowaj");
         this.hideButton.setRX(hideButton.getX()+bw);
 
-        animation = new AnimationTiming(3000, AnimationTiming.TimingFun.ease, AnimationTiming.RepeatableFun.norepeat);
+        animation = new AnimationTiming(300, AnimationTiming.TimingFun.ease, AnimationTiming.RepeatableFun.norepeat);
 
         tx = w + MainClass.margin;
     }
 
     public void update(float et) {
         if(isAnimating) {
-            animation.update(et);
-//            if(animation.getProgress() < 0.3f)
-//            System.out.println(animation.getProgress());
-            progress += et * vel;
-
-            progress = animation.getProgress();
-
-            if(progress >= 1.0f) {
-                progress = 1.0f;
+            if(!animation.update()) {
                 isAnimating = false;
-                isVisible = false;
-            }else if(progress < 0.0f) {
-                progress = 0.0f;
-                isAnimating = false;
+
+                if(animation.getProgress() == 1.0f) {
+                    isVisible = false;
+                }
             }
         }
     }
 
     public void render(Graphics g) {
-        g.translate((int)(tx*progress), 0);
+        g.translate((int)(tx*animation.getProgress()), 0);
 
         g.setColor(Gamecol.DARK_BROWN);
         g.fillRect((int)x, (int)y, (int)w, (int)h);
@@ -94,34 +83,41 @@ public class EquipmentGUI extends Equipment {
             }
         }
 
-        g.translate(-(int)(tx*progress), 0);
+        g.translate(-(int)(tx*animation.getProgress()), 0);
 
-        g.translate((int)((64-hideButton.getH()/2)*progress), 0);
-        hideButton.rotateTo(-progress * (float)Math.PI / 2.0f);
+        g.translate((int)((64-hideButton.getH()/2)*animation.getProgress()), 0);
+        hideButton.rotateTo(-animation.getProgress() * (float)Math.PI / 2.0f);
         hideButton.render(g);
-        g.translate(-(int)((64-hideButton.getH()/2)*progress), 0);
+        g.translate(-(int)((64-hideButton.getH()/2)*animation.getProgress()), 0);
     }
 
     private void show() {
-        isAnimating = true;
-        vel = -movingSpeed;
         isVisible = true;
         hideButton.setCaption("Schowaj");
+        animation.back();
+        if(!isAnimating) {
+            isAnimating = true;
+            animation.start();
+        }
     }
 
     private void hide() {
-        isAnimating = true;
-        vel = movingSpeed;
+
         hideButton.setCaption("Poka¿");
+        animation.front();
+        if(!isAnimating) {
+            isAnimating = true;
+            animation.start();
+        }
     }
 
     public void mouseMoved(MouseEvent e) {
-        hideButton.hover(e.getX()-(int)((64-hideButton.getH()/2)*progress), e.getY());
+        hideButton.hover(e.getX()-(int)((64-hideButton.getH()/2)*animation.getProgress()), e.getY());
     }
 
     public void mousePressed(MouseEvent e) {
         if(e.getButton() == 1) {
-            if (hideButton.mouseOver(e.getX()-(int)((64-hideButton.getH()/2)*progress), e.getY())) {
+            if (hideButton.mouseOver(e.getX()-(int)((64-hideButton.getH()/2)*animation.getProgress()), e.getY())) {
                 if (isVisible) {
                     hide();
                 } else {

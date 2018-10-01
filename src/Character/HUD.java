@@ -3,10 +3,8 @@ package Character;
 import Creatures.Creature;
 import Eq.EquipmentGUI;
 import MainFiles.MainClass;
+import Other.*;
 import Other.Button;
-import Other.Comment;
-import Other.Gamecol;
-import Other.Handler;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -33,11 +31,10 @@ public class HUD {
     private Comment comment = new Comment();
 
     private Button hideButton;
-    private float progress = 0.0f, vel = 1.0f;
-    private float movingSpeed = 5.0f;
     private float tx;
     private boolean isAnimating = false;
     private boolean isVisible = true;
+    private AnimationTiming animation;
 
     public HUD(Handler handler) {
         this.handler = handler;
@@ -59,19 +56,18 @@ public class HUD {
         int bw = 100, bh = 30;
         hideButton = new Button(MainClass.WW-bw-MainClass.margin, y-bh, bw, bh, "Schowaj");
         hideButton.setRX(hideButton.getX()+bw);
+
+        animation = new AnimationTiming(300, AnimationTiming.TimingFun.ease, AnimationTiming.RepeatableFun.norepeat);
     }
 
     public void update(float et) {
         if(isAnimating) {
-            progress += et * vel;
+            if(!animation.update()) {
+                isAnimating = false;
 
-            if(progress >= 1.0f) {
-                progress = 1.0f;
-                isAnimating = false;
-                isVisible = false;
-            }else if(progress < 0.0f) {
-                progress = 0.0f;
-                isAnimating = false;
+                if(animation.getProgress() == 1.0f) {
+                    isVisible = false;
+                }
             }
         }
 
@@ -81,7 +77,7 @@ public class HUD {
     public void render(Graphics g) {
         eq.render(g);
 
-        g.translate((int)(tx*progress), 0);
+        g.translate((int)(tx*animation.getProgress()), 0);
         if(isVisible) {
             // Health Points
             g.setColor(new Color(48, 24, 3));
@@ -149,25 +145,31 @@ public class HUD {
             }
         }
 
-        g.translate((int)-(tx*progress), 0);
+        g.translate((int)-(tx*animation.getProgress()), 0);
 
 
-        g.translate((int)((MainClass.margin-hideButton.getH()/2)*progress), 0);
-        hideButton.rotateTo(-progress * (float)Math.PI / 2.0f);
+        g.translate((int)((MainClass.margin-hideButton.getH()/2)*animation.getProgress()), 0);
+        hideButton.rotateTo(-animation.getProgress() * (float)Math.PI / 2.0f);
         hideButton.render(g);
-        g.translate(-(int)((MainClass.margin-hideButton.getH()/2)*progress), 0);
+        g.translate(-(int)((MainClass.margin-hideButton.getH()/2)*animation.getProgress()), 0);
     }
 
     private void show() {
-        isAnimating = true;
-        vel = -movingSpeed;
+        if(!isAnimating) {
+            isAnimating = true;
+            animation.start();
+        }
+        animation.back();
         isVisible = true;
         hideButton.setCaption("Schowaj");
     }
 
     private void hide() {
-        isAnimating = true;
-        vel = movingSpeed;
+        if(!isAnimating) {
+            isAnimating = true;
+            animation.start();
+        }
+        animation.front();
         hideButton.setCaption("Poka¿");
     }
 
@@ -191,7 +193,7 @@ public class HUD {
 
     public void mouseMoved(MouseEvent e) {
         int mx = e.getX();
-        int my = e.getY() - (int)(tx*progress);
+        int my = e.getY() - (int)(tx*animation.getProgress());
 
         if(isVisible) {
             if (mouseOver(mx, my)) {
@@ -223,14 +225,14 @@ public class HUD {
             }
         }
 
-        hideButton.hover(mx-(int)((64-hideButton.getH()/2)*progress), e.getY());
+        hideButton.hover(mx-(int)((64-hideButton.getH()/2)*animation.getProgress()), e.getY());
 
         eq.mouseMoved(e);
     }
 
     public void mousePressed(MouseEvent e) {
         if(e.getButton() == 1) {
-            if (hideButton.mouseOver(e.getX()-(int)((64-hideButton.getH()/2)*progress), e.getY())) {
+            if (hideButton.mouseOver(e.getX()-(int)((64-hideButton.getH()/2)*animation.getProgress()), e.getY())) {
                 if (isVisible) {
                     hide();
                 } else {
