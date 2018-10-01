@@ -2,6 +2,7 @@ package Eq;
 
 import Creatures.Creature;
 import MainFiles.MainClass;
+import Other.AnimationTiming;
 import Other.Button;
 import Other.Gamecol;
 
@@ -21,6 +22,8 @@ public class EquipmentGUI extends Equipment {
     private boolean isAnimating = false;
     private boolean isVisible = true;
 
+    private AnimationTiming animation;
+
     int bw = 100, bh = 30;
 
     public EquipmentGUI(Creature c) {
@@ -37,12 +40,18 @@ public class EquipmentGUI extends Equipment {
         this.hideButton = new Button(x+w-bw,y-bh, bw, bh, "Schowaj");
         this.hideButton.setRX(hideButton.getX()+bw);
 
+        animation = new AnimationTiming(10000, AnimationTiming.TimingFun.ease, AnimationTiming.RepeatableFun.norepeat);
+
         tx = w + MainClass.margin;
     }
 
     public void update(float et) {
         if(isAnimating) {
+            animation.update(et);
+            System.out.println(animation.getProgress());
             progress += et * vel;
+
+            progress = animation.getProgress();
 
             if(progress >= 1.0f) {
                 progress = 1.0f;
