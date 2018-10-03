@@ -16,7 +16,9 @@ public class Camera {
     private boolean isDragging = false;
 
     private Creature c;
+	private fPoint p;
 
+	// Point of target
     private class fPoint {
     	float x, y;
     	public fPoint(float x, float y) {
@@ -27,9 +29,6 @@ public class Camera {
 			this.y = y;
 		}
 	}
-
-	private fPoint p;
-
 
 	public Camera(Handler handler) {
 		Creature c = handler.creatures.get(0);
