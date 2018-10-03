@@ -9,8 +9,6 @@ public class AnimationTiming {
     private TimingFun fun;
     private RepeatableFun rFun;
 
-    private boolean isRunning = false;
-
     public enum TimingFun {
         linear,
         ease
