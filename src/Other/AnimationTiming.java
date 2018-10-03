@@ -60,7 +60,7 @@ public class AnimationTiming {
     public void front() { dir = 1; }
     public void back() { dir = -1; }
 
-
+    public void reset() { progress = 0; }
 
     public float getProgress() { return progress; }
 }

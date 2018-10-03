@@ -17,6 +17,9 @@ public class ActionManagerGUI extends ActionManager {
 
     private boolean actionsVisible = true;
     private AnimationTiming animation;
+    private boolean isAnimating = false;
+    private float ty = ActionManagerGUI.buttonW*2;
+
     private ActionGroup[] ag = new ActionGroup[3];
     private Action previousAction = null;
 
@@ -65,6 +68,14 @@ public class ActionManagerGUI extends ActionManager {
         for(ActionGroup ag : ag) {
             ag.update(et);
         }
+        if(isAnimating) {
+            if(!animation.update()) {
+                isAnimating = false;
+                if(animation.getProgress() == 1.0f) {
+                    actionsVisible = false;
+                }
+            }
+        }
     }
 
     public void render(Graphics g) {
@@ -90,25 +101,29 @@ public class ActionManagerGUI extends ActionManager {
         int sx = (int)(selX + buttonW - f.stringWidth("Wybrane akcje") / 2.0f);
         g.drawString("Wybrane akcje", sx, (int)(y - buttonW * 0.5f));
 
-        int index = -1;
-        for(int i=0; i<3; i++) {
-            if(ag[i].isOpen()) {
-                index = i;
-                i = 3;
-            }
-        }
-
-        if(index != -1) {
-            for(int i=0; i<3; i++) {
-                if(i != index) {
-                    ag[i].render(g);
+        if(actionsVisible) {
+            g.translate(0, (int)(ty * animation.getProgress()));
+            int index = -1;
+            for (int i = 0; i < 3; i++) {
+                if (ag[i].isOpen()) {
+                    index = i;
+                    i = 3;
                 }
             }
-            ag[index].render(g);
-        }else {
-            for(ActionGroup ag : ag) {
-                ag.render(g);
+
+            if (index != -1) {
+                for (int i = 0; i < 3; i++) {
+                    if (i != index) {
+                        ag[i].render(g);
+                    }
+                }
+                ag[index].render(g);
+            } else {
+                for (ActionGroup ag : ag) {
+                    ag.render(g);
+                }
             }
+            g.translate(0, -(int)(ty * animation.getProgress()));
         }
 
         if(selected[currentAction] != null) {
@@ -152,18 +167,20 @@ public class ActionManagerGUI extends ActionManager {
 
     public void mouseMoved(MouseEvent e) {
         if(actionsVisible) {
-            int index = -1;
-            for (int i = 0; i < 3; i++) {
-                if (ag[i].isOpen()) {
-                    index = i;
-                    i = 3;
+            if(!isAnimating) {
+                int index = -1;
+                for (int i = 0; i < 3; i++) {
+                    if (ag[i].isOpen()) {
+                        index = i;
+                        i = 3;
+                    }
                 }
-            }
-            if (index != -1) {
-                ag[index].mouseMoved(e);
-            } else {
-                for (ActionGroup ag : ag) {
-                    ag.mouseMoved(e);
+                if (index != -1) {
+                    ag[index].mouseMoved(e);
+                } else {
+                    for (ActionGroup ag : ag) {
+                        ag.mouseMoved(e);
+                    }
                 }
             }
         }
@@ -202,7 +219,9 @@ public class ActionManagerGUI extends ActionManager {
     }
 
     public void hideActions() {
-        actionsVisible = false;
+        isAnimating = true;
+        animation.start();
+        animation.front();
         CursorManager.setCursor(CursorManager.DEFAULT);
         for (ActionGroup a : ag) {
             a.close();
@@ -210,6 +229,9 @@ public class ActionManagerGUI extends ActionManager {
     }
 
     public void showActions() {
+        isAnimating = true;
+        animation.start();
+        animation.back();
         actionsVisible = true;
     }
 

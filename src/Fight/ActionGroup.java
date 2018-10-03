@@ -1,9 +1,7 @@
 package Fight;
 
-import Other.CursorManager;
 import Other.Gamecol;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
@@ -13,15 +11,11 @@ public class ActionGroup {
 	// Position of left-bottom corner 
 	private float x, y;
 
-	// Translate y (while is hided)
-    private float ty = ActionManagerGUI.buttonW*2, velY = 0;
-	private float movingProgress = 0.0f, movingSpeed = 6.0f;
-
 	public LinkedList<Action> actions = new LinkedList<Action>();
 	
 	private boolean isOpen = false;
 	private boolean isVisible = true;
-	
+
 	// Animation (opening, closing)
 	private float animationSpeed = 6.0f;
 	private float progress = 0.0f;
@@ -61,27 +55,9 @@ public class ActionGroup {
 				isOpen = false;
 			}
 		}
-
-		if(velY != 0) {
-            movingProgress += velY * et;
-
-            if (velY > 0) {
-                if(movingProgress >= 1.0f) {
-                    movingProgress = 1.0f;
-                    velY = 0.0f;
-                }
-            } else if (velY < 0) {
-                if(movingProgress <= 0.0f) {
-                    movingProgress = 0.0f;
-                    velY = 0.0f;
-                }
-            }
-        }
 	}
 	
 	public void render(Graphics g) {
-	    g.translate(0, (int)(ty*movingProgress));
-
 		if(isOpen) {
 			float h = 80 + progress * (actions.size()-1) * 80;
 //			g.setColor(new Color(30, 30, 30, 150));
@@ -96,8 +72,6 @@ public class ActionGroup {
 		}else {
 			actions.get(0).render(g);
 		}
-
-        g.translate(0, (int)-(ty*movingProgress));
 	}
 
 	public Action mouseReleased(MouseEvent e) {
