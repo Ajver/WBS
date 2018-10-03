@@ -68,8 +68,8 @@ public class MainClass extends Canvas implements Runnable {
 
 		clStr();
 		/////////////////////////////////////////////////
-//		g.setColor(new Color(94, 93, 89));
-//		g.fillRect(0, 0, WW, WH);
+		g.setColor(new Color(94, 93, 89));
+		g.fillRect(0, 0, WW, WH);
 
 		handler.render(g);
 
