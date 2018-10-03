@@ -7,6 +7,14 @@ import Other.*;
 
 public class MainClass extends Canvas implements Runnable {
 
+	/*
+	Warhammer Battle Simulator
+	Made by Dominik Zawlocki
+
+	Project started 24 August 2018
+	version 0.2.6
+	 */
+
 	private static final long serialVersionUID = 1275741336205243443L;
 	private boolean isRunning = false;
 	private Thread thread;
@@ -31,17 +39,6 @@ public class MainClass extends Canvas implements Runnable {
 		MainClass.WW = (int)tk.getScreenSize().getWidth();
 		MainClass.WH = (int)tk.getScreenSize().getHeight();
 
-//		MainClass.WW = 1280;
-//		MainClass.WH = (int)(WW * 0.618);
-
-//		if(MainClass.WW < 1400) {
-//			margin = 48;
-//
-//			if(MainClass.WW < 1280) {
-//				margin = 32;
-//			}
-//		}
-
 		tex = new Textures();
 		
 		handler = new Handler(this);
@@ -55,18 +52,24 @@ public class MainClass extends Canvas implements Runnable {
 	private void update(float et) {
 		handler.update(et);
 	}
-	
+
+	private long st, sp;
+	private void clStr() { st = System.currentTimeMillis(); }
+	private void clStp() { sp = System.currentTimeMillis(); System.out.println("et: " + (sp-st)); }
+
 	private void render() {
+
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null) {
 			this.createBufferStrategy(3);
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		
+
+		clStr();
 		/////////////////////////////////////////////////
-		g.setColor(new Color(94, 93, 89));
-		g.fillRect(0, 0, WW, WH);
+//		g.setColor(new Color(94, 93, 89));
+//		g.fillRect(0, 0, WW, WH);
 
 		handler.render(g);
 
@@ -75,9 +78,10 @@ public class MainClass extends Canvas implements Runnable {
 		g.drawString("FPS: "+this.fps, 50, 50);
 		
 		/////////////////////////////////////////////////
-		
+		clStp();
 		g.dispose();
 		bs.show();
+
 	}
 	
 	public void run() {
@@ -103,7 +107,7 @@ public class MainClass extends Canvas implements Runnable {
 			if(System.currentTimeMillis() - timer >= 1000) {
 				timer += 1000;
 				this.fps = frames;
-				//System.out.println(frames);
+				System.out.println(frames);
 				frames = 0;
 			}
 		}
