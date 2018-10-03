@@ -161,21 +161,6 @@ public class ActionGroup {
 
 		vel = -animationSpeed;
 	}
-//
-//	public void hide() {
-//	    close();
-//	    for (Action a : actions) {
-//	    	a.setVisible(false);
-//	    }
-//        isVisible = false;
-//	}
-//
-//	public void show() {
-//        isVisible = true;
-//		for (Action a : actions) {
-//			a.setVisible(true);
-//		}
-//	}
 	
 	public boolean isOpen() { return this.isOpen && this.isVisible; }
 }	
