@@ -45,9 +45,7 @@ public class AnimationTiming {
         }
 
         if(fun == TimingFun.ease) {
-            progress = (progress - 0.5f) * (float) Math.PI;
-            progress = (float) Math.sin(progress);
-            progress = (progress + 1.0f) / 2.0f;
+            progress = (1.0f - (float)Math.cos(progress * Math.PI)) / 2.0f;
         }
 
         if(dir == -1) {
