@@ -2,10 +2,9 @@ package Fight;
 
 import Creatures.Creature;
 import MainFiles.MainClass;
-import Other.Button;
-import Other.Gamecol;
-import Other.Handler;
+import Other.*;
 import Character.HUD;
+import Other.Button;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -16,6 +15,8 @@ public class ActionManagerGUI extends ActionManager {
 
     public static float buttonW = 64;
 
+    private boolean actionsVisible = true;
+    private AnimationTiming animation;
     private ActionGroup[] ag = new ActionGroup[3];
     private Action previousAction = null;
 
@@ -54,6 +55,8 @@ public class ActionManagerGUI extends ActionManager {
 
         this.ag[2] = new ActionGroup(x+192, agy,
                 new ActionSkip(p, handler, hud));
+
+        animation = new AnimationTiming(300, AnimationTiming.TimingFun.ease, AnimationTiming.RepeatableFun.norepeat);
 
         refresh();
     }
@@ -118,14 +121,17 @@ public class ActionManagerGUI extends ActionManager {
     public void mouseReleased(MouseEvent e) {
         if(e.getButton() == 1) {
             if (current() == null) {
-                for (ActionGroup ag : ag) {
-                    Action a = ag.mouseReleased(e);
+                if(actionsVisible) {
+                    for (ActionGroup ag : ag) {
+                        Action a = ag.mouseReleased(e);
 
-                    if (a != null) {
-                        select(a);
+                        if (a != null) {
+                            select(a);
+                        }
                     }
                 }
             } else {
+                // Over selected actions
                 if (mouseOver(e.getX(), e.getY(), selX, y, buttonW * 2, buttonW)) {
                     return;
                 }
@@ -145,18 +151,20 @@ public class ActionManagerGUI extends ActionManager {
     }
 
     public void mouseMoved(MouseEvent e) {
-        int index = -1;
-        for(int i=0; i<3; i++) {
-            if(ag[i].isOpen()) {
-                index = i;
-                i = 3;
+        if(actionsVisible) {
+            int index = -1;
+            for (int i = 0; i < 3; i++) {
+                if (ag[i].isOpen()) {
+                    index = i;
+                    i = 3;
+                }
             }
-        }
-        if(index != -1) {
-            ag[index].mouseMoved(e);
-        }else {
-            for(ActionGroup ag : ag) {
-                ag.mouseMoved(e);
+            if (index != -1) {
+                ag[index].mouseMoved(e);
+            } else {
+                for (ActionGroup ag : ag) {
+                    ag.mouseMoved(e);
+                }
             }
         }
 
@@ -193,16 +201,16 @@ public class ActionManagerGUI extends ActionManager {
         showActions();
     }
 
-    private void showActions() {
-        for(ActionGroup ag : ag) {
-            ag.show();
+    public void hideActions() {
+        actionsVisible = false;
+        CursorManager.setCursor(CursorManager.DEFAULT);
+        for (ActionGroup a : ag) {
+            a.close();
         }
     }
 
-    private void hideActions() {
-        for(ActionGroup ag : ag) {
-            ag.hide();
-        }
+    public void showActions() {
+        actionsVisible = true;
     }
 
     public void select(Action a) {

@@ -143,34 +143,39 @@ public class ActionGroup {
 	
 	private void open() {
 		if(isOpen) return;
-		
+
+		for(Action a : actions) {
+			a.setVisible(true);
+		}
+
 		isOpen = true;
 		vel = animationSpeed;
 	}
-	
-	private void close() {
+
+	public void close() {
 		if(!isOpen) return;
-		
+
+		for(Action a : actions) {
+			a.setVisible(false);
+		}
+
 		vel = -animationSpeed;
 	}
-	
-	public void hide() {
-	    close();
-		CursorManager.setCursor(CursorManager.DEFAULT);
-	    for (Action a : actions) {
-	    	a.setVisible(false);
-	    }
-        isVisible = false;
-		velY = movingSpeed;
-	}
-	
-	public void show() {
-        isVisible = true;
-		for (Action a : actions) {
-			a.setVisible(true);
-		}
-        velY = -movingSpeed;
-	}
+//
+//	public void hide() {
+//	    close();
+//	    for (Action a : actions) {
+//	    	a.setVisible(false);
+//	    }
+//        isVisible = false;
+//	}
+//
+//	public void show() {
+//        isVisible = true;
+//		for (Action a : actions) {
+//			a.setVisible(true);
+//		}
+//	}
 	
 	public boolean isOpen() { return this.isOpen && this.isVisible; }
 }	
