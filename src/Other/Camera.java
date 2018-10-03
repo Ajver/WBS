@@ -9,7 +9,11 @@ import java.awt.event.MouseEvent;
 public class Camera {
 
 	private float x, y;
-	private float velX, velY;
+
+	// Original position
+	private float ox, oy, diffX, diffY;
+	private AnimationTiming animation;
+	private boolean isFollowing = false;
 
 	// Previous mouse position
 	private int pmx, pmy;
@@ -36,29 +40,44 @@ public class Camera {
 		this.x = c.getX() - MainClass.WW / 2.0f + Handler.cellW / 2.0f;
 		this.y = c.getY() - MainClass.WH / 2.0f + Handler.cellH / 2.0f;
 
-		p = new fPoint(x, y);
+		p = new fPoint(c.getX(), c.getY());
+
+		animation = new AnimationTiming(700, AnimationTiming.TimingFun.ease, AnimationTiming.RepeatableFun.norepeat);
+
+		start();
 	}
 	
-	public void update(float et) {
+	public void update() {
 	    if(!isDragging) {
-            setVelocity();
+			if (!animation.update()) {
+				x = ox + diffX;
+				y = oy + diffY;
 
-            x += velX * et;
-            y += velY * et;
+				ox = x;
+				oy = y;
+				diffX = diffY = 0;
+			}
+			x = ox + diffX * animation.getProgress();
+			y = oy + diffY * animation.getProgress();
         }
 	}
 	
 	public void focus(Creature c) {
 		if(c != null) {
 			this.c = c;
+			start();
 		}
 	}
 	
-	private void setVelocity() {
-		if(c != null) {
-			float speed = 0.4f;
-			this.velX = ((c.getX() - MainClass.WW / 2.0f + Handler.cellW / 2.0f) - this.x) / speed;
-			this.velY = ((c.getY() - MainClass.WH / 2.0f + Handler.cellH / 2.0f) - this.y) / speed;
+	private void setDiffs() {
+		this.diffX = (p.x - MainClass.WW / 2.0f + Handler.cellW / 2.0f) - this.x;
+		this.diffY = (p.y - MainClass.WH / 2.0f + Handler.cellH / 2.0f) - this.y;
+	}
+
+	private void start() {
+		setDiffs();
+		if(diffX != 0 || diffY != 0) {
+			animation.start();
 		}
 	}
 
@@ -78,13 +97,14 @@ public class Camera {
             int mx = e.getX();
             int my = e.getY();
 
-            this.x = pmx - mx;
-            this.y = pmy - my;
+            this.x = this.ox = pmx - mx;
+            this.y = this.oy = pmy - my;
         }
     }
 
     public void mouseReleased(MouseEvent e) {
 		isDragging = false;
+
 		CursorManager.setCursor(CursorManager.DEFAULT);
     }
 	

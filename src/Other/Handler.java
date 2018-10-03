@@ -75,7 +75,7 @@ public class Handler extends MouseAdapter {
 
 		map.update(et);
 		hud.update(et);
-		camera.update(et);
+		camera.update();
 	}
 	
 	public void render(Graphics g) {
